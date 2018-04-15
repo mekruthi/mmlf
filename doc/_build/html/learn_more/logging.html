@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Logging &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Learn more about..." href="learn_more.html" />
+    <link rel="next" title="State and Action Spaces" href="state_and_action_spaces.html" />
+    <link rel="prev" title="Experiments" href="evaluating_experiments.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="state_and_action_spaces.html" title="State and Action Spaces"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="evaluating_experiments.html" title="Experiments"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" accesskey="U">Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="logging">
+<span id="id1"></span><h1>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basic-logging">
+<h2>Basic logging<a class="headerlink" href="#basic-logging" title="Permalink to this headline">¶</a></h2>
+<p>During execution of a world (a &#8220;run&#8221;), the MMLF stores several information about the agent&#8217;s performance during learning. This information is stored into a subdirectory of the MMLF RW area (the one created during your first run of the MMLF, typically ~/.mmlf). For each run, a new subdirectory is created, for instance for a run in the maze2d environment, this subdirectory might have the path &#8220;maze2d/1854587605103575641/20110415_12_19_46_57_4547690801476827566&#8221;. The first component of this path is the world package name, the second component the hash value of the joint agent and environment configuration, and the last component consists of the start time of the run and the thread and process id of this run.  While this path appears to be overly complex at first glance, it has the following advantages: Several runs of the same world (the same configuration) are automatically stored in the same subdirectory of the world log directory such that it is easier to group many runs of the MMLF into groups of runs with the same world configuration. Since this grouping is done based on the hash value of the actual configuration, one can not mistakenly group together run with different parameter values. Furthermore, using start time and thread and process id as name of the run directory ensures that each run gets assigned automatically a unique directory even when several runs are conducted concurrently.</p>
+<dl class="docutils">
+<dt>The following information are stored:</dt>
+<dd><ul class="first last">
+<li><p class="first">The world configuration file is stored into the matching subdirectory (maze2d/1854587605103575641 in the example)</p>
+</li>
+<li><p class="first">Performance measurements of the agent (e.g. reward obtained per episode, episode length) are typically stored by the environment. This measurements go into a subdirectory with the environment class&#8217; name (&#8220;Maze2dEnvironment&#8221; for instance) and go into files with the ending (&#8221;.fso&#8221;). These files are structured as follows:</p>
+<div class="highlight-python"><pre>0       1620
+1       1188
+2       1555
+...</pre>
+</div>
+<p>The first number in a line corresponds to a time stamp (typically the episode or step index), while the second one correponds to the agent&#8217;s performance at this time (for instance the reward accrued during this episode). These files can then later be plotted and analysed using the MMLF experimenter (see <a class="reference internal" href="evaluating_experiments.html#evaluate-experiments"><em>Evaluating experiments</em></a>). Which performance measures are stored depends on which &#8220;FloatStreamObservables&#8221; are defined in the environment (see <a class="reference internal" href="../tutorials/writing_environments.html#writing-environments"><em>Writing an environment</em></a>). For FloatStreamObservables, one fso file is created. The name of this fso file corresponds to the observables internal name.</p>
+</li>
+<li><p class="first">Plots of internal components of the agent like policies, models, value function etc. This information is typically stored by the agent into a subdirectory named according to the agent&#8217;s name (e.g. TDLambdaAgent). The plots go into a further subdirectory of this agent subdirectory named according to the agent&#8217;s components (e.g. greedypolicy, optimalvaluefunction etc.). In this directory, pdf-files with the name &#8220;episode_00009.pdf&#8221;, episode_00019.pdf&#8221;, ... are generated, where &#8220;episode_00009.pdf&#8221; contains a plot of the component after the 9th episodes.  Which internal components are plotted and with which frequency depends on the monitor&#8217;s configuration (see below). The generated graphics are similar to those generated by the viewers (see <a class="reference internal" href="viewers.html#viewers"><em>Viewers</em></a>).</p>
+</li>
+<li><p class="first">The policy followed by the agent at a certain time. This policy is stored in a serialized form (pickled). It goes into the subdirectory &#8220;policy&#8221; of the agent log directory. The files &#8220;policy_0&#8221;, &#8220;policy_1&#8221;, ... contain the policy folloewd by the agent at the end of episode 0, 1,...</p>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="monitor">
+<span id="id2"></span><h2>Monitor<a class="headerlink" href="#monitor" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>The Monitor controls which information is automatically stored during a run of the MMLF. This information is stored in the RW-area of the MMLF (see above) and may include:</dt>
+<dd><ul class="first last simple">
+<li>performance measures of an agent</li>
+<li>pickling of an agent&#8217;s policy</li>
+<li>creating periodically plots of selected StateActionValuesObservable</li>
+<li>creating periodically plots of selected FunctionOverStateSpaceObservable</li>
+<li>creating periodically plots of selected ModelObservable</li>
+</ul>
+</dd>
+</dl>
+<p>The monitor can either be configured in the MMLF Explorer GUI (see image below) or in the world configuration file when running MMLF in a non-graphical way:</p>
+<div class="highlight-python"><pre>monitor:
+ plotObservables: All
+ policyLogFrequency: 1
+ functionOverStateSpaceLogging:
+   active : True
+   logFrequency: 10
+   rasterPoints: 50
+   stateDims: null
+ modelLogging:
+   active : True
+   colouring: Rewards
+   logFrequency: 10
+   minExplorationValue: 1
+   plotSamples: true
+   rasterPoints: 25
+   stateDims: null
+ stateActionValuesLogging:
+   active : True
+   actions: null
+   logFrequency: 10
+   rasterPoints: 50
+   stateDims: null</pre>
+</div>
+<img alt="../_images/monitor.png" src="../_images/monitor.png" style="width: 300px;" />
+<p>See the automatically generated documentation of the Monitor class below for an explanation of the different parameters. When specifying a world using a world configuration file, one may skip the functionOverStateSpaceLogging, modelLogging, and stateActionValuesLogging blocks. This causes the MMLF to not store any plots for the corresponding observables.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If a world configuration file is loaded in which one of the blocks functionOverStateSpaceLogging, modelLogging, and stateActionValuesLogging is skipped, it is not yet possible to add it via the GUI configuration dialog for the monitor.</p>
+</div>
+<dl class="class">
+<dt id="framework.monitor.Monitor">
+<em class="property">class </em><tt class="descclassname">framework.monitor.</tt><tt class="descname">Monitor</tt><big>(</big><em>world</em>, <em>configDict</em><big>)</big><a class="headerlink" href="#framework.monitor.Monitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Monitor of the MMLF.</p>
+<p>The monitor supervises the execution of a world within the MMLF and stores
+certain selected information periodically. It always stores the values a
+FloatStreamObservable takes on into a file with the suffix &#8220;fso&#8221;. For other 
+observables (FunctionOverStateSpaceObservable, StateActionValuesObservable,
+ModelObservable) a plot is generated and stored into files if this is 
+specified in the monitor&#8217;s config dict (using functionOverStateSpaceLogging,
+stateActionValuesLogging, modelLogging).</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">policyLogFrequency:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Frequency of storing the agent&#8217;s policy in a serialized version to a file.
+The policy is stored in the file policy_x in the 
+subdirectory &#8220;policy&#8221; of the agent&#8217;s log directory 
+where x is the episodes&#8217; numbers.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">plotObservables:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The names of the observables that should be stored to a file. If &#8220;All&#8221;, all observables are stored.
+Defaults to &#8220;All&#8221; (also if plotObservables is not specified in a config file).</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">stateActionValuesLogging:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Configuration of periodically plotting StateActionValuesObservables.
+Examples for StateActionValuesObservable are
+state-action value functions or stochastic policies.
+The plots are stored in the file episode_x.pdf in a 
+subdirectory  of the agent&#8217;s log directory
+with the observable&#8217;s name where x is the episodes&#8217; numbers.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">functionOverStateSpaceLogging:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Configuration of periodically plotting FunctionOverStateSpaceObservables.
+Examples for FunctionOverStateSpaceObservable are
+state value functions or deterministic policies.
+The plots are stored in the file episode_x.pdf in a 
+subdirectory  of the agent&#8217;s log directory
+with the observable&#8217;s name where x is the episodes&#8217; numbers.</td>
+</tr>
+<tr class="field"><th class="field-name">modelLogging:</th><td class="field-body">: Configuration of periodically plotting ModelObservables.
+Examples for ModelObservables are models.
+The plots are stored in the file episode_x.pdf in a 
+subdirectory  of the agent&#8217;s log directory
+with the observable&#8217;s name where x is the episodes&#8217; numbers.</td>
+</tr>
+<tr class="field"><th class="field-name">active:</th><td class="field-body">: Whether the respective kind of logging is activated</td>
+</tr>
+<tr class="field"><th class="field-name">logFrequency:</th><td class="field-body">: Frequency (in episodes) of creating a plot based on the respective observable and storing it to a file.</td>
+</tr>
+<tr class="field"><th class="field-name">stateDims:</th><td class="field-body">: The state space dimensions that are varied in the plot. All other state space dimensions are kept constant.
+If None, the stateDims are automatically deduced. This is only possible under specific conditions (2d state space)</td>
+</tr>
+<tr class="field"><th class="field-name">actions:</th><td class="field-body">: The actions for which separate plots are created for each StateActionValuesObservable.</td>
+</tr>
+<tr class="field"><th class="field-name">rasterPoints:</th><td class="field-body">: The resolution (rasterPoint*rasterPoint) of the plot in continuous domain.</td>
+</tr>
+<tr class="field"><th class="field-name">colouring:</th><td class="field-body">: The background colouring of a model plot. Can be either &#8220;Rewards&#8221; or &#8220;Exploration&#8221;.
+If &#8220;Rewards&#8221;, the reward predicted by the model is used for 
+as background, while for &#8220;Exploration&#8221;, each state-action 
+pair tried at least minExplorationValue times is coloured
+with one colour, the others with an other colour.</td>
+</tr>
+<tr class="field"><th class="field-name">plotSamples:</th><td class="field-body">: If true, the state-action pairs that have been observed are plotted into the model-plot. Otherwise the model&#8217;s predictions.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">minExplorationValue:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: If the colouring is &#8220;Exploration&#8221;, each state-action pair tried at least minExplorationValue times is coloured with one colour, the others with an other colour.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="learn_more.html">Learn more about...</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="agents_and_environments.html">Existing Agents and Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluating_experiments.html">Experiments</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-logging">Basic logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#monitor">Monitor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="state_and_action_spaces.html">State and Action Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viewers.html">Viewers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="evaluating_experiments.html"
+                        title="previous chapter">Experiments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="state_and_action_spaces.html"
+                        title="next chapter">State and Action Spaces</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/learn_more/logging.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="state_and_action_spaces.html" title="State and Action Spaces"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="evaluating_experiments.html" title="Experiments"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" >Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

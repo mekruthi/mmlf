@@ -1,0 +1,27 @@
+agent:
+  configDict:
+    function_approximator:
+      default: 0.0
+      learning_rate: 0.1
+      name: TabularStorage
+    gamma: 0.0
+    lambda: 0.9
+    minTraceValue: 0.5
+    preferences_approximator:
+      default: 0.0
+      learning_rate: 1.0
+      name: TabularStorage
+    tau: 0.2
+    update_rule: SARSA
+  moduleName: actor_critic_agent
+environment:
+  configDict: {}
+  moduleName: seventeen_and_four
+monitor:
+  functionOverStateSpaceLogging:
+    active : True
+    logFrequency: 25
+    rasterPoints: 50
+    stateDims: None
+  policyLogFrequency: 10
+worldPackage: seventeen_and_four

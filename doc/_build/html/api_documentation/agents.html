@@ -1,0 +1,700 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Agents &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="API-documentation" href="api_documentation.html" />
+    <link rel="next" title="Environments" href="environments.html" />
+    <link rel="prev" title="MMLF package interface" href="0_mmlf_interface.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="environments.html" title="Environments"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="0_mmlf_interface.html" title="MMLF package interface"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="api_documentation.html" accesskey="U">API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-agents">
+<span id="agents"></span><h1>Agents<a class="headerlink" href="#module-agents" title="Permalink to this headline">¶</a></h1>
+<p>Package that contains all available MMLF agents.</p>
+<dl class="docutils">
+<dt>A list of all agents:</dt>
+<dd><ul class="first last">
+<li><p class="first">Agent &#8216;<em>Model-based Direct Policy Search</em>&#8216; from module mbdps_agent
+implemented in class MBDPS_Agent.</p>
+<blockquote>
+<div><p>An agent that uses the state-action-reward-successor_state transitions to 
+learn a model of the environment. It performs direct policy search
+(similar to the direct policy search agent using a black-box optimization
+algorithm to optimize the parameters of a parameterized policy) in the model
+in order to optimize a criterion defined by a fitness function. This fitness
+function can be e.g. the estimated accumulated reward obtained by this
+policy in the model environment. In order to enforce exploration, the model
+is wrapped for an RMax-like behavior so that it returns the reward RMax for 
+all states that have not been sufficiently explored. RMax should be an upper
+bound to the actual achievable return in order to enforce optimism in the
+face of uncertainty.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Monte-Carlo</em>&#8216; from module monte_carlo_agent
+implemented in class MonteCarloAgent.</p>
+<blockquote>
+<div><p>An agent which uses Monte Carlo policy evaluation to optimize its behavior
+in a given environment.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Dyna TD</em>&#8216; from module dyna_td_agent
+implemented in class DynaTDAgent.</p>
+<blockquote>
+<div><p>Dyna-TD uses temporal difference learning along with 
+learning a model of the environment and doing planning in it.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Temporal Difference + Eligibility</em>&#8216; from module td_lambda_agent
+implemented in class TDLambdaAgent.</p>
+<blockquote>
+<div><p>An agent that uses temporal difference learning  (e.g. Sarsa)
+with eligibility traces and function approximation (e.g. linear tile
+coding CMAC) to optimize its behavior in a given environment</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Policy Replay</em>&#8216; from module policy_replay_agent
+implemented in class PolicyReplayAgent.</p>
+<blockquote>
+<div><p>Agent which loads a stored policy and follows it without improving it.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Random</em>&#8216; from module random_agent
+implemented in class RandomAgent.</p>
+</li>
+<li><p class="first">Agent &#8216;<em>Actor Critic</em>&#8216; from module actor_critic_agent
+implemented in class ActorCriticAgent.</p>
+<blockquote>
+<div><p>This agent learns based on the actor critic architecture.   
+It uses standard TD(lambda) to learn the value function of
+the critic. For this reason, it subclasses TDLambdaAgent. The main
+difference to TD(lambda) is the means for action selection. Instead of
+deriving an epsilon-greedy policy from its Q-function, it learns an 
+explicit stochastic policy. To this end, it maintains preferences for each
+action in each state. These preferences are updated after each action
+execution according to the following rule:</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>RoundRobin</em>&#8216; from module example_agent
+implemented in class ExampleAgent.</p>
+</li>
+<li><p class="first">Agent &#8216;<em>Direct Policy Search</em>&#8216; from module dps_agent
+implemented in class DPS_Agent.</p>
+<blockquote>
+<div><p>This agent uses a black-box optimization algorithm to optimize the parameters 
+of a parametrized policy such that the accumulated (undiscounted) reward of the
+the policy is maximized.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Fitted-RMax</em>&#8216; from module fitted_r_max_agent
+implemented in class FittedRMaxAgent.</p>
+<blockquote>
+<div><p>Fitted R-Max is a model-based RL algorithm that uses the RMax heuristic for
+exploration control, uses a fitted function approximator (even though this can
+be configured differently), and uses Dynamic Programming (boosted by prioritized
+sweeping) for deriving a value function from the model. Fitted R-Max learns 
+usually very sample-efficient (meaning that a good policy is learned with only a 
+few interactions with the environment) but requires a huge amount of 
+computational resources.</p>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+<img src="../_images/inheritance92ba636846.png" usemap="#inheritance92ba636846" class="inheritance"/><map id="inheritance92ba636846" name="inheritance92ba636846">
+</map>
+<div class="section" id="module-agents.agent_base">
+<span id="agent-base-class"></span><h2>Agent base-class<a class="headerlink" href="#module-agents.agent_base" title="Permalink to this headline">¶</a></h2>
+<p>Module for MMLF interface for agents</p>
+<p>This module contains the AgentBase class that specifies the interface that all
+MMLF agents have to implement.</p>
+<dl class="class">
+<dt id="agents.agent_base.AgentBase">
+<em class="property">class </em><tt class="descclassname">agents.agent_base.</tt><tt class="descname">AgentBase</tt><big>(</big><em>config</em>, <em>baseUserDir</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.agent_base.AgentBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>MMLF interface for agents</p>
+<p>Each agent that should be used in the MMLF needs to be derived from this
+class and implements the following methods:</p>
+<p><strong>Interface Methods</strong></p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">setStateSpace:</th><td class="field-body">: Informs the agent of the environment&#8217;s state space</td>
+</tr>
+<tr class="field"><th class="field-name">setActionSpace:</th><td class="field-body">: Informs the agent of the environment&#8217;s action space</td>
+</tr>
+<tr class="field"><th class="field-name">setState:</th><td class="field-body">: Informs the agent of the environment&#8217;s current state</td>
+</tr>
+<tr class="field"><th class="field-name">giveReward:</th><td class="field-body">: Provides a reward to the agent</td>
+</tr>
+<tr class="field"><th class="field-name">getAction:</th><td class="field-body">: Request the next action the agent want to execute</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">nextEpisodeStarted:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Informs the agent that the current episode 
+has terminated and a new one has started.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="method">
+<dt id="agents.agent_base.AgentBase.getAction">
+<tt class="descname">getAction</tt><big>(</big><big>)</big><a class="headerlink" href="#agents.agent_base.AgentBase.getAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request the next action the agent want to execute</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agents.agent_base.AgentBase.getGreedyPolicy">
+<tt class="descname">getGreedyPolicy</tt><big>(</big><big>)</big><a class="headerlink" href="#agents.agent_base.AgentBase.getGreedyPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the optimal, greedy policy the agent has found so far</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agents.agent_base.AgentBase.giveReward">
+<tt class="descname">giveReward</tt><big>(</big><em>reward</em><big>)</big><a class="headerlink" href="#agents.agent_base.AgentBase.giveReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a reward to the agent</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agents.agent_base.AgentBase.nextEpisodeStarted">
+<tt class="descname">nextEpisodeStarted</tt><big>(</big><big>)</big><a class="headerlink" href="#agents.agent_base.AgentBase.nextEpisodeStarted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Informs the agent that a new episode has started.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agents.agent_base.AgentBase.setActionSpace">
+<tt class="descname">setActionSpace</tt><big>(</big><em>actionSpace</em><big>)</big><a class="headerlink" href="#agents.agent_base.AgentBase.setActionSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Informs the agent about the action space of the environment</p>
+<p>More information about action spaces can be found in 
+<a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-and-action-spaces"><em>State and Action Spaces</em></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agents.agent_base.AgentBase.setState">
+<tt class="descname">setState</tt><big>(</big><em>state</em>, <em>normalizeState=True</em><big>)</big><a class="headerlink" href="#agents.agent_base.AgentBase.setState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Informs the agent of the environment&#8217;s current state.</p>
+<p>If <em>normalizeState</em> is True, each state dimension is scaled to the
+value range(0,1). More information about (valid) states can be found in 
+<a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-and-action-spaces"><em>State and Action Spaces</em></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agents.agent_base.AgentBase.setStateSpace">
+<tt class="descname">setStateSpace</tt><big>(</big><em>stateSpace</em><big>)</big><a class="headerlink" href="#agents.agent_base.AgentBase.setStateSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Informs the agent about the state space of the environment</p>
+<p>More information about state spaces can be found in 
+<a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-and-action-spaces"><em>State and Action Spaces</em></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="agents.agent_base.AgentBase.storePolicy">
+<tt class="descname">storePolicy</tt><big>(</big><em>filePath</em>, <em>optimal=True</em><big>)</big><a class="headerlink" href="#agents.agent_base.AgentBase.storePolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stores the agent&#8217;s policy in the given file by pickling it.</p>
+<p>Pickles the agent&#8217;s policy and stores it in the file <em>filePath</em>.
+If the agent is based on value functions, a value function policy 
+wrapper is used to obtain a policy object which is then stored.</p>
+<p>If optimal==True, the agent stores the best policy it has found so far,
+if optimal==False, the agent stores its current (exploitation) policy.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-agents.actor_critic_agent">
+<span id="actor-critic"></span><h2>Actor-critic<a class="headerlink" href="#module-agents.actor_critic_agent" title="Permalink to this headline">¶</a></h2>
+<p>Agent that learns based on the actor-critic architecture.</p>
+<p>This module contains an agent that learns based on the actor critic
+architecture. It uses standard TD(lambda) to learn the value function of
+the critic and updates the preferences of the actor based on the TD error.</p>
+<dl class="class">
+<dt id="agents.actor_critic_agent.ActorCriticAgent">
+<em class="property">class </em><tt class="descclassname">agents.actor_critic_agent.</tt><tt class="descname">ActorCriticAgent</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.actor_critic_agent.ActorCriticAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Agent that learns based on the actor-critic architecture.</p>
+<p>This agent learns based on the actor critic architecture.   
+It uses standard TD(lambda) to learn the value function of
+the critic. For this reason, it subclasses TDLambdaAgent. The main
+difference to TD(lambda) is the means for action selection. Instead of
+deriving an epsilon-greedy policy from its Q-function, it learns an 
+explicit stochastic policy. To this end, it maintains preferences for each
+action in each state. These preferences are updated after each action
+execution according to the following rule:</p>
+<img src="../_images/mathmpl/math-55330ded68.png" class="center" /><p>where delta is the TD error</p>
+<img src="../_images/mathmpl/math-b648b0203e.png" class="center" /><p>Action selection is based on a Gibbs softmax distribution:</p>
+<img src="../_images/mathmpl/math-08e1d99132.png" class="center" /><p>where tau is a temperature parameter.</p>
+<p>Note that even though preferences are stored in a function approximator 
+such that in principle, action preferences could be generalized over the
+state space, continuous state spaces are not yet supported.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.9: </span>Added Actor-Critic agent</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">gamma:</th><td class="field-body">: The discount factor for computing the return given the rewards</td>
+</tr>
+<tr class="field"><th class="field-name">lambda:</th><td class="field-body">: The eligibility trace decay rate</td>
+</tr>
+<tr class="field"><th class="field-name">tau:</th><td class="field-body">: Temperature parameter used in the Gibbs softmax distribution for action selection</td>
+</tr>
+<tr class="field"><th class="field-name">minTraceValue:</th><td class="field-body">: The minimum value of an entry in a trace that is considered to be relevant. If the eligibility falls  below this value, it is set to 0 and the entry is thus no longer updated</td>
+</tr>
+<tr class="field"><th class="field-name">update_rule:</th><td class="field-body">: Whether the learning is on-policy or off-policy.. Can be either &#8220;SARSA&#8221; (on-policy) or &#8220;WatkinsQ&#8221; (off-policy)</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">stateDimensionResolution:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The default &#8220;resolution&#8221; the agent uses for every state dimension. Can be either an int (same resolution for each dimension) or a dict mapping dimension name to its resolution.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">actionDimensionResolution:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Per default, the agent discretizes a continuous action space in this number of discrete actions.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">function_approximator:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The function approximator used for representing the Q value function</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">preferences_approximator:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">The function approximator used for representing the action preferences (i.e. the policy)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-agents.dps_agent">
+<span id="direct-policy-search-dps"></span><h2>Direct Policy Search (DPS)<a class="headerlink" href="#module-agents.dps_agent" title="Permalink to this headline">¶</a></h2>
+<p>Agent that performs direct search in the policy space to find a good policy</p>
+<p>This agent uses a black-box optimization algorithm to optimize the parameters 
+of a parametrized policy such that the accumulated (undiscounted) reward of the
+the policy is maximized.</p>
+<dl class="class">
+<dt id="agents.dps_agent.DPS_Agent">
+<em class="property">class </em><tt class="descclassname">agents.dps_agent.</tt><tt class="descname">DPS_Agent</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.dps_agent.DPS_Agent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Agent that performs direct search in the policy space to find a good policy</p>
+<p>This agent uses a black-box optimization algorithm to optimize the parameters 
+of a parametrized policy such that the accumulated (undiscounted) reward of the
+the policy is maximized.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">policy_search:</th><td class="field-body">: The method used for search of an optimal policy in the policy space. Defines policy parametrization and internally used black box optimization algorithm.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-agents.dyna_td_agent">
+<span id="dyna-td"></span><h2>Dyna TD<a class="headerlink" href="#module-agents.dyna_td_agent" title="Permalink to this headline">¶</a></h2>
+<p>The Dyna-TD agent module</p>
+<p>This module contains the Dyna-TD agent class.
+It uses temporal difference learning along with 
+learning a model of the environment and is based on the
+Dyna architecture.</p>
+<dl class="class">
+<dt id="agents.dyna_td_agent.DynaTDAgent">
+<em class="property">class </em><tt class="descclassname">agents.dyna_td_agent.</tt><tt class="descname">DynaTDAgent</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.dyna_td_agent.DynaTDAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Agent that learns based on the DYNA architecture.</p>
+<p>Dyna-TD uses temporal difference learning along with 
+learning a model of the environment and doing planning in it.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">gamma:</th><td class="field-body">: The discount factor for computing the return given the rewards</td>
+</tr>
+<tr class="field"><th class="field-name">epsilon:</th><td class="field-body">: Exploration rate. The probability that an action is chosen non-greedily, i.e. uniformly random among all available actions</td>
+</tr>
+<tr class="field"><th class="field-name">lambda:</th><td class="field-body">: The eligibility trace decay rate</td>
+</tr>
+<tr class="field"><th class="field-name">minTraceValue:</th><td class="field-body">: The minimum value of an entry in a trace that is considered to be relevant. If the eligibility falls  below this value, it is set to 0 and the entry is thus no longer updated</td>
+</tr>
+<tr class="field"><th class="field-name">update_rule:</th><td class="field-body">: Whether the learning is on-policy or off-policy.. Can be either &#8220;SARSA&#8221; (on-policy) or &#8220;WatkinsQ&#8221; (off-policy)</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">stateDimensionResolution:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The default &#8220;resolution&#8221; the agent uses for every state dimension. Can be either an int (same resolution for each dimension) or a dict mapping dimension name to its resolution.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">actionDimensionResolution:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Per default, the agent discretizes a continuous action space in this number of discrete actions</td>
+</tr>
+<tr class="field"><th class="field-name">planner:</th><td class="field-body">: The algorithm used for planning, i.e. for optimizing the policy based on a learned model</td>
+</tr>
+<tr class="field"><th class="field-name">model:</th><td class="field-body">: The algorithm used for learning a model of the environment</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">function_approximator:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The function approximator used for representing the Q value function</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-agents.fitted_r_max_agent">
+<span id="fitted-r-max"></span><h2>Fitted R-Max<a class="headerlink" href="#module-agents.fitted_r_max_agent" title="Permalink to this headline">¶</a></h2>
+<p>Fitted R-Max agent</p>
+<p>Fitted R-Max is a model-based RL algorithm that uses the RMax heuristic for
+exploration control, uses a fitted function approximator (even though this can
+be configured differently), and uses Dynamic Programming (boosted by prioritized
+sweeping) for deriving a value function from the model. Fitted R-Max learns 
+usually very sample-efficient (meaning that a good policy is learned with only a 
+few interactions with the environment) but requires a huge amount of 
+computational resources.</p>
+<dl class="class">
+<dt id="agents.fitted_r_max_agent.FittedRMaxAgent">
+<em class="property">class </em><tt class="descclassname">agents.fitted_r_max_agent.</tt><tt class="descname">FittedRMaxAgent</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.fitted_r_max_agent.FittedRMaxAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fitted R-Max agent</p>
+<p>Fitted R-Max is a model-based RL algorithm that uses the RMax heuristic for
+exploration control, uses a fitted function approximator (even though this can
+be configured differently), and uses Dynamic Programming (boosted by prioritized
+sweeping) for deriving a value function from the model. Fitted R-Max learns 
+usually very sample-efficient (meaning that a good policy is learned with only a 
+few interactions with the environment) but requires a huge amount of 
+computational resources.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Nicholas K. Jong and Peter Stone,
+&#8220;Model-based function approximation in reinforcement learning&#8221;,
+in &#8220;Proceedings of the 6th International Joint Conference on Autonomous Agents and Multiagent Systems&#8221; 
+Honolulu, Hawaii: ACM, 2007, 1-8, <a class="reference external" href="http://portal.acm.org/citation.cfm?id=1329125.1329242">http://portal.acm.org/citation.cfm?id=1329125.1329242</a>.</p>
+</div>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">gamma:</th><td class="field-body">: The discount factor for computing the return given the rewards#</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">min_exploration_value:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The agent explores in a state until the given exploration value (approx. number of exploratory actions in proximity of state action pair) is reached for all actions</td>
+</tr>
+<tr class="field"><th class="field-name">RMax:</th><td class="field-body">: An upper bound on the achievable return an agent can obtain in a single episode</td>
+</tr>
+<tr class="field"><th class="field-name">planner:</th><td class="field-body">: The algorithm used for planning, i.e. for optimizing the policy based on a learned model</td>
+</tr>
+<tr class="field"><th class="field-name">model:</th><td class="field-body">: The algorithm used for learning a model of the environment</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">function_approximator:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The function approximator used for representing the Q value function</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">actionDimensionResolution:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Per default, the agent discretizes a continuous action space in this number of discrete actions</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-agents.mbdps_agent">
+<span id="model-based-direct-policy-search-mbdps"></span><h2>Model-based Direct Policy Search (MBDPS)<a class="headerlink" href="#module-agents.mbdps_agent" title="Permalink to this headline">¶</a></h2>
+<p>The Model-based Direct Policy Search agent</p>
+<p>This module contains an agent that uses the state-action-reward-successor_state
+transitions to learn a model of the environment. It performs than direct policy
+search (similar to the direct policy search agent using a black-box optimization
+algorithm to optimize the parameters of a parameterized policy) in the model
+in order to optimize a criterion defined by a fitness function. This fitness
+function can be e.g. the estimated accumulated reward obtained by this
+policy in the model environment. In order to enforce exploration, the model
+is wrapped for an RMax-like behavior so that it returns the reward RMax for all
+states that have not been sufficiently explored.</p>
+<dl class="class">
+<dt id="agents.mbdps_agent.MBDPS_Agent">
+<em class="property">class </em><tt class="descclassname">agents.mbdps_agent.</tt><tt class="descname">MBDPS_Agent</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.mbdps_agent.MBDPS_Agent" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Model-based Direct Policy Search agent</p>
+<p>An agent that uses the state-action-reward-successor_state transitions to 
+learn a model of the environment. It performs direct policy search
+(similar to the direct policy search agent using a black-box optimization
+algorithm to optimize the parameters of a parameterized policy) in the model
+in order to optimize a criterion defined by a fitness function. This fitness
+function can be e.g. the estimated accumulated reward obtained by this
+policy in the model environment. In order to enforce exploration, the model
+is wrapped for an RMax-like behavior so that it returns the reward RMax for 
+all states that have not been sufficiently explored. RMax should be an upper
+bound to the actual achievable return in order to enforce optimism in the
+face of uncertainty.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">gamma:</th><td class="field-body">: The discount factor for computing the return given the rewards</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">planning_episodes:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The number internally simulated episodes that are performed in one planning step</td>
+</tr>
+<tr class="field"><th class="field-name">policy_search:</th><td class="field-body">: The method used for search of an optimal policy in the policy space. Defines policy parametrization and internally used black box optimization algorithm.</td>
+</tr>
+<tr class="field"><th class="field-name">model:</th><td class="field-body">: The algorithm used for learning a model of the environment</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-agents.monte_carlo_agent">
+<span id="monte-carlo"></span><h2>Monte-Carlo<a class="headerlink" href="#module-agents.monte_carlo_agent" title="Permalink to this headline">¶</a></h2>
+<p>Monte-Carlo learning agent</p>
+<p>This module defines an agent which uses Monte Carlo policy evaluation
+to optimize its behavior in a given environment</p>
+<dl class="class">
+<dt id="agents.monte_carlo_agent.MonteCarloAgent">
+<em class="property">class </em><tt class="descclassname">agents.monte_carlo_agent.</tt><tt class="descname">MonteCarloAgent</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.monte_carlo_agent.MonteCarloAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Agent that learns based on monte-carlo samples of the Q-function</p>
+<p>An agent which uses Monte Carlo policy evaluation to optimize its behavior
+in a given environment.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">gamma:</th><td class="field-body">: The discount factor for computing the return given the rewards</td>
+</tr>
+<tr class="field"><th class="field-name">epsilon:</th><td class="field-body">: Exploration rate. The probability that an action is chosen non-greedily, i.e. uniformly random among all available actions</td>
+</tr>
+<tr class="field"><th class="field-name">visit:</th><td class="field-body">: Whether first (&#8220;first&#8221;) or every visit (&#8220;every&#8221;) is used in Monte-Carlo updates</td>
+</tr>
+<tr class="field"><th class="field-name">defaultQ:</th><td class="field-body">: The initially assumed Q-value for each state-action pair. Allows to control initial exploration due to optimistic initialization</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="option">
+<h2>Option<a class="headerlink" href="#option" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-agents.random_agent">
+<span id="random"></span><h2>Random<a class="headerlink" href="#module-agents.random_agent" title="Permalink to this headline">¶</a></h2>
+<p>MMLF agent that acts randomly</p>
+<p>This module defines a simple agent that can interact with an environment.
+It chooses all available actions with the same probability.</p>
+<p>This module deals also as an example of how to implement an MMLF agent.</p>
+<dl class="class">
+<dt id="agents.random_agent.RandomAgent">
+<em class="property">class </em><tt class="descclassname">agents.random_agent.</tt><tt class="descname">RandomAgent</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.random_agent.RandomAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Agent that chooses uniformly randomly among the available actions.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="temporal-difference-learning">
+<h2>Temporal Difference Learning<a class="headerlink" href="#temporal-difference-learning" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-agents.td_agent">
+<span id="td-0"></span><h3>TD(0)<a class="headerlink" href="#module-agents.td_agent" title="Permalink to this headline">¶</a></h3>
+<p>Agent based on temporal difference learning</p>
+<p>This module defines a base agent for all kind of agents based on 
+temporal difference learning. Most of these agents can reuse most methods
+of this agents and have to modify only small parts.</p>
+<p>Note: The TDAgent cannot be instantiated by itself, it is a abstract base class!</p>
+<dl class="class">
+<dt id="agents.td_agent.TDAgent">
+<em class="property">class </em><tt class="descclassname">agents.td_agent.</tt><tt class="descname">TDAgent</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.td_agent.TDAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base agent for all kind of agents based on temporal difference learning.
+Most of these agents can reuse most methods of this agents and 
+have to modify only small parts</p>
+<p>Note: The TDAgent cannot be instantiated by itself, it is a abstract base class!</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-agents.td_lambda_agent">
+<span id="td-lambda-eligibility-traces"></span><h3>TD(lambda) - Eligibility Traces<a class="headerlink" href="#module-agents.td_lambda_agent" title="Permalink to this headline">¶</a></h3>
+<p>Agent based on temporal difference learning with eligibility traces</p>
+<p>This module defines an agent that uses temporal difference learning  (e.g. Sarsa)
+with eligibility traces and function approximation
+(e.g. linear tile coding CMAC) to optimize its behavior in a given environment</p>
+<dl class="class">
+<dt id="agents.td_lambda_agent.TDLambdaAgent">
+<em class="property">class </em><tt class="descclassname">agents.td_lambda_agent.</tt><tt class="descname">TDLambdaAgent</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#agents.td_lambda_agent.TDLambdaAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Agent that implements TD(lambda) RL</p>
+<p>An agent that uses temporal difference learning  (e.g. Sarsa)
+with eligibility traces and function approximation (e.g. linear tile
+coding CMAC) to optimize its behavior in a given environment</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">update_rule:</th><td class="field-body">: Whether the learning is on-policy or off-policy.. Can be either &#8220;SARSA&#8221; (on-policy) or &#8220;WatkinsQ&#8221; (off-policy)</td>
+</tr>
+<tr class="field"><th class="field-name">gamma:</th><td class="field-body">: The discount factor for computing the return given the rewards</td>
+</tr>
+<tr class="field"><th class="field-name">epsilon:</th><td class="field-body">: Exploration rate. The probability that an action is chosen non-greedily, i.e. uniformly random among all available actions</td>
+</tr>
+<tr class="field"><th class="field-name">epsilonDecay:</th><td class="field-body">: Decay factor for the exploration rate. The exploration rate is multiplied with this value after each episode.</td>
+</tr>
+<tr class="field"><th class="field-name">lambda:</th><td class="field-body">: The eligibility trace decay rate</td>
+</tr>
+<tr class="field"><th class="field-name">minTraceValue:</th><td class="field-body">: The minimum value of an entry in a trace that is considered to be relevant. If the eligibility falls  below this value, it is set to 0 and the entry is thus no longer updated</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">replacingTraces:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Whether replacing or accumulating traces are used.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">stateDimensionResolution:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The default &#8220;resolution&#8221; the agent uses for every state dimension. Can be either an int (same resolution for each dimension) or a dict mapping dimension name to its resolution.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">actionDimensionResolution:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Per default, the agent discretizes a continuous action space in this number of discrete actions</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">function_approximator:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The function approximator used for representing the Q value function</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api_documentation.html">API-documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="0_mmlf_interface.html">MMLF package interface</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-agents.agent_base">Agent base-class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-agents.actor_critic_agent">Actor-critic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-agents.dps_agent">Direct Policy Search (DPS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-agents.dyna_td_agent">Dyna TD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-agents.fitted_r_max_agent">Fitted R-Max</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-agents.mbdps_agent">Model-based Direct Policy Search (MBDPS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-agents.monte_carlo_agent">Monte-Carlo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#option">Option</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-agents.random_agent">Random</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temporal-difference-learning">Temporal Difference Learning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="observables.html">Observables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources/resources.html">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="framework/framework.html">Framework</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="0_mmlf_interface.html"
+                        title="previous chapter">MMLF package interface</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="environments.html"
+                        title="next chapter">Environments</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api_documentation/agents.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="environments.html" title="Environments"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="0_mmlf_interface.html" title="MMLF package interface"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="api_documentation.html" >API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

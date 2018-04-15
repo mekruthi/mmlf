@@ -1,0 +1,297 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Experiments &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Learn more about..." href="learn_more.html" />
+    <link rel="next" title="Logging" href="logging.html" />
+    <link rel="prev" title="Existing Agents and Environments" href="agents_and_environments.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="logging.html" title="Logging"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="agents_and_environments.html" title="Existing Agents and Environments"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" accesskey="U">Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="experiments">
+<span id="running-experiments"></span><h1>Experiments<a class="headerlink" href="#experiments" title="Permalink to this headline">¶</a></h1>
+<p>With &#8220;experiment&#8221;, we refer to the systematic analysis of a RL method, the influence of its parameters onto its performance, and/or the comparison of different RL methods. Note: Even though we focus in this text onto the agent component of the world, similar experiments could also be conducted for comparing the performance of an agent in different environments.</p>
+<div class="section" id="conducting-experiments">
+<span id="conduct-experiments"></span><h2>Conducting experiments<a class="headerlink" href="#conducting-experiments" title="Permalink to this headline">¶</a></h2>
+<p>Experiments can be either be conducted using the <a class="reference internal" href="../tutorials/quick_start.html#quickstart"><em>command line interface</em></a> or using the <a class="reference internal" href="../tutorials/quick_start_gui.html#experimenter"><em>MMLF Experimenter</em></a>. For this example, download this example experiment configuration <a class="reference download internal" href="../_downloads/test_experiment.zip"><tt class="xref download docutils literal"><span class="pre">here</span></tt></a>, and extract it into your rw-directory (this should result in a directory ~/.mmlf/test_experiment). Now, you can execute the experiment using:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="n">run_mmlf</span> <span class="o">--</span><span class="n">experiment</span> <span class="n">test_experiment</span>
+</pre></div>
+</div>
+<p>Note that you have to use the <tt class="docutils literal"><span class="pre">--experiment</span></tt> argument instead of <tt class="docutils literal"><span class="pre">--config</span></tt>, and the path of the experiment <em>directory</em>  must be relative to the rw-directory. For this particular experiment, this will conduct 5 runs a 100 episodes for 3 worlds. Alternatively, you could also load the experiment into the MMLF experimenter using the &#8220;Load Experiment&#8221; button and execute it using the &#8220;Start Experiment&#8221; button. In this case, you can monitor the progress in the GUI online. See the <a class="reference internal" href="../tutorials/quick_start_gui.html#experimenter"><em>MMLF Experimenter</em></a> for more details. A further option for conducting experiments is to script them (see <a class="reference internal" href="#scripted-experiments"><em>Scripting experiments</em></a>).</p>
+<p>The experiment configuration (in the test_experiment directory) consists of the definition of several worlds (one for each yaml-file in the worlds subdirectory of test_experiment directory) and the configuration of the experiment itself in experiment_config.yaml:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">concurrency</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Sequential</span>
+<span class="l-Scalar-Plain">episodesPerRun</span><span class="p-Indicator">:</span> <span class="s">&#39;100&#39;</span>
+<span class="l-Scalar-Plain">parallelProcesses</span><span class="p-Indicator">:</span> <span class="s">&#39;1&#39;</span>
+<span class="l-Scalar-Plain">runsPerWorld</span><span class="p-Indicator">:</span> <span class="s">&#39;5&#39;</span>
+</pre></div>
+</div>
+<p>This configuration defines whether the experiment should be executed sequentially (&#8220;concurrency: Sequential&#8221;, i.e. only one run at a time) or concurrently (&#8220;concurrency: Concurrent&#8221;, i.e. several runs at the same time), how many episodes per world run should be conducted (&#8220;episodesPerRun&#8221;), how many runs are executed in parallel for concurrent execution order (&#8220;parallelProcesses&#8221;), and how many runs (repetitions) should be conducted for each world (&#8220;runsPerWorld&#8221;). Note that &#8220;parallelProcesses&#8221; is ignored if the execution order is sequential.</p>
+<p>In this example experiment, three different agents are compared in the linear markov chain environment: an agent acting randomly, an TD-based agent with epsilon=0.5, and an TD-based agent with epsilon=0.1. Each of this agents acts for 100 episodes and gets 5 independent runs. By looking at the logs/linear_markov_chain directory, you may see that three novel results directories have been created (&#8220;849418770030302468&#8221; etc., see <a class="reference internal" href="logging.html#logging"><em>Logging</em></a> for an explanation why the directories are named this way.) For convenience, you may rename these directories to more meaningful names once the experiment is finished (e.g. &#8220;Random&#8221;, &#8220;TD0.1&#8221;, and &#8220;TD0.5&#8221;). You can identify which directory belongs to which agent by looking into the world.yaml file in these directories.</p>
+</div>
+<div class="section" id="evaluating-experiments">
+<span id="evaluate-experiments"></span><h2>Evaluating experiments<a class="headerlink" href="#evaluating-experiments" title="Permalink to this headline">¶</a></h2>
+<p>Once an experiment is finished, you can analyze it using the MMLF Experimenter. If you already conducted the experiment using the MMLF experimenter, a tab with the title &#8220;Experiment Statistics&#8221; has already been created which shows the results of the experiment. Otherwise, you can load the experiment&#8217;s results by pressing &#8220;Load Experiment Results&#8221; in the MMLF Experimenter. This opens a file selection dialog in which the root directory of the particular experiment in the RW area must be selected (logs/linear_markov_chain for the example above).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It may happen that different experiments share the same root directory (namely, when both experiments use the same environment). In this case, the Experimenter cannot distinguish these experiments and interprets them as a single experiment. In order to avoid that, please copy the results of an experiment to a unique directory manually.</p>
+</div>
+<p>The &#8220;Experiment Statistics&#8221; tab shows you various statistics for a selected metric and allows to plot these results by pressing &#8220;Visualize&#8221;. For a more detailed explanation of the &#8220;Experiment Statistics&#8221; tab, we refer to the <a class="reference internal" href="../tutorials/quick_start_gui.html#experimenter"><em>MMLF Experimenter</em></a>. For now, the interesting part is the &#8220;Statistical Analysis&#8221; tab that is opened by pressing &#8220;Statistics&#8221; in the &#8220;Experiment Statistics&#8221; tab:</p>
+<img alt="../_images/statistical_analysis.png" src="../_images/statistical_analysis.png" style="width: 800px;" />
+<dl class="docutils">
+<dt>This tab shows you a boxplot based visualization of the average performance of the different setups and also a comparison based on statistical hypothesis testing. You can select the following:</dt>
+<dd><ul class="first last simple">
+<li>The &#8220;metric&#8221; based on which the different setups should be compared (e.g. &#8220;EpisodeReturn&#8221; or &#8220;EpisodeLength&#8221;)</li>
+<li>How the different values the metric takes on during a run should be combined into a single scalar value (&#8220;aggregated&#8221;). This is accomplished by using a python lambda function like &#8220;lambda x: mean(x[:])&#8221;. In this expression, the sequence of values the metric takes on during a run is stored in x (typically one value per episode). One can now select just a subset of this values using slicing (e.g. x[0:20] would just retain the first 20 values while x[:] retains all values) and choose how this value range is aggregated (mean, median, max, min are available). For instance, to compare based on the minimal performance obtained during the first 30 episodes, use &#8220;lambda x: min(x[0:30])&#8221;.</li>
+<li>Which statistical hypothesis test is conducted (Student t-test or MannWhitney u-test)</li>
+<li>Which level is considered to be significant (typically p &lt; 0.05)</li>
+</ul>
+</dd>
+</dl>
+<p>By pressing &#8220;Update&#8221;, the graphic and the significance table are updated. In the table, pairs of setups for which one setup obtained significantly better results than the other are shown bold (in the example TD0.1&gt;TD0.5&gt;Random)</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Please take care when comparing many setups: No correction for multiple testing is performed.</p>
+</div>
+</div>
+<div class="section" id="scripting-experiments">
+<span id="scripted-experiments"></span><h2>Scripting experiments<a class="headerlink" href="#scripting-experiments" title="Permalink to this headline">¶</a></h2>
+<p>If a large number of agent/environments combinations should be compared it may become inconvenient to create for each combination a separate world file or to configure this world in the MMLF GUI. In such a situation it may be more convenient to write a python script that create the world configurations on the fly, execute the experiment and consolidates the log files. These python scripts use the <a class="reference internal" href="../api_documentation/0_mmlf_interface.html#mmlf-package-interface"><em>MMLF python package interface</em></a>. For example, the following script (download <a class="reference download internal" href="../_downloads/scripted_experiment.py"><tt class="xref download docutils literal"><span class="pre">here</span></tt></a>) lets the TD(lambda) agent learn in the mountain car environment for six different values of the exploration ratio epsilon:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Maja Machine Learning Framework</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published</span>
+<span class="c"># by the Free Software Foundation; either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+
+<span class="c"># This program is distributed in the hope that it will be useful, but</span>
+<span class="c"># WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program; if not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="c"># The mmlf must be importable (global installation or the directory into which </span>
+<span class="c"># the MMLF has been extracted must be in python search path).</span>
+<span class="kn">import</span> <span class="nn">mmlf</span>
+<span class="c"># Initialize logging and rw-area</span>
+<span class="n">mmlf</span><span class="o">.</span><span class="n">setupConsoleLogging</span><span class="p">()</span>
+<span class="n">mmlf</span><span class="o">.</span><span class="n">initializeRWArea</span><span class="p">()</span>
+
+<span class="c"># Template for world configuration</span>
+<span class="c"># The specific values for epsilon will be changed later, the rest remains </span>
+<span class="c"># identical for all worlds</span>
+<span class="n">worldConfTemplateYaml</span> <span class="o">=</span> \
+<span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">worldPackage : mountain_car</span>
+<span class="sd">environment:</span>
+<span class="sd">    moduleName : &quot;mcar_env&quot;</span>
+<span class="sd">    configDict: </span>
+<span class="sd">        maxStepsPerEpisode : 500    </span>
+<span class="sd">        accelerationFactor : 0.001</span>
+<span class="sd">        maxGoalVelocity : 0.07</span>
+<span class="sd">        positionNoise : 0.0</span>
+<span class="sd">        velocityNoise : 0.0</span>
+<span class="sd">agent:</span>
+<span class="sd">    moduleName : &quot;td_lambda_agent&quot;</span>
+<span class="sd">    configDict:</span>
+<span class="sd">        gamma : 1.0</span>
+<span class="sd">        epsilon : 0.0</span>
+<span class="sd">        lambda : 0.95</span>
+<span class="sd">        minTraceValue : 0.5</span>
+<span class="sd">        stateDimensionResolution : 9</span>
+<span class="sd">        actionDimensionResolution : 7</span>
+<span class="sd">        function_approximator : </span>
+<span class="sd">            name : &#39;CMAC&#39;</span>
+<span class="sd">            number_of_tilings : 10</span>
+<span class="sd">            learning_rate : 0.5</span>
+<span class="sd">            update_rule : &#39;exaggerator&#39;</span>
+<span class="sd">            default : 0.0</span>
+<span class="sd">monitor:</span>
+<span class="sd">    policyLogFrequency : 250</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">worldConfTemplate</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">worldConfTemplateYaml</span><span class="p">)</span>
+
+<span class="c"># Create experiment configuration</span>
+<span class="c"># Experiment is conducted concurrently with 8 parallel processes (if enough </span>
+<span class="c"># cores are available). Each run consists of 250 episodes and 5 runs are </span>
+<span class="c"># conducted per world </span>
+<span class="n">experimentConf</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;concurrency&quot;</span><span class="p">:</span> <span class="s">&quot;Concurrent&quot;</span><span class="p">,</span>
+                  <span class="s">&quot;episodesPerRun&quot;</span><span class="p">:</span> <span class="s">&#39;250&#39;</span><span class="p">,</span>
+                  <span class="s">&quot;parallelProcesses&quot;</span><span class="p">:</span> <span class="s">&#39;8&#39;</span><span class="p">,</span>
+                  <span class="s">&quot;runsPerWorld&quot;</span><span class="p">:</span> <span class="s">&#39;5&#39;</span><span class="p">,</span>
+                  <span class="s">&quot;worlds&quot;</span> <span class="p">:</span> <span class="nb">dict</span><span class="p">()}</span>
+
+<span class="c"># Change exploration ratio of worlds</span>
+<span class="k">for</span> <span class="n">epsilon</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]:</span>
+    <span class="n">worldConf</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">worldConfTemplate</span><span class="p">)</span>
+    <span class="n">worldConf</span><span class="p">[</span><span class="s">&#39;agent&#39;</span><span class="p">][</span><span class="s">&#39;configDict&#39;</span><span class="p">][</span><span class="s">&#39;epsilon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">epsilon</span>
+    <span class="n">experimentConf</span><span class="p">[</span><span class="s">&quot;worlds&quot;</span><span class="p">][</span><span class="s">&quot;TD</span><span class="si">%.2f</span><span class="s">&quot;</span><span class="o">%</span><span class="n">epsilon</span><span class="p">]</span> <span class="o">=</span> <span class="n">worldConf</span>
+                        
+<span class="c"># Run the experiment (this may take some time)</span>
+<span class="n">mmlf</span><span class="o">.</span><span class="n">runExperiment</span><span class="p">(</span><span class="n">experimentConf</span><span class="p">)</span>
+
+<span class="c"># Give directories more meaningful names</span>
+<span class="k">for</span> <span class="n">worldName</span><span class="p">,</span> <span class="n">worldConf</span> <span class="ow">in</span> <span class="n">experimentConf</span><span class="p">[</span><span class="s">&quot;worlds&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="c"># Determine log directory into which the results of a specific world </span>
+    <span class="c"># have been stored. This is copy-pasted from world.py</span>
+    <span class="n">envConfig</span> <span class="o">=</span> <span class="n">worldConf</span><span class="p">[</span><span class="s">&#39;environment&#39;</span><span class="p">]</span>
+    <span class="n">agentConfig</span> <span class="o">=</span> <span class="n">worldConf</span><span class="p">[</span><span class="s">&#39;agent&#39;</span><span class="p">]</span>
+    <span class="n">confStr</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%s%s%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">envConfig</span><span class="p">[</span><span class="s">&quot;moduleName&quot;</span><span class="p">],</span>
+                             <span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">envConfig</span><span class="p">[</span><span class="s">&quot;configDict&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+                                        <span class="n">envConfig</span><span class="p">[</span><span class="s">&quot;configDict&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())),</span>
+                             <span class="n">agentConfig</span><span class="p">[</span><span class="s">&quot;moduleName&quot;</span><span class="p">],</span>
+                             <span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">agentConfig</span><span class="p">[</span><span class="s">&quot;configDict&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span>
+                                        <span class="n">agentConfig</span><span class="p">[</span><span class="s">&quot;configDict&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">())))</span>
+   
+    <span class="n">directoryName</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="nb">hash</span><span class="p">(</span><span class="n">confStr</span><span class="p">)))</span>
+    
+    <span class="c"># Rename directories</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">mmlf</span><span class="o">.</span><span class="n">getRWPath</span><span class="p">(),</span> <span class="s">&quot;logs&quot;</span><span class="p">,</span> <span class="n">worldConf</span><span class="p">[</span><span class="s">&#39;worldPackage&#39;</span><span class="p">],</span> <span class="n">directoryName</span><span class="p">]),</span>
+                <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">mmlf</span><span class="o">.</span><span class="n">getRWPath</span><span class="p">(),</span> <span class="s">&quot;logs&quot;</span><span class="p">,</span> <span class="n">worldConf</span><span class="p">[</span><span class="s">&#39;worldPackage&#39;</span><span class="p">],</span> <span class="n">worldName</span><span class="p">]))</span>
+</pre></div>
+</div>
+<p>You may execute this script with the following command (but be aware that this experiment may take some hours, in particular on slower machines):</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="n">python</span> <span class="n">scripted_experiment</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>Instead of executing the experiment, you can also download the results that have been obtained in one execution <a class="reference download internal" href="../_downloads/mountain_car.zip"><tt class="xref download docutils literal"><span class="pre">here</span></tt></a>. Now, you may load the results into the MMLF Experimenter (using &#8220;Load Experiment Results&#8221;) and analyze them.</p>
+<p>For instance, plotting the average performance of an agent after applying a moving window average of length 16:</p>
+<img alt="../_images/mcar_experiment_performance.png" src="../_images/mcar_experiment_performance.png" style="width: 500px;" />
+<p>Doing a statistical analysis of the results:</p>
+<img alt="../_images/mcar_experiment_statistical_analysis.png" src="../_images/mcar_experiment_statistical_analysis.png" style="width: 800px;" />
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="learn_more.html">Learn more about...</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="agents_and_environments.html">Existing Agents and Environments</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Experiments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#conducting-experiments">Conducting experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#evaluating-experiments">Evaluating experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scripting-experiments">Scripting experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_and_action_spaces.html">State and Action Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viewers.html">Viewers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="agents_and_environments.html"
+                        title="previous chapter">Existing Agents and Environments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="logging.html"
+                        title="next chapter">Logging</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/learn_more/evaluating_experiments.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="logging.html" title="Logging"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="agents_and_environments.html" title="Existing Agents and Environments"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" >Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

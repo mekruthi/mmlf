@@ -1,0 +1,294 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MMLF package interface &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="API-documentation" href="api_documentation.html" />
+    <link rel="next" title="Agents" href="agents.html" />
+    <link rel="prev" title="API-documentation" href="api_documentation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="agents.html" title="Agents"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api_documentation.html" title="API-documentation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="api_documentation.html" accesskey="U">API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-mmlf">
+<span id="id1"></span><span id="mmlf-package-interface"></span><h1>MMLF package interface<a class="headerlink" href="#module-mmlf" title="Permalink to this headline">¶</a></h1>
+<p>Maja Machine Learning Framework</p>
+<p>The Maja Machine Learning Framework (MMLF) is a general framework for 
+problems in the domain of Reinforcement Learning (RL). It provides a 
+set of RL related algorithms and a set of benchmark domains. 
+Furthermore it is easily extensible and allows to automate 
+benchmarking of different agents.</p>
+<p>Among the RL algorithms are TD(lambda), DYNA-TD, CMA-ES,
+Fitted R-Max, and Monte-Carlo learning. MMLF contains different 
+variants of the maze-world and pole-balancing problem class as 
+well as the mountain-car testbed.</p>
+<p>Further documentation is available under <a class="reference external" href="http://mmlf.sourceforge.net/">http://mmlf.sourceforge.net/</a></p>
+<p>Contact the mailing list <a class="reference external" href="mailto:MMLF-support&#37;&#52;&#48;lists&#46;sourceforge&#46;net">MMLF-support<span>&#64;</span>lists<span>&#46;</span>sourceforge<span>&#46;</span>net</a>
+if you have any questions.</p>
+<dl class="exception">
+<dt id="mmlf.RWAreaInitializationFailedException">
+<em class="property">exception </em><tt class="descclassname">mmlf.</tt><tt class="descname">RWAreaInitializationFailedException</tt><a class="headerlink" href="#mmlf.RWAreaInitializationFailedException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception raised if initialization of MMLF RW area failed.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mmlf.getRWPath">
+<tt class="descclassname">mmlf.</tt><tt class="descname">getRWPath</tt><big>(</big><big>)</big><a class="headerlink" href="#mmlf.getRWPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the path of the MMLF RW area to be used.</p>
+<p>This defaults to the path given by the environment variable $MMLF_RW_PATH
+if this variable exists. Otherwise, $HOME/.mmlf is used if the environment
+variable $HOME exists (typically under unix-like OS). Under Windows OS,
+$USERPROFILE/.mmlf is used instead. If None of these variable exists,
+an Exception of type RWAreaInitializationFailedException is raised.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mmlf.initializeRWArea">
+<tt class="descclassname">mmlf.</tt><tt class="descname">initializeRWArea</tt><big>(</big><em>rwPath=None</em><big>)</big><a class="headerlink" href="#mmlf.initializeRWArea" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the RW area.</p>
+<p>If <em>rwPath</em> is specified, the RW area located under that path is used.
+Otherwise, the standard RW area returned by <em>getRWPath()</em> is used.</p>
+<p>If the required RW area does not exist, it is automatically created under
+the specified path. If config files in the RW area are missing, they are
+automatically restored.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mmlf.loadExperimentConfig">
+<tt class="descclassname">mmlf.</tt><tt class="descname">loadExperimentConfig</tt><big>(</big><em>experimentPath</em><big>)</big><a class="headerlink" href="#mmlf.loadExperimentConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the specification of an MMLF experiment.</p>
+<p>Loads the specification of an MMLF experiment from the file
+<tt class="docutils literal"><span class="pre">experiment_config.yaml</span></tt> in <em>experimentPath</em>. Returns a dictionary 
+containing the experiment&#8217;s specification.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mmlf.loadWorld">
+<tt class="descclassname">mmlf.</tt><tt class="descname">loadWorld</tt><big>(</big><em>worldConfigObject</em>, <em>baseUserDir=None</em>, <em>useGUI=False</em>, <em>keepObservers=</em><span class="optional">[</span><span class="optional">]</span><big>)</big><a class="headerlink" href="#mmlf.loadWorld" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the world specified in the <em>worldConfigObject</em>.</p>
+<p><em>worldConfigObject</em> must be a dictionary defining the configuration of a world.
+This dictionary must have the following keys:</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">worldPackage:</th><td class="field-body">: The name of the subpackage of <tt class="docutils literal"><span class="pre">mmlf/world</span></tt> in which
+the world is located.</td>
+</tr>
+<tr class="field"><th class="field-name">environment:</th><td class="field-body">: Definition of the environment. Must be a dictionary with
+the keys &#8220;moduleName&#8221; (the python module in which the 
+environment is defined; looked up in the subdirectory
+<tt class="docutils literal"><span class="pre">environments</span></tt> of the world package) and &#8220;configDict&#8221;
+(the config dictionary of the environment, must have the 
+same key-values as the environment&#8217;s DEFAULT_CONFIG_DICT).</td>
+</tr>
+<tr class="field"><th class="field-name">agents:</th><td class="field-body">: Definition of the agent. Must be a dictionary with the keys 
+&#8220;moduleName&#8221; (the python module in which the agent is defined;
+looked up in <tt class="docutils literal"><span class="pre">mmlf/agents</span></tt> or in the subdirectory <tt class="docutils literal"><span class="pre">agents</span></tt>
+of the world package) and &#8220;configDict&#8221; (the config dictionary
+of the agent, must have the same key-values as the agent&#8217;s 
+DEFAULT_CONFIG_DICT).</td>
+</tr>
+<tr class="field"><th class="field-name">monitor:</th><td class="field-body">: The configuration dictionary of the MMLF monitor.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>You may take a look at the 
+<a class="reference internal" href="../learn_more/evaluating_experiments.html#scripted-experiments"><em>Learn more about Experiments/Scripting experiments</em></a>
+section of the MMLF documentation for an example.</p>
+<p><em>baseUserDir</em> must be a MMLF BaseUserDirectory object (which represent the
+MMLF RW area internally). If none, a new BaseUserDirectory object is created.</p>
+<p><em>useGUI</em> indicates whether we are running a graphical user interface. If True,
+this causes the agent and environment of the world to create Viewers (and
+thus requires that PyQt4 is installed).</p>
+<p>Per default, loadWorld() removes all existing observer objects since these 
+stem from prior runs. Of observables should be kept, these can be passed via 
+the parameter <em>keepObservers</em> (a list).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mmlf.loadWorldFromConfigFile">
+<tt class="descclassname">mmlf.</tt><tt class="descname">loadWorldFromConfigFile</tt><big>(</big><em>configPath</em>, <em>useGUI=False</em><big>)</big><a class="headerlink" href="#mmlf.loadWorldFromConfigFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the world specified in the <em>configPath</em>.</p>
+<p>This method loads the MMLF world specified in the YAML-file under
+<em>configPath</em>. <em>configPath</em> can either be a relative path (in which case
+it is looked up in the config directory of MMLF RW area or an absolute path.
+The created MMLF World object is returned.</p>
+<p><em>useGUI</em> indicates whether we are running a graphical user interface. If True,
+this causes the agent and environment of the world to create Viewers (and
+thus requires that PyQt4 is installed).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mmlf.runExperiment">
+<tt class="descclassname">mmlf.</tt><tt class="descname">runExperiment</tt><big>(</big><em>experimentConf</em><big>)</big><a class="headerlink" href="#mmlf.runExperiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the experiment specified in experimentConf.</p>
+<p><em>experimentConf</em> must be a dictionary defining the specification of the
+experiment. This dictionary must have the following keys:</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">concurrency:</th><td class="field-body">: &#8220;Concurrent&#8221; if several runs of the experiment should 
+be executed at the same time, &#8220;Sequential&#8221; if one run 
+after the other should be executed.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">parallelProcesses:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: If concurrent execution is requested, this parameter
+specifies how many runs can be run in parallel. This
+value is upper-bounded by the number of cores.</td>
+</tr>
+<tr class="field"><th class="field-name">episodesPerRun:</th><td class="field-body">: Integer defining how many episodes each run of a world
+should last.</td>
+</tr>
+<tr class="field"><th class="field-name">runsPerWorld:</th><td class="field-body">: How many independent runs should be executed for each world.</td>
+</tr>
+<tr class="field"><th class="field-name">worlds:</th><td class="field-body">: A dictionary mapping world name to a world configuration 
+dictionary. See <em>loadWorld</em> for more details about world
+configuration dictionaries.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>You may take a look at the 
+<a class="reference internal" href="../learn_more/evaluating_experiments.html#scripted-experiments"><em>Learn more about Experiments/Scripting experiments</em></a>
+section of the MMLF documentation for an example.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mmlf.setupConsoleLogging">
+<tt class="descclassname">mmlf.</tt><tt class="descname">setupConsoleLogging</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mmlf.setupConsoleLogging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the logging of messages to the console.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="mmlf.setupFileLogging">
+<tt class="descclassname">mmlf.</tt><tt class="descname">setupFileLogging</tt><big>(</big><em>logdir</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#mmlf.setupFileLogging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the logging of messages into a log file in <em>logdir</em>.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api_documentation.html">API-documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">MMLF package interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="observables.html">Observables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources/resources.html">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="framework/framework.html">Framework</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="api_documentation.html"
+                        title="previous chapter">API-documentation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="agents.html"
+                        title="next chapter">Agents</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api_documentation/0_mmlf_interface.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="agents.html" title="Agents"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="api_documentation.html" title="API-documentation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="api_documentation.html" >API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

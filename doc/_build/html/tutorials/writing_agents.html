@@ -1,0 +1,553 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Writing an agent &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Writing an environment" href="writing_environments.html" />
+    <link rel="prev" title="Quick start (graphical user interface)" href="quick_start_gui.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="writing_environments.html" title="Writing an environment"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="quick_start_gui.html" title="Quick start (graphical user interface)"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="writing-an-agent">
+<span id="writing-agents"></span><h1>Writing an agent<a class="headerlink" href="#writing-an-agent" title="Permalink to this headline">¶</a></h1>
+<p>This tuturial will explain how you can write your own learning agent for the MMLF.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Writing an agent is easier with a local installation of the MMLF (see <a class="reference internal" href="installation.html#installation"><em>Installation Tutorial</em></a>).</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Get an overview over the existing agents in <a class="reference internal" href="../learn_more/agents_and_environments.html#agent-list"><em>Existing agents</em></a></p>
+</div>
+<div class="section" id="learning-about-the-basic-structure-of-mmlf-agents">
+<h2>Learning about the basic structure of MMLF agents<a class="headerlink" href="#learning-about-the-basic-structure-of-mmlf-agents" title="Permalink to this headline">¶</a></h2>
+<p>For the start, please take a look into the agents subdirectory of the MMLF and open the random_agent.py in the python editor of your choice. The <a class="reference internal" href="#random-agent"><em>RandomAgent</em></a> is a quite simple and straightforward agent which demonstrates well the inner life of an agent (though an intelligent agent might choose his actions differently ;-)).</p>
+<dl class="docutils">
+<dt>What you can learn from the agent is the following:</dt>
+<dd><ul class="first last simple">
+<li>Each agent has to be a subclass of AgentBase</li>
+<li>Each agent class must have a static attribute DEFAULT_CONFIG_DICT, which contains the parameters that are available for customizing the agent&#8217;s behaviour and their default values.</li>
+<li>The __init__ method gets passed additional arguments (<tt class="docutils literal"><span class="pre">*args</span></tt>) and keyword arguments (<tt class="docutils literal"><span class="pre">**kwargs</span></tt>). These MUST be passed on to the superclass&#8217; constructor using <tt class="docutils literal"><span class="pre">super(RandomAgent,</span> <span class="pre">self).__init__(*args,</span> <span class="pre">**kwargs)</span></tt></li>
+<li>Each agent must have an AgentInfo attribute that specifies in which kinds of environments it can be used, which communication protocol it supports etc.</li>
+<li>The setStateSpace(self, stateSpace) method is called to inform the agent about the structure of the <a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-spaces"><em>state space</em></a>. A default implementation of this method is contained in the AgentBase class; if this implementation is sufficient the method need not be implemented again.</li>
+<li>The setActionSpace(self, actionSpace) method is called to inform the agent about the structure of the <a class="reference internal" href="../learn_more/state_and_action_spaces.html#action-spaces"><em>action space</em></a>. A default implementation of this method is contained in the AgentBase class; if this implementation is sufficient the method need not be implemented again.</li>
+<li>The setState(self, state) method is called to inform the agent about the current state of the environment. To correctly interpret the state, the agent has to use the definition of the <a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-spaces"><em>state space</em></a>.</li>
+<li>The getAction(self) method is called to ask the agent for the action he wants to perform. The agent should store its decision in a dictionary which maps action dimension name to the chosen value for this dimension. For instance: {&#8220;gasPedalForce&#8221;: &#8220;extreme&#8221;, &#8220;steeringWheelAngle&#8221;: 30} (see page <a class="reference internal" href="../learn_more/state_and_action_spaces.html#action-spaces"><em>action space</em></a>). This action dictionary must be converted to an ActionTaken object via the method _generateActionObject(actionDictionary) of AgentBase.</li>
+<li>The giveReward(self, reward) method is called to reward the agent for its last action(s). The passed reward is a float value. The agent can treat this reward in different ways, e.g. accumulate it, use it directly for policy optimization etc.</li>
+<li>The nextEpisodeStarted(self) method is called whenever one epsiode is over and the next one is started, i.e. when the environment is reset. In this method, you should finish all calculations which make only sense during one episode (such as accumulating the reward obtained during one episode).</li>
+<li>In each agent module, the module-level attribute AgentClass needs set to the class that inherits from AgentBase. This assignment is located usually at the end of the module: AgentClass = RandomAgent</li>
+<li>Furthermore, the module-level attribute AgentName should be set to the name of the agent, e.g. AgentName = &#8220;Random&#8221;. This name is used for instance in the GUI.</li>
+<li>The agent can send messages to the logger by calling &#8220;self.agentLog.info(message)&#8221;</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="writing-a-new-mmlf-agent">
+<h2>Writing a new MMLF agent<a class="headerlink" href="#writing-a-new-mmlf-agent" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s write a new agent. This agent should execute actions independent of the state in a round-robin like manner, i.e. when there are three available actions a1, a2, a3, the agent should choose actions in this sequence: a1,a2,a3,a1,a2,a3,... Obviously this is not a very clever approach, but for the tutorial it should suffice.</p>
+<dl class="docutils">
+<dt>In order to implement a new agent that chooses actions in a round-robin like manner, you have to do the following:</dt>
+<dd><ol class="first last arabic">
+<li><p class="first">Go into the agents subdirectory of the MMLF and create a copy of the random_agent.py (let&#8217;s call this copy example_agent.py).</p>
+</li>
+<li><p class="first">Open example_agent.py and rename the agent class from RandomAgent to ExampleAgent. Replace every occurrence of RandomAgent by ExampleAgent.</p>
+</li>
+<li><p class="first">Set &#8220;DEFAULT_CONFIG_DICT = {}&#8221;, since the agent does not have any configuration options.</p>
+</li>
+<li><p class="first">Set &#8220;continuousAction = False&#8221;, since the round-robin action selection is only possible for a finite (non-continuous) action set.</p>
+</li>
+<li><p class="first">Add the following lines add the end of &#8220;setActionSpace&#8221;:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># We can only deal with one-dimensional action spaces</span>
+<span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span><span class="o">.</span><span class="n">getNumberOfDimensions</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+<span class="c"># Get a list of all actions this agent might take</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span><span class="o">.</span><span class="n">getActionList</span><span class="p">()</span>
+<span class="c"># Get name of action dimension</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">actionDimensionName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span><span class="o">.</span><span class="n">getDimensionNames</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="c"># Create an iterator that iterates in a round-robin manner over available actions</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">nextActionIterator</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s">&quot;itertools&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Reimplement the method &#8220;getAction()&#8221; as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">getAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Request the next action the agent want to execute &quot;&quot;&quot;</span>
+    <span class="c"># Get next action  from iterator</span>
+    <span class="c"># We are only interested in the value of the first (and only) dimension,</span>
+    <span class="c"># thus the &quot;0&quot;</span>
+    <span class="n">nextAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nextActionIterator</span><span class="o">.</span><span class="n">next</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c"># Create a dictionary that maps dimension name to chosen action</span>
+    <span class="n">actionDictionary</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">actionDimensionName</span> <span class="p">:</span> <span class="n">nextAction</span><span class="p">}</span>
+    <span class="c"># Generate mmlf.framework.protocol.ActionTaken object</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generateActionObject</span><span class="p">(</span><span class="n">actionDictionary</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Remove superfluous methods &#8220;setStateSpace()&#8221;, &#8220;setState()&#8221;, &#8220;giveReward&#8221;, and &#8220;nextEpisodeStarted()&#8221;. They can use the default implementation of the AgentBase class</p>
+</li>
+<li><p class="first">Set thet AgentClass module attribute appropriately: &#8220;AgentClass = ExampleAgent&#8221;</p>
+</li>
+<li><p class="first">Set the AgentName to something meaningful: &#8220;AgentName = &#8220;RoundRobin&#8221;&#8220;</p>
+</li>
+<li><p class="first">Do not forget to update the comments and the documentation of your new module!</p>
+</li>
+</ol>
+</dd>
+</dl>
+<p>That&#8217;s it! Your agent module should now look like shown <a class="reference internal" href="#example-agent"><em>here</em></a>. You can test it in the GUI by selecting &#8220;RoundRobin&#8221; as agent.</p>
+</div>
+<div class="section" id="randomagent">
+<span id="random-agent"></span><h2>RandomAgent<a class="headerlink" href="#randomagent" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Maja Machine Learning Framework</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published</span>
+<span class="c"># by the Free Software Foundation; either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+
+<span class="c"># This program is distributed in the hope that it will be useful, but</span>
+<span class="c"># WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program; if not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="c"># Author: Jan Hendrik Metzen  (jhm@informatik.uni-bremen.de)</span>
+<span class="c"># Created: 2007/07/23</span>
+
+<span class="sd">&quot;&quot;&quot; MMLF agent that acts randomly</span>
+
+<span class="sd">This module defines a simple agent that can interact with an environment.</span>
+<span class="sd">It chooses all available actions with the same probability.</span>
+
+<span class="sd">This module deals also as an example of how to implement an MMLF agent.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;Jan Hendrik Metzen&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011, University Bremen, AG Robotics&quot;</span>
+<span class="n">__credits__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Mark Edgington&#39;</span><span class="p">]</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s">&quot;GPLv3&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;1.0&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s">&quot;Jan Hendrik Metzen&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s">&quot;jhm@informatik.uni-bremen.de&quot;</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">import</span> <span class="nn">mmlf.framework.protocol</span>
+
+<span class="kn">from</span> <span class="nn">mmlf.agents.agent_base</span> <span class="kn">import</span> <span class="n">AgentBase</span>
+
+<span class="c"># Each agent has to inherit directly or indirectly from AgentBase</span>
+<span class="k">class</span> <span class="nc">RandomAgent</span><span class="p">(</span><span class="n">AgentBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Agent that chooses uniformly randomly among the available actions. &quot;&quot;&quot;</span>
+    
+    <span class="c"># Add default configuration for this agent to this static dict</span>
+    <span class="c"># This specific parameter controls after how many steps we send information </span>
+    <span class="c"># regarding the accumulated reward to the logger.</span>
+    <span class="n">DEFAULT_CONFIG_DICT</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Reward_log_frequency&#39;</span> <span class="p">:</span> <span class="mi">100</span><span class="p">}</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c"># Create the agent info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agentInfo</span> <span class="o">=</span> \
+            <span class="n">mmlf</span><span class="o">.</span><span class="n">framework</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">AgentInfo</span><span class="p">(</span><span class="c"># Which communication protocol </span>
+                                                 <span class="c"># version can the agent handle?</span>
+                                                 <span class="n">versionNumber</span> <span class="o">=</span> <span class="s">&quot;0.3&quot;</span><span class="p">,</span>
+                                                 <span class="c"># Name of the agent (can be </span>
+                                                 <span class="c"># chosen arbitrarily) </span>
+                                                 <span class="n">agentName</span><span class="o">=</span> <span class="s">&quot;Random&quot;</span><span class="p">,</span> 
+                                                 <span class="c"># Can the agent be used in </span>
+                                                 <span class="c"># environments with continuous</span>
+                                                 <span class="c"># state spaces?</span>
+                                                 <span class="n">continuousState</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                                 <span class="c"># Can the agent be used in </span>
+                                                 <span class="c"># environments with continuous</span>
+                                                 <span class="c"># action spaces?</span>
+                                                 <span class="n">continuousAction</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                                 <span class="c"># Can the agent be used in </span>
+                                                 <span class="c"># environments with discrete</span>
+                                                 <span class="c"># action spaces?</span>
+                                                 <span class="n">discreteAction</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                                 <span class="c"># Can the agent be used in</span>
+                                                 <span class="c"># non-episodic environments</span>
+                                                 <span class="n">nonEpisodicCapable</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+    
+        <span class="c"># Calls constructor of base class</span>
+        <span class="c"># After this call, the agent has an attribute &quot;self.configDict&quot;,</span>
+        <span class="c"># The values of this dict are evaluated, i.e. instead of &#39;100&#39; (string),</span>
+        <span class="c"># the key &#39;Reward log frequency&#39; will have the same value 100 (int).</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RandomAgent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="c"># The superclass AgentBase implements the methods setStateSpace() and</span>
+        <span class="c"># setActionSpace() which set the attributes stateSpace and actionSpace</span>
+        <span class="c"># They can be overwritten if the agent has to modify these spaces</span>
+        <span class="c"># for some reason</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stateSpace</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="c"># The agent keeps track of all rewards it obtained in an episode</span>
+        <span class="c"># The rewardDict implements a mapping from the episode index to a list</span>
+        <span class="c"># of all rewards it obtained in this episode</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rewardDict</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="c">######################  BEGIN COMMAND-HANDLING METHODS ###############################</span>
+    
+    <span class="k">def</span> <span class="nf">setStateSpace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stateSpace</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Informs the agent about the state space of the environment</span>
+<span class="sd">        </span>
+<span class="sd">        More information about state spaces can be found in </span>
+<span class="sd">        :ref:`state_and_action_spaces`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># We delegate to the superclass, which does the following:</span>
+        <span class="c"># self.stateSpace = stateSpace</span>
+        <span class="c"># We need not implement this method for this, but it is given in order</span>
+        <span class="c"># to show what is going on...</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RandomAgent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setStateSpace</span><span class="p">(</span><span class="n">stateSpace</span><span class="p">)</span> 
+
+        
+    <span class="k">def</span> <span class="nf">setActionSpace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actionSpace</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Informs the agent about the action space of the environment</span>
+<span class="sd">        </span>
+<span class="sd">        More information about action spaces can be found in </span>
+<span class="sd">        :ref:`state_and_action_spaces`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># We delegate to the superclass, which does the following:</span>
+        <span class="c"># self.actionSpace = actionSpace</span>
+        <span class="c"># We need not implement this method for this, but it is given in order</span>
+        <span class="c"># to show what is going on...</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RandomAgent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setActionSpace</span><span class="p">(</span><span class="n">actionSpace</span><span class="p">)</span> 
+    
+    <span class="k">def</span> <span class="nf">setState</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Informs the agent of the environment&#39;s current state </span>
+<span class="sd">        </span>
+<span class="sd">        More information about (valid) states can be found in </span>
+<span class="sd">        :ref:`state_and_action_spaces`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># We delegate to the superclass, which does the following:</span>
+        <span class="c">#     self.state = self.stateSpace.parseStateDict(state) # Parse state dict</span>
+        <span class="c">#     self.state.scale(0, 1) # Scale state such that each dimension falls into the bin (0,1)</span>
+        <span class="c">#     self.stepCounter += 1 # Count how many steps have passed</span>
+        
+        <span class="c"># We need not implement this method for this, but it is given in order</span>
+        <span class="c"># to show what is going on...</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RandomAgent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setState</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+
+        
+    <span class="k">def</span> <span class="nf">getAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Request the next action the agent want to execute &quot;&quot;&quot;</span>
+        <span class="c"># Each action of the agent corresponds to one step</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_chooseRandomAction</span><span class="p">()</span>
+        
+        <span class="c"># Call super class method since this updates some internal information</span>
+        <span class="c"># (self.lastState, self.lastAction, self.reward, self.state, self.action)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RandomAgent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getAction</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="n">action</span>
+    
+    <span class="k">def</span> <span class="nf">giveReward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reward</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Provides a reward to the agent &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rewardDict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">episodeCounter</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reward</span><span class="p">)</span> <span class="c"># remember reward</span>
+        <span class="c"># Send message about the accumulated reward every </span>
+        <span class="c"># self.configDict[&#39;Reward log frequency&#39;] episodes to logger </span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepCounter</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">configDict</span><span class="p">[</span><span class="s">&#39;Reward_log_frequency&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">agentLog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Reward accumulated after </span><span class="si">%s</span><span class="s"> steps in episode </span><span class="si">%s</span><span class="s">: </span><span class="si">%s</span><span class="s">&quot;</span> 
+                                <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stepCounter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">episodeCounter</span><span class="p">,</span>
+                                   <span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rewardDict</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">episodeCounter</span><span class="p">])))</span>
+        
+    <span class="k">def</span> <span class="nf">nextEpisodeStarted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Informs the agent that a new episode has started.&quot;&quot;&quot;</span>
+        <span class="c"># We delegate to the superclass, which does the following:</span>
+        <span class="c">#     self.episodeCounter += 1</span>
+        <span class="c">#     self.stepCounter = 0</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RandomAgent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">nextEpisodeStarted</span><span class="p">()</span>
+    
+    <span class="c">########################  END COMMAND-HANDLING METHODS ###############################</span>
+    
+    <span class="k">def</span> <span class="nf">_chooseRandomAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;Chooses an action randomly from the action space&quot;</span>
+        
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span><span class="p">,</span> <span class="s">&quot;Error: Action requested before actionSpace &quot;</span>\
+                                 <span class="s">&quot;was specified&quot;</span>
+        
+        <span class="c"># We sample a random action from the action space</span>
+        <span class="c"># This returns a dictionary with a mapping from action dimension name</span>
+        <span class="c"># to the sample value.</span>
+        <span class="c"># For instance: {&quot;gasPedalForce&quot;: &quot;extreme&quot;, &quot;steeringWheelAngle&quot;: 30}</span>
+        <span class="n">actionDictionary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span><span class="o">.</span><span class="n">sampleRandomAction</span><span class="p">()</span>
+
+        <span class="c"># The action dictionary has to be converted into an</span>
+        <span class="c"># mmlf.framework.protocol.ActionTaken object.</span>
+        <span class="c"># This is done using the _generateActionObject method</span>
+        <span class="c"># of the superclass</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generateActionObject</span><span class="p">(</span><span class="n">actionDictionary</span><span class="p">)</span>
+
+<span class="c"># Each module that implements an agent must have a module-level attribute </span>
+<span class="c"># &quot;AgentClass&quot; that is set to the class that inherits from Agentbase</span>
+<span class="n">AgentClass</span> <span class="o">=</span> <span class="n">RandomAgent</span>
+<span class="c"># Furthermore, the name of the agent has to be assigned to &quot;AgentName&quot;. This </span>
+<span class="c"># name is used in the GUI. </span>
+<span class="n">AgentName</span> <span class="o">=</span> <span class="s">&quot;Random&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exampleagent">
+<span id="example-agent"></span><h2>ExampleAgent<a class="headerlink" href="#exampleagent" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Maja Machine Learning Framework</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published</span>
+<span class="c"># by the Free Software Foundation; either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+
+<span class="c"># This program is distributed in the hope that it will be useful, but</span>
+<span class="c"># WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program; if not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="c"># Author: Jan Hendrik Metzen  (jhm@informatik.uni-bremen.de)</span>
+<span class="c"># Created: 2007/07/23</span>
+
+<span class="sd">&quot;&quot;&quot; MMLF agent that chooses actions in a round-robin manner.</span>
+
+<span class="sd">This agent&#39;s sole purpose is to give an example of how to write an agent.</span>
+<span class="sd">It should not be used for any actual learning.  </span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;Jan Hendrik Metzen&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011, University Bremen, AG Robotics&quot;</span>
+<span class="n">__credits__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Mark Edgington&#39;</span><span class="p">]</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s">&quot;GPLv3&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;1.0&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s">&quot;Jan Hendrik Metzen&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s">&quot;jhm@informatik.uni-bremen.de&quot;</span>
+
+
+<span class="kn">import</span> <span class="nn">mmlf.framework.protocol</span>
+
+<span class="kn">from</span> <span class="nn">mmlf.agents.agent_base</span> <span class="kn">import</span> <span class="n">AgentBase</span>
+
+<span class="c"># Each agent has to inherit directly or indirectly from AgentBase</span>
+<span class="k">class</span> <span class="nc">ExampleAgent</span><span class="p">(</span><span class="n">AgentBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; MMLF agent that chooses actions in a round-robin manner. &quot;&quot;&quot;</span>
+
+    <span class="n">DEFAULT_CONFIG_DICT</span> <span class="o">=</span> <span class="p">{}</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="c"># Create the agent info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">agentInfo</span> <span class="o">=</span> \
+            <span class="n">mmlf</span><span class="o">.</span><span class="n">framework</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">AgentInfo</span><span class="p">(</span><span class="c"># Which communication protocol </span>
+                                                 <span class="c"># version can the agent handle?</span>
+                                                 <span class="n">versionNumber</span> <span class="o">=</span> <span class="s">&quot;0.3&quot;</span><span class="p">,</span>
+                                                 <span class="c"># Name of the agent (can be </span>
+                                                 <span class="c"># chosen arbitrarily) </span>
+                                                 <span class="n">agentName</span><span class="o">=</span> <span class="s">&quot;Round Robin&quot;</span><span class="p">,</span> 
+                                                 <span class="c"># Can the agent be used in </span>
+                                                 <span class="c"># environment with contiuous</span>
+                                                 <span class="c"># state spaces?</span>
+                                                 <span class="n">continuousState</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                                 <span class="c"># Can the agent be used in </span>
+                                                 <span class="c"># environment with continuous</span>
+                                                 <span class="c"># action spaces?</span>
+                                                 <span class="n">continuousAction</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                                 <span class="c"># Can the agent be used in </span>
+                                                 <span class="c"># environment with discrete</span>
+                                                 <span class="c"># action spaces?</span>
+                                                 <span class="n">discreteAction</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+                                                 <span class="c"># Can the agent be used in</span>
+                                                 <span class="c"># non-episodic environments</span>
+                                                 <span class="n">nonEpisodicCapable</span> <span class="o">=</span> <span class="bp">True</span><span class="p">)</span>
+    
+        <span class="c"># Calls constructor of base class</span>
+        <span class="c"># After this call, the agent has an attribute &quot;self.configDict&quot;,</span>
+        <span class="c"># that contains the information from config[&#39;configDict&#39;].</span>
+        <span class="c"># The values of this dict are evaluated, i.e. instead of &#39;100&#39; (string),</span>
+        <span class="c"># the key &#39;Reward log frequency&#39; will have the same value 100 (int).</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleAgent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        
+        <span class="c"># The superclass AgentBase implements the methods setStateSpace() and</span>
+        <span class="c"># setActionSpace() which set the attributes stateSpace and actionSpace</span>
+        <span class="c"># They can be overwritten if the agent has to modify these spaces</span>
+        <span class="c"># for some reason</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stateSpace</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="c"># The agent keeps track of the sum of all rewards it obtained</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rewardValue</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="c">######################  BEGIN COMMAND-HANDLING METHODS ###############################</span>
+            
+    <span class="k">def</span> <span class="nf">setActionSpace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actionSpace</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Informs the agent about the action space of the environment</span>
+<span class="sd">        </span>
+<span class="sd">        More information about action spaces can be found in </span>
+<span class="sd">        :ref:`state_and_action_spaces`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleAgent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">setActionSpace</span><span class="p">(</span><span class="n">actionSpace</span><span class="p">)</span>
+        
+        <span class="c"># We can only deal with one-dimensional action spaces</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span><span class="o">.</span><span class="n">getNumberOfDimensions</span><span class="p">()</span> <span class="o">==</span> <span class="mi">1</span>
+        
+        <span class="c"># Get a list of all actions this agent might take</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span><span class="o">.</span><span class="n">getActionList</span><span class="p">()</span>
+        <span class="c"># Get name of action dimension</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionDimensionName</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span><span class="o">.</span><span class="n">getDimensionNames</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c"># Create an iterator that iterates in a round-robin manner over available actions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nextActionIterator</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s">&quot;itertools&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">cycle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actions</span><span class="p">)</span>        
+        
+    <span class="k">def</span> <span class="nf">getAction</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Request the next action the agent want to execute &quot;&quot;&quot;</span>
+        <span class="c"># Get next action  from iterator</span>
+        <span class="c"># We are only interested in the value of the first (and only) dimension,</span>
+        <span class="c"># thus the &quot;0&quot;</span>
+        <span class="n">nextAction</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nextActionIterator</span><span class="o">.</span><span class="n">next</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> 
+        <span class="c"># Create a dictionary that maps dimension name to chosen action</span>
+        <span class="n">actionDictionary</span> <span class="o">=</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">actionDimensionName</span> <span class="p">:</span> <span class="n">nextAction</span><span class="p">}</span>
+        
+        <span class="c"># Call super class method since this updates some internal information</span>
+        <span class="c"># (self.lastState, self.lastAction, self.reward, self.state, self.action)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleAgent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">getAction</span><span class="p">()</span>
+        
+        <span class="c"># Generate mmlf.framework.protocol.ActionTaken object</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generateActionObject</span><span class="p">(</span><span class="n">actionDictionary</span><span class="p">)</span>
+    
+<span class="c"># Each module that implements an agent must have a module-level attribute </span>
+<span class="c"># &quot;AgentClass&quot; that is set to the class that implements the AgentBase superclass</span>
+<span class="n">AgentClass</span> <span class="o">=</span> <span class="n">ExampleAgent</span>
+<span class="c"># Furthermore, the name of the agent has to be assigned to &quot;AgentName&quot;. This </span>
+<span class="c"># name is used in the GUI. </span>
+<span class="n">AgentName</span> <span class="o">=</span> <span class="s">&quot;RoundRobin&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html">Quick start (command line interface)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start_gui.html">Quick start (graphical user interface)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Writing an agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#learning-about-the-basic-structure-of-mmlf-agents">Learning about the basic structure of MMLF agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-a-new-mmlf-agent">Writing a new MMLF agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#randomagent">RandomAgent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exampleagent">ExampleAgent</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="writing_environments.html">Writing an environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="quick_start_gui.html"
+                        title="previous chapter">Quick start (graphical user interface)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="writing_environments.html"
+                        title="next chapter">Writing an environment</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorials/writing_agents.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="writing_environments.html" title="Writing an environment"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="quick_start_gui.html" title="Quick start (graphical user interface)"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

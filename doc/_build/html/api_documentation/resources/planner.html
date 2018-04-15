@@ -1,0 +1,396 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Planner &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Resources" href="resources.html" />
+    <link rel="next" title="Policies" href="policies.html" />
+    <link rel="prev" title="Optimization" href="optimization.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="policies.html" title="Policies"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="optimization.html" title="Optimization"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" >API-documentation</a> &raquo;</li>
+          <li><a href="resources.html" accesskey="U">Resources</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-resources.planner.planner">
+<span id="planner"></span><h1>Planner<a class="headerlink" href="#module-resources.planner.planner" title="Permalink to this headline">¶</a></h1>
+<p>Abstract base class for planners</p>
+<p>This module contains the abstract base class &#8220;Planner&#8221; for planning algorithms,
+i.e. algorithms for computing the optimal state-action value
+function (and thus the optimal policy) for a given model (i.e. state transition
+and expected reward function). Subclasses of Planner must implement the
+&#8220;plan&#8221; method.</p>
+<dl class="class">
+<dt id="resources.planner.planner.Planner">
+<em class="property">class </em><tt class="descclassname">resources.planner.planner.</tt><tt class="descname">Planner</tt><big>(</big><em>stateSpace</em>, <em>functionApproximator</em>, <em>gamma</em>, <em>actions</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.planner.planner.Planner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abstract base class for planners</p>
+<p>This module contains the abstract base class &#8220;Planner&#8221; for planning 
+algorithms, i.e. algorithms for computing the optimal state-action value
+function (and thus the optimal policy) for a given model (i.e. state 
+transition and expected reward function). Subclasses of Planner must 
+implement the &#8220;plan&#8221; method.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.9.</span></p>
+<dl class="staticmethod">
+<dt id="resources.planner.planner.Planner.create">
+<em class="property">static </em><tt class="descname">create</tt><big>(</big><em>plannerSpec</em>, <em>stateSpace</em>, <em>functionApproximator</em>, <em>gamma</em>, <em>actions</em>, <em>epsilon=0.0</em><big>)</big><a class="headerlink" href="#resources.planner.planner.Planner.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory method that creates planner based on spec-dictionary.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="resources.planner.planner.Planner.getPlannerDict">
+<em class="property">static </em><tt class="descname">getPlannerDict</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.planner.planner.Planner.getPlannerDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns dict that contains a mapping from planner name to planner class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.planner.planner.Planner.setStates">
+<tt class="descname">setStates</tt><big>(</big><em>states</em><big>)</big><a class="headerlink" href="#resources.planner.planner.Planner.setStates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the discrete <em>states</em> on which dynamic programming is performed.</p>
+<p>Remove Q-Values of state-action pairs that are no longer required.
+NOTE: Setting states is only meaningful for discrete state sets,</p>
+<blockquote>
+<div>where the TabularStorage function approximator is used.</div></blockquote>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="module-resources.planner.mbdps_planner">
+<span id="mbdps-planner"></span><h2>MBDPS Planner<a class="headerlink" href="#module-resources.planner.mbdps_planner" title="Permalink to this headline">¶</a></h2>
+<p>A planner module which is used in the MBDPS agent.</p>
+<dl class="class">
+<dt id="resources.planner.mbdps_planner.MBDPSPlanner">
+<em class="property">class </em><tt class="descclassname">resources.planner.mbdps_planner.</tt><tt class="descname">MBDPSPlanner</tt><big>(</big><em>gamma</em>, <em>planningEpisodes</em>, <em>evalsPerIndividual</em>, <em>fitnessFunction=&lt;function estimatePolicyOutcome at 0x5488aa0&gt;</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.planner.mbdps_planner.MBDPSPlanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>A planner module which is used in the MBDPS agent.</p>
+<p>The planner uses a policy search method to search in the space of policies.
+Policies are evaluated based on the return the achieve in trajectory sampled
+from a supplied model. A policy&#8217;s fitness is set to the average return it
+obtains in several episodes starting from potentially different start states.</p>
+<dl class="docutils">
+<dt>Parameters:</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt><em>fitnessFunction</em> The fitness function used to evaluate the policy.</dt>
+<dd><p class="first last">Defaults to the module&#8217;s function <em>estimatePolicyOutcome</em>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.9.</span></p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">gamma:</th><td class="field-body">: The discounting factor.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">planningEpisodes:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The number of simulated episodes that can be conducted before the planning is stopped.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">evalsPerIndividual:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The number episodes each policy is evaluated.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-resources.planner.prioritized_sweeping">
+<span id="prioritized-sweeping"></span><h2>Prioritized sweeping<a class="headerlink" href="#module-resources.planner.prioritized_sweeping" title="Permalink to this headline">¶</a></h2>
+<p>Planning based on prioritized sweeping.</p>
+<dl class="class">
+<dt id="resources.planner.prioritized_sweeping.PrioritizedSweepingPlanner">
+<em class="property">class </em><tt class="descclassname">resources.planner.prioritized_sweeping.</tt><tt class="descname">PrioritizedSweepingPlanner</tt><big>(</big><em>stateSpace</em>, <em>functionApproximator</em>, <em>gamma</em>, <em>actions</em>, <em>epsilon</em>, <em>minSweepDelta</em>, <em>updatesPerStep</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.planner.prioritized_sweeping.PrioritizedSweepingPlanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Planning based on prioritized sweeping</p>
+<p>A planner based on the prioritized sweeping algorithm that
+allows to compute the optimal state-action value
+function (and thus the optimal policy) for a given distribution model (i.e. 
+state transition and expected reward function). It is assumed that the MDP is 
+finite and that the available actions are defined explicitly.</p>
+<dl class="docutils">
+<dt>The following parameters must be passed to the constructor:</dt>
+<dd><ul class="first last">
+<li><p class="first"><em>stateSpace</em> The state space of the agent (must be finite)</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>functionApproximator</em> The function approximator which handles storing</dt>
+<dd><p class="first last">the Q-Function</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><em>gamma</em> The discount factor of the MDP</p>
+</li>
+<li><p class="first"><em>actions</em> The actions available to the agent</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.9.</span></p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">minSweepDelta:</th><td class="field-body">: The minimal TD error that is applied during prioritized sweeping. If no change larger than minSweepDelta remains, the sweep is stopped.</td>
+</tr>
+<tr class="field"><th class="field-name">updatesPerStep:</th><td class="field-body">: The maximal number of updates that can be performed in one sweep.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-resources.planner.trajectory_sampling">
+<span id="trajectory-sampling"></span><h2>Trajectory sampling<a class="headerlink" href="#module-resources.planner.trajectory_sampling" title="Permalink to this headline">¶</a></h2>
+<p>Planning based on trajectory sampling.</p>
+<p>This module contains a planner based on the trajectory sampling algorithm that
+allows to compute  an improved state-action value function (and thus policy) 
+for a given sample model. The MDP&#8217;s state space need not be discrete and finite
+but it is assumed that there is only a finite number of actions that are 
+defined explicitly.</p>
+<dl class="class">
+<dt id="resources.planner.trajectory_sampling.TrajectorySamplingPlanner">
+<em class="property">class </em><tt class="descclassname">resources.planner.trajectory_sampling.</tt><tt class="descname">TrajectorySamplingPlanner</tt><big>(</big><em>stateSpace</em>, <em>functionApproximator</em>, <em>gamma</em>, <em>actions</em>, <em>epsilon</em>, <em>maxTrajectoryLength</em>, <em>updatesPerStep</em>, <em>onPolicy</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.planner.trajectory_sampling.TrajectorySamplingPlanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Planning based on trajectory sampling.</p>
+<p>A planner based on the trajectory sampling algorithm that allows to compute 
+an improved state-action value function (and thus policy) for a given sample
+model. The MDP&#8217;s state space need not be discrete and finite
+but it is assumed that there is only a finite number of actions that are 
+defined explicitly.</p>
+<dl class="docutils">
+<dt>The following parameters must be passed to the constructor:</dt>
+<dd><ul class="first last">
+<li><p class="first"><em>stateSpace</em> The state space of the agent</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>functionApproximator</em> The function approximator which handles storing</dt>
+<dd><p class="first last">the Q-Function</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><em>gamma</em> The discount factor of the MDP</p>
+</li>
+<li><p class="first"><em>actions</em> The actions available to the agent</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.9.</span></p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">maxTrajectoryLength:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The maximal length of a trajectory before a new trajectory is started.</td>
+</tr>
+<tr class="field"><th class="field-name">updatesPerStep:</th><td class="field-body">: The maximal number of updates that can be performed in one planning call.</td>
+</tr>
+<tr class="field"><th class="field-name">onPolicy:</th><td class="field-body">: Whether the trajectory is sampled from the on-policy distribution.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-resources.planner.value_iteration">
+<span id="value-iteration"></span><h2>Value iteration<a class="headerlink" href="#module-resources.planner.value_iteration" title="Permalink to this headline">¶</a></h2>
+<p>Planning based on value iteration</p>
+<p>This module contains a planner based on the value iteration algorithm that
+allows to compute the optimal state-action value
+function (and thus the optimal policy) for a given distribution model (i.e. 
+state transition and expected reward function). It is assumed that the MDP is 
+finite and that the available actions are defined explicitly.</p>
+<dl class="class">
+<dt id="resources.planner.value_iteration.ValueIterationPlanner">
+<em class="property">class </em><tt class="descclassname">resources.planner.value_iteration.</tt><tt class="descname">ValueIterationPlanner</tt><big>(</big><em>stateSpace</em>, <em>functionApproximator</em>, <em>gamma</em>, <em>actions</em>, <em>epsilon</em>, <em>minimalBellmanError</em>, <em>maxIterations</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.planner.value_iteration.ValueIterationPlanner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Planning based on value iteration</p>
+<p>This module contains a planner based on the value iteration algorithm that
+allows to compute the optimal state-action value
+function (and thus the optimal policy) for a given distribution model (i.e. 
+state transition and expected reward function). It is assumed that the MDP is 
+finite and that the available actions are defined explicitly.</p>
+<dl class="docutils">
+<dt>The following parameters must be passed to the constructor:</dt>
+<dd><ul class="first last">
+<li><p class="first"><em>stateSpace</em> The state space of the agent (must be finite)</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>functionApproximator</em> The function approximator which handles storing</dt>
+<dd><p class="first last">the Q-Function</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><em>gamma</em> The discount factor of the MDP</p>
+</li>
+<li><p class="first"><em>actions</em> The actions available to the agent</p>
+</li>
+</ul>
+</dd>
+</dl>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.9.</span></p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">minimalBellmanError:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The minimal bellman error (sum of TD errors over all state-action pairs) that enforces another iteration. If the bellman error falls below this threshold, value iteration is stopped.</td>
+</tr>
+<tr class="field"><th class="field-name">maxIterations:</th><td class="field-body">: The maximum number of iterations before value iteration is stopped.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api_documentation.html">API-documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../0_mmlf_interface.html">MMLF package interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../agents.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../observables.html">Observables</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="resources.html">Resources</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="function_approximators.html">Function Approximators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learning_algorithms.html">Learning Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="policies.html">Policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="policy_search.html">Policy Search Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skill_discovery.html">Skill Discovery</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../framework/framework.html">Framework</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="optimization.html"
+                        title="previous chapter">Optimization</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="policies.html"
+                        title="next chapter">Policies</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/api_documentation/resources/planner.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="policies.html" title="Policies"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="optimization.html" title="Optimization"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" >API-documentation</a> &raquo;</li>
+          <li><a href="resources.html" >Resources</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

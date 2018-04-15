@@ -1,0 +1,832 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Environments &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="API-documentation" href="api_documentation.html" />
+    <link rel="next" title="Observables" href="observables.html" />
+    <link rel="prev" title="Agents" href="agents.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="observables.html" title="Observables"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="agents.html" title="Agents"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="api_documentation.html" accesskey="U">API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-worlds">
+<span id="environments"></span><h1>Environments<a class="headerlink" href="#module-worlds" title="Permalink to this headline">¶</a></h1>
+<p>Package that contains all available MMLF world environments.</p>
+<dl class="docutils">
+<dt>A list of all environments:</dt>
+<dd><ul class="first last">
+<li><p class="first">Environment &#8216;<em>Maze Cliff</em>&#8216; from module maze_cliff_environment
+implemented in class MazeCliffEnvironment.</p>
+<blockquote>
+<div><p>In this maze, there are two alternative ways from the start to the goal 
+state: one short way which leads along a dangerous cliff and one long 
+but secure way. If the agent happens to step into the maze, it will
+get a huge negative reward (configurable via <em>cliffPenalty</em>) and is reset
+into the start state. Per default, the maze is deterministic, i.e. the agent 
+always moves in the direction it chooses. However, the parameter
+<em>stochasticity</em> allows to control the stochasticity of the environment.
+For instance, when stochasticity is set to 0.01, the the agent performs a
+random move instead of the chosen one with probability 0.01.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Pinball 2D</em>&#8216; from module pinball_maze_environment
+implemented in class PinballMazeEnvironment.</p>
+<blockquote>
+<div><p>The pinball maze environment class.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Linear Markov Chain</em>&#8216; from module linear_markov_chain_environment
+implemented in class LinearMarkovChainEnvironment.</p>
+<blockquote>
+<div><p>The agent starts in the middle of this linear markov chain. He can either
+move right or left. The chain is not stochastic, i.e. when the agent 
+wants to move right, the state is decreased with probability 1 by 1.  
+When the agent wants to move left, the state is increased with probability 1
+by 1 accordingly.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Maze 2D</em>&#8216; from module maze2d_environment
+implemented in class Maze2dEnvironment.</p>
+<blockquote>
+<div><p>A 2d maze world, in which the agent is situated at each moment in time in a 
+certain field (specified by its (row,column) coordinate) and can move
+either upwards, downwards, left or right. The structure of the maze can be
+configured via a text-based config file.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Double Pole Balancing</em>&#8216; from module double_pole_balancing_environment
+implemented in class DoublePoleBalancingEnvironment.</p>
+<blockquote>
+<div><p>In the double pole balancing environment, the task of the agent is to control
+a cart such that two poles which are mounted on the cart stay in a nearly
+vertical position (to balance them). At the same time, the cart has to stay
+in a confined region.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Partial Observable Double Pole Balancing</em>&#8216; from module po_double_pole_balancing_environment
+implemented in class PODoublePoleBalancingEnvironment.</p>
+<blockquote>
+<div><p>In the partially observable double pole balancing environment, 
+the task of the agent is to control a cart such that two poles which are mounted
+on the cart stay in a nearly vertical position (to balance them). At the same 
+time, the cart has to stay in a confined region. In contrast to the fully
+observable double pole balancing environment, the agent only observes the
+current position of cart and the two poles but not their velocities.
+This renders the problem to be not markovian.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Mountain Car</em>&#8216; from module mcar_env
+implemented in class MountainCarEnvironment.</p>
+<blockquote>
+<div><p>In the mountain car environment, the agent has to control a car which is
+situated somewhere in a valley between two hills. The goal of the agent
+is to reach the top of the right hill. Unfortunately, the engine of the
+car is not strong enough to reach the top of the hill directly from many
+start states. Thus, it has first to drive in the wrong direction to gather
+enough potential energy.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Single Pole Balancing</em>&#8216; from module single_pole_balancing_environment
+implemented in class SinglePoleBalancingEnvironment.</p>
+<blockquote>
+<div><p>In the single pole balancing environment, the task of the agent is to control
+a cart such that a pole which is mounted on the cart stays in a nearly
+vertical position (to balance it). At the same time, the cart has to stay
+in a confined region.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Seventeen and Four</em>&#8216; from module seventeen_and_four
+implemented in class SeventeenAndFourEnvironment.</p>
+<blockquote>
+<div><p>This environment implements a simplified form of the card game seventeen &amp; four,
+in which the agent takes the role of the player and plays against a hard-coded 
+dealer.</p>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="module-environments.single_agent_environment">
+<span id="single-agent-environment-base-class"></span><h2>Single-agent environment base-class<a class="headerlink" href="#module-environments.single_agent_environment" title="Permalink to this headline">¶</a></h2>
+<p>Abstract base classes for environments in the MMLF.</p>
+<p>This module defines abstract base classes from which environments in the MMLF
+must be derived.</p>
+<dl class="docutils">
+<dt>The following environment base classes are defined:</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">SingleAgentEnvironment:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Base class for environments in which a single agent                             can act.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="class">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment">
+<em class="property">class </em><tt class="descclassname">environments.single_agent_environment.</tt><tt class="descname">SingleAgentEnvironment</tt><big>(</big><em>config</em>, <em>baseUserDir</em>, <em>useGUI</em><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>MMLF interface for environments with a simgle agent</p>
+<p>Each environment that should be used in the MMLF needs to be derived from 
+this class and implement the following methods:</p>
+<p><strong>Interface Methods</strong></p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">getInitialState:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Returns the initial state of the environment</td>
+</tr>
+<tr class="field"><th class="field-name">getStateSpace:</th><td class="field-body">Returns the state space of the environment</td>
+</tr>
+<tr class="field"><th class="field-name">getActionSpace:</th><td class="field-body">Returns the action space of the environment</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">evaluateAction(actionObject):</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">Evaluate the action defined in <em>actionObject</em></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<dl class="method">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment.actionTaken">
+<tt class="descname">actionTaken</tt><big>(</big><em>action</em><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment.actionTaken" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes an action chosen by the agent.</p>
+<p>Causes a state transition of the environment based on the specific action
+chosen by the agent. Depending on the successor state, the agent is 
+rewarded, informed about the end of an episodes and/or provided
+with the next state.</p>
+<p><strong>Parameters</strong></p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">action:</th><td class="field-body">: A dictionary that specifies for each dimension of the 
+action space the value the agent has chosen for the 
+dimension.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment.evaluateAction">
+<tt class="descname">evaluateAction</tt><big>(</big><em>actionObject</em><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment.evaluateAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute an agent&#8217;s action in the environment.</p>
+<p>Take an actionObject containing the action of an agent, and evaluate 
+this action, calculating the next state, and the reward the agent 
+should receive for having taken this action.</p>
+<p>Additionally, decide whether the episode should continue,
+or end after the reward has been  issued to the agent.</p>
+<dl class="docutils">
+<dt>This method returns a dictionary with the following keys:</dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">rewardValue:</th><td class="field-body">: An integer or float representing the agent&#8217;s reward.
+If rewardValue == None, then no reward is given to the agent.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">startNewEpisode:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: True if the agent&#8217;s action has caused an episode
+to get finished.</td>
+</tr>
+<tr class="field"><th class="field-name">nextState:</th><td class="field-body">: A State object which contains the state the environment
+takes on after executing the action. This might be the
+initial state of the next episode if a new episode
+has just started (startNewEpisode == True)</td>
+</tr>
+<tr class="field"><th class="field-name">terminalState:</th><td class="field-body">: A State object which contains the terminal state 
+of the environment in the last episode if a new 
+episode has just started (startNewEpisode == True). 
+Otherwise None.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment.getActionSpace">
+<tt class="descname">getActionSpace</tt><big>(</big><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment.getActionSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the action space of this environment.</p>
+<p>More information about action spaces can be found in 
+<a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-and-action-spaces"><em>State and Action Spaces</em></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment.getInitialState">
+<tt class="descname">getInitialState</tt><big>(</big><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment.getInitialState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the initial state of the environment</p>
+<p>More information about (valid) states can be found in 
+<a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-and-action-spaces"><em>State and Action Spaces</em></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment.getStateSpace">
+<tt class="descname">getStateSpace</tt><big>(</big><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment.getStateSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the state space of this environment.</p>
+<p>More information about state spaces can be found in
+<a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-and-action-spaces"><em>State and Action Spaces</em></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment.getWish">
+<tt class="descname">getWish</tt><big>(</big><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment.getWish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query the next command object for the interaction server.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment.giveAgentInfo">
+<tt class="descname">giveAgentInfo</tt><big>(</big><em>agentInfo</em><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment.giveAgentInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check whether an agent is compatible with this environment.</p>
+<p>The parameter <em>agentInfo</em> contains informations whether an agent is 
+suited for continuous state and/or action spaces, episodic domains
+etc. It is checked whether the agent has the correct capabilties for
+this environment. If not, an 
+<tt class="xref py py-class docutils literal"><span class="pre">ImproperAgentException</span></tt>
+exception is thrown.</p>
+<p><strong>Parameters</strong></p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">agentInfo:</th><td class="field-body">: A dictionary-like object of type
+<tt class="xref py py-class docutils literal"><span class="pre">GiveAgentInfo</span></tt> 
+that contains information regarding the agent&#8217;s
+capabilities.</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment.plotStateSpaceStructure">
+<tt class="descname">plotStateSpaceStructure</tt><big>(</big><em>axis</em><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment.plotStateSpaceStructure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot structure of state space into given axis.</p>
+<p>Just a helper function for viewers and graphic logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="environments.single_agent_environment.SingleAgentEnvironment.stop">
+<tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#environments.single_agent_environment.SingleAgentEnvironment.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method which is called when the environment should be stopped</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="environments.single_agent_environment.ImproperAgentException">
+<em class="property">class </em><tt class="descclassname">environments.single_agent_environment.</tt><tt class="descname">ImproperAgentException</tt><a class="headerlink" href="#environments.single_agent_environment.ImproperAgentException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception thrown if an improper agent is added to a world.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-worlds.double_pole_balancing.environments.double_pole_balancing_environment">
+<span id="fully-observable-double-pole-balancing"></span><h2>Fully-observable Double Pole Balancing<a class="headerlink" href="#module-worlds.double_pole_balancing.environments.double_pole_balancing_environment" title="Permalink to this headline">¶</a></h2>
+<p>Module that implements the double pole balancing environment and its dynamics.</p>
+<dl class="class">
+<dt id="worlds.double_pole_balancing.environments.double_pole_balancing_environment.DoublePoleBalancingEnvironment">
+<em class="property">class </em><tt class="descclassname">worlds.double_pole_balancing.environments.double_pole_balancing_environment.</tt><tt class="descname">DoublePoleBalancingEnvironment</tt><big>(</big><em>useGUI</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#worlds.double_pole_balancing.environments.double_pole_balancing_environment.DoublePoleBalancingEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The double pole balancing environment</p>
+<p>In the double pole balancing environment, the task of the agent is to control
+a cart such that two poles which are mounted on the cart stay in a nearly
+vertical position (to balance them). At the same time, the cart has to stay
+in a confined region.</p>
+<p>The agent can apply in every time step a force between -10N and 10N in order to
+accelerate the car. Thus the action space is one-dimensional and continuous. 
+The state consists of the cart&#8217;s current position and velocity as well as the
+poles&#8217; angles and angular velocities. Thus, the state space is six-dimensional
+and continuous.</p>
+<p>The config dict of the environment expects the following parameters:</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">GRAVITY:</th><td class="field-body">: The gravity force. Benchmark default &#8220;-9.8&#8221;.</td>
+</tr>
+<tr class="field"><th class="field-name">MASSCART:</th><td class="field-body">: The mass of the cart. Benchmark default &#8220;1.0&#8221;.</td>
+</tr>
+<tr class="field"><th class="field-name">TAU:</th><td class="field-body">: The time step between two commands of the agent. 
+Benchmark default &#8220;0.02&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MASSPOLE_1:</th><td class="field-body">: The mass of pole 1. Benchmark default &#8220;0.1&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MASSPOLE_2:</th><td class="field-body">: The mass of pole 2. Benchmark default &#8220;0.01&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">LENGTH_1:</th><td class="field-body">: The length of pole 1. Benchmark default &#8220;0.5&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">LENGTH_2:</th><td class="field-body">: The length of pole 2. Benchmark default &#8220;0.05&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MUP:</th><td class="field-body">: Coefficient of friction of the poles&#8217; hinges.
+Benchmark default &#8220;0.000002&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MUC:</th><td class="field-body">: Coefficient that controls friction. Benchmark default &#8220;0.0005&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">INITIALPOLEANGULARPOSITION1:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Initial angle of pole 1. 
+Benchmark default &#8220;4.0&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">MAXCARTPOSITION:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The maximal distance the cart is allowed to move away
+from its start position. Benchmark default &#8220;2.4&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">MAXPOLEANGULARPOSITION1:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Maximal angle pole 1 is allowed to take on. 
+Benchmark default &#8220;36.0&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">MAXPOLEANGULARPOSITION2:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Maximal angle pole 2 is allowed to take on. 
+Benchmark default &#8220;36.0&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MAXSTEPS:</th><td class="field-body">: The number of steps the agent must balance the poles. 
+Benchmark default &#8220;100000&#8221;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-worlds.linear_markov_chain.environments.linear_markov_chain_environment">
+<span id="linear-markov-chain"></span><h2>Linear Markov Chain<a class="headerlink" href="#module-worlds.linear_markov_chain.environments.linear_markov_chain_environment" title="Permalink to this headline">¶</a></h2>
+<p>A linear markov chain environment.</p>
+<dl class="class">
+<dt id="worlds.linear_markov_chain.environments.linear_markov_chain_environment.LinearMarkovChainEnvironment">
+<em class="property">class </em><tt class="descclassname">worlds.linear_markov_chain.environments.linear_markov_chain_environment.</tt><tt class="descname">LinearMarkovChainEnvironment</tt><big>(</big><em>useGUI</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#worlds.linear_markov_chain.environments.linear_markov_chain_environment.LinearMarkovChainEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>A linear markov chain.</p>
+<p>The agent starts in the middle of this linear markov chain. He can either
+move right or left. The chain is not stochastic, i.e. when the agent 
+wants to move right, the state is decreased with probability 1 by 1.  
+When the agent wants to move left, the state is increased with probability 1
+by 1 accordingly.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.10: </span>Added LinearMarkovChain environment</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">length:</th><td class="field-body">: The number of states of the linear markov chain</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-worlds.maze2d.environments.maze2d_environment">
+<span id="maze-2d"></span><h2>Maze 2D<a class="headerlink" href="#module-worlds.maze2d.environments.maze2d_environment" title="Permalink to this headline">¶</a></h2>
+<p>Two-dimensional maze world environment.</p>
+<dl class="class">
+<dt id="worlds.maze2d.environments.maze2d_environment.Maze2dEnvironment">
+<em class="property">class </em><tt class="descclassname">worlds.maze2d.environments.maze2d_environment.</tt><tt class="descname">Maze2dEnvironment</tt><big>(</big><em>useGUI</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#worlds.maze2d.environments.maze2d_environment.Maze2dEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The two-dimensional maze environment for an agent without orientation.</p>
+<p>A 2d maze world, in which the agent is situated at each moment in time in a 
+certain field (specified by its (row,column) coordinate) and can move
+either upwards, downwards, left or right. The structure of the maze can be
+configured via a text-based config file.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">episodesUntilDoorChange:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Episodes that the door will remain in their initial state. After this number of episodes, the door state is inverted.</td>
+</tr>
+<tr class="field"><th class="field-name">MAZE:</th><td class="field-body">: Name of the config file, where the maze is defined. These files are located in folder &#8216;worlds/maze2d&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-worlds.maze_cliff.environments.maze_cliff_environment">
+<span id="maze-cliff"></span><h2>Maze Cliff<a class="headerlink" href="#module-worlds.maze_cliff.environments.maze_cliff_environment" title="Permalink to this headline">¶</a></h2>
+<p>This module contains an implementation of the maze 2d dynamics which can be 
+used in a world of the mmlf.framework.</p>
+<p>2008-03-08, Jan Hendrik Metzen (<a class="reference external" href="mailto:jhm&#37;&#52;&#48;informatik&#46;uni-bremen&#46;de">jhm<span>&#64;</span>informatik<span>&#46;</span>uni-bremen<span>&#46;</span>de</a>)</p>
+<dl class="class">
+<dt id="worlds.maze_cliff.environments.maze_cliff_environment.MazeCliffEnvironment">
+<em class="property">class </em><tt class="descclassname">worlds.maze_cliff.environments.maze_cliff_environment.</tt><tt class="descname">MazeCliffEnvironment</tt><big>(</big><em>useGUI</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#worlds.maze_cliff.environments.maze_cliff_environment.MazeCliffEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The two-dimensional maze cliff environment.</p>
+<p>In this maze, there are two alternative ways from the start to the goal 
+state: one short way which leads along a dangerous cliff and one long 
+but secure way. If the agent happens to step into the maze, it will
+get a huge negative reward (configurable via <em>cliffPenalty</em>) and is reset
+into the start state. Per default, the maze is deterministic, i.e. the agent 
+always moves in the direction it chooses. However, the parameter
+<em>stochasticity</em> allows to control the stochasticity of the environment.
+For instance, when stochasticity is set to 0.01, the the agent performs a
+random move instead of the chosen one with probability 0.01.</p>
+<p>The maze structure is as follows where &#8220;S&#8221; is the start state, &#8220;G&#8221; the goal 
+state and &#8220;C&#8221; is a cliff field:
+<strong>**********</strong>
+*            *
+*            *
+*            *
+<em>SCCCCCCCCCCG</em>
+<strong>**********</strong></p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">cliffPenalty:</th><td class="field-body">: The reward an agent obtains when stepping into the cliff area</td>
+</tr>
+<tr class="field"><th class="field-name">stochasticity:</th><td class="field-body">: The stochasticity of the state transition matrix. With probability 1-<em>stochasticity</em> the desired transition is made, otherwise a random transition</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-worlds.mountain_car.environments.mcar_env">
+<span id="mountain-car"></span><h2>Mountain Car<a class="headerlink" href="#module-worlds.mountain_car.environments.mcar_env" title="Permalink to this headline">¶</a></h2>
+<p>Module that implements the mountain car environment and its dynamics.</p>
+<dl class="class">
+<dt id="worlds.mountain_car.environments.mcar_env.MountainCarEnvironment">
+<em class="property">class </em><tt class="descclassname">worlds.mountain_car.environments.mcar_env.</tt><tt class="descname">MountainCarEnvironment</tt><big>(</big><em>config</em>, <em>useGUI</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#worlds.mountain_car.environments.mcar_env.MountainCarEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The mountain car environment.</p>
+<p>In the mountain car environment, the agent has to control a car which is
+situated somewhere in a valley between two hills. The goal of the agent
+is to reach the top of the right hill. Unfortunately, the engine of the
+car is not strong enough to reach the top of the hill directly from many
+start states. Thus, it has first to drive in the wrong direction to gather
+enough potential energy.</p>
+<p>The agent can either accelerate left, right, or coast. Thus, the action
+space is discrete with three discrete actions. The agent observes
+two continuous state components: The current position and velocity of the
+car. The start state of the car is stochastically initialised.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">maxStepsPerEpisode:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The number of steps the agent has maximally to reach the goal. Benchmark default is &#8220;500&#8221;.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">accelerationFactor:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: A factor that influences how strong the cars engine is relative to the slope of the hill. Benchmark default is &#8220;0.001&#8221;.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">maxGoalVelocity:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Maximum velocity the agent might have when reaching the goal. If smaller than 0.07, this effectively makes the task MountainPark instead of MountainCar. Benchmark default is &#8220;0.07&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">positionNoise:</th><td class="field-body">: Noise that is added to the agent&#8217;s observation of the position. Benchmark default is &#8220;0.0&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">velocityNoise:</th><td class="field-body">: Noise that is added to the agent&#8217;s observation of the velocity. Benchmark default is &#8220;0.0&#8221;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-worlds.po_double_pole_balancing.environments.po_double_pole_balancing_environment">
+<span id="partially-observable-double-pole-balancing"></span><h2>Partially-observable Double Pole Balancing<a class="headerlink" href="#module-worlds.po_double_pole_balancing.environments.po_double_pole_balancing_environment" title="Permalink to this headline">¶</a></h2>
+<p>Module that implements the partially observable double pole balancing.</p>
+<dl class="class">
+<dt id="worlds.po_double_pole_balancing.environments.po_double_pole_balancing_environment.PODoublePoleBalancingEnvironment">
+<em class="property">class </em><tt class="descclassname">worlds.po_double_pole_balancing.environments.po_double_pole_balancing_environment.</tt><tt class="descname">PODoublePoleBalancingEnvironment</tt><big>(</big><em>useGUI</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#worlds.po_double_pole_balancing.environments.po_double_pole_balancing_environment.PODoublePoleBalancingEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The partially observable double pole balancing environment</p>
+<p>In the partially observable double pole balancing environment, 
+the task of the agent is to control a cart such that two poles which are mounted
+on the cart stay in a nearly vertical position (to balance them). At the same 
+time, the cart has to stay in a confined region. In contrast to the fully
+observable double pole balancing environment, the agent only observes the
+current position of cart and the two poles but not their velocities.
+This renders the problem to be not markovian.</p>
+<p>The agent can apply in every time step a force between -10N and 10N in order to
+accelerate the car. Thus the action space is one-dimensional and continuous. 
+The state consists of the cart&#8217;s current position and velocity as well as the
+poles&#8217; angles and angular velocities. Thus, the state space is six-dimensional
+and continuous.</p>
+<p>The config dict of the environment expects the following parameters:</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">GRAVITY:</th><td class="field-body">: The gravity force. Benchmark default &#8220;-9.8&#8221;.</td>
+</tr>
+<tr class="field"><th class="field-name">MASSCART:</th><td class="field-body">: The mass of the cart. Benchmark default &#8220;1.0&#8221;.</td>
+</tr>
+<tr class="field"><th class="field-name">TAU:</th><td class="field-body">: The time step between two commands of the agent. 
+Benchmark default &#8220;0.02&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MASSPOLE_1:</th><td class="field-body">: The mass of pole 1. Benchmark default &#8220;0.1&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MASSPOLE_2:</th><td class="field-body">: The mass of pole 2. Benchmark default &#8220;0.01&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">LENGTH_1:</th><td class="field-body">: The length of pole 1. Benchmark default &#8220;0.5&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">LENGTH_2:</th><td class="field-body">: The length of pole 2. Benchmark default &#8220;0.05&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MUP:</th><td class="field-body">: Coefficient of friction of the poles&#8217; hinges.
+Benchmark default &#8220;0.000002&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MUC:</th><td class="field-body">: Coefficient that controls friction. Benchmark default &#8220;0.0005&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">INITIALPOLEANGULARPOSITION1:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Initial angle of pole 1. 
+Benchmark default &#8220;4.0&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">MAXCARTPOSITION:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The maximal distance the cart is allowed to move away
+from its start position. Benchmark default &#8220;2.4&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">MAXPOLEANGULARPOSITION1:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Maximal angle pole 1 is allowed to take on. 
+Benchmark default &#8220;36.0&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">MAXPOLEANGULARPOSITION2:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Maximal angle pole 2 is allowed to take on. 
+Benchmark default &#8220;36.0&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MAXSTEPS:</th><td class="field-body">: The number of steps the agent must balance the poles. 
+Benchmark default &#8220;100000&#8221;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-worlds.pinball_maze.environments.pinball_maze_environment">
+<span id="pinball"></span><h2>Pinball<a class="headerlink" href="#module-worlds.pinball_maze.environments.pinball_maze_environment" title="Permalink to this headline">¶</a></h2>
+<p>Module that contains the the pinball maze environment.</p>
+<dl class="class">
+<dt id="worlds.pinball_maze.environments.pinball_maze_environment.PinballMazeEnvironment">
+<em class="property">class </em><tt class="descclassname">worlds.pinball_maze.environments.pinball_maze_environment.</tt><tt class="descname">PinballMazeEnvironment</tt><big>(</big><em>useGUI</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#worlds.pinball_maze.environments.pinball_maze_environment.PinballMazeEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pinball maze environment class.</p>
+<p>The pinball maze environment class.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">George Konidaris and Andrew G Barto
+&#8220;Skill Discovery in Continuous Reinforcement Learning Domains using Skill Chaining&#8221;
+in &#8220;Advances in Neural Information Processing Systems&#8221;, 2009</p>
+</div>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.9.</span></p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">DRAG:</th><td class="field-body">: Factor that slows the ball each time step (multiplied to velocity after each step)</td>
+</tr>
+<tr class="field"><th class="field-name">NOISE:</th><td class="field-body">: gaussian noise with MU_POS for position [x,y] and MU_VEL for velocity [xdot,ydot]; as simplification the covariance matrix is just a unit matrix multiplied with SIGMA</td>
+</tr>
+<tr class="field"><th class="field-name">THRUST_PENALTY:</th><td class="field-body">: Reward the agent gains each time it accelerates the ball</td>
+</tr>
+<tr class="field"><th class="field-name">STEP_PENALTY:</th><td class="field-body">: Reward the agent gains each time step it not thrusts or terminates</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">END_EPISODE_REWARD:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Reward the agent gains if the ball reaches the goal</td>
+</tr>
+<tr class="field"><th class="field-name">SUBSTEPS:</th><td class="field-body">: number of dynamic steps of the environment between each of the agent&#8217;s actions</td>
+</tr>
+<tr class="field"><th class="field-name">MAZE:</th><td class="field-body">: Name of the config file, where the maze is defined. These files are located in folder &#8216;worlds/pinball_maze&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-worlds.seventeen_and_four.environments.seventeen_and_four">
+<span id="seventeen-and-four"></span><h2>Seventeen and Four<a class="headerlink" href="#module-worlds.seventeen_and_four.environments.seventeen_and_four" title="Permalink to this headline">¶</a></h2>
+<p>Module that contains the seventeen &amp; four environment</p>
+<p>This module contains a simplified implementation of the card game seventeen &amp; four,
+in which the agent takes the role of the player and plays against a hard-coded 
+dealer.</p>
+<dl class="class">
+<dt id="worlds.seventeen_and_four.environments.seventeen_and_four.SeventeenAndFourEnvironment">
+<em class="property">class </em><tt class="descclassname">worlds.seventeen_and_four.environments.seventeen_and_four.</tt><tt class="descname">SeventeenAndFourEnvironment</tt><big>(</big><em>useGUI</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#worlds.seventeen_and_four.environments.seventeen_and_four.SeventeenAndFourEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The seventeen &amp; four environment</p>
+<p>This environment implements a simplified form of the card game seventeen &amp; four,
+in which the agent takes the role of the player and plays against a hard-coded 
+dealer.</p>
+<p>The player starts initially with two randomly drawn card with values of
+2,3,4,7,8,9,10 or 11. The goal is get a set of cards whose sum is as close 
+as possible to 21. The agent can stick with two cards or draw arbitrarily 
+many cards sequentially. If the sum of cards becomes greater than 21, the
+agent looses and gets a reward of -1. If the agent stops with cards less 
+valued than 22, a hard-coded dealer policy starts playing against the agent.
+This dealer draws card until it has either equal/more points than the agent 
+or more than 21. In the first case, the dealer wins and the agent gets a 
+reward of -1, otherwise the player wins and gets a reward of 0.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-worlds.single_pole_balancing.environments.single_pole_balancing_environment">
+<span id="single-pole-balancing"></span><h2>Single Pole Balancing<a class="headerlink" href="#module-worlds.single_pole_balancing.environments.single_pole_balancing_environment" title="Permalink to this headline">¶</a></h2>
+<p>Module that implements the single pole balancing environment and its dynamics.</p>
+<dl class="class">
+<dt id="worlds.single_pole_balancing.environments.single_pole_balancing_environment.SinglePoleBalancingEnvironment">
+<em class="property">class </em><tt class="descclassname">worlds.single_pole_balancing.environments.single_pole_balancing_environment.</tt><tt class="descname">SinglePoleBalancingEnvironment</tt><big>(</big><em>useGUI</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#worlds.single_pole_balancing.environments.single_pole_balancing_environment.SinglePoleBalancingEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>The single pole balancing environment.</p>
+<p>In the single pole balancing environment, the task of the agent is to control
+a cart such that a pole which is mounted on the cart stays in a nearly
+vertical position (to balance it). At the same time, the cart has to stay
+in a confined region.</p>
+<p>The agent can apply in every time step a force between -2N and 2N in order to
+accelerate the car. Thus the action space is one-dimensional and continuous. 
+The state consists of the cart&#8217;s current position and velocity as well as the
+pole&#8217;s angle and angular velocity. Thus, the state space is four-dimensional
+and continuous.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">GRAVITY:</th><td class="field-body">: The gravity force. Benchmark default &#8220;-9.8&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MASSCART:</th><td class="field-body">: The mass of the cart. Benchmark default &#8220;1.0&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MASSPOLE:</th><td class="field-body">: The mass of the pole. Benchmark default &#8220;0.1&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">TOTAL_MASS:</th><td class="field-body">: The total mass (pole + cart). Benchmark default &#8220;1.1&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">LENGTH:</th><td class="field-body">: The length of the pole. Benchmark default &#8220;0.5&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">POLEMASS_LENGTH:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The center of mass of the pole. Benchmark default &#8220;0.05&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">TAU:</th><td class="field-body">: The time step between two commands of the agent. Benchmark default &#8220;0.02&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">MAXCARTPOSITION:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The maximal distance the cart is allowed to move away
+from its start position. Benchmark default &#8220;7.5&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">MAXPOLEANGULARPOSITION:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Maximal angle the pole is allowed to take on. Benchmark default &#8220;0.7&#8221;</td>
+</tr>
+<tr class="field"><th class="field-name">MAXSTEPS:</th><td class="field-body">: The number of steps the agent must balance the poles. Benchmark default &#8220;100000&#8221;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api_documentation.html">API-documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="0_mmlf_interface.html">MMLF package interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents.html">Agents</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-environments.single_agent_environment">Single-agent environment base-class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-worlds.double_pole_balancing.environments.double_pole_balancing_environment">Fully-observable Double Pole Balancing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-worlds.linear_markov_chain.environments.linear_markov_chain_environment">Linear Markov Chain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-worlds.maze2d.environments.maze2d_environment">Maze 2D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-worlds.maze_cliff.environments.maze_cliff_environment">Maze Cliff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-worlds.mountain_car.environments.mcar_env">Mountain Car</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-worlds.po_double_pole_balancing.environments.po_double_pole_balancing_environment">Partially-observable Double Pole Balancing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-worlds.pinball_maze.environments.pinball_maze_environment">Pinball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-worlds.seventeen_and_four.environments.seventeen_and_four">Seventeen and Four</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-worlds.single_pole_balancing.environments.single_pole_balancing_environment">Single Pole Balancing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="observables.html">Observables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources/resources.html">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="framework/framework.html">Framework</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="agents.html"
+                        title="previous chapter">Agents</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="observables.html"
+                        title="next chapter">Observables</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api_documentation/environments.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="observables.html" title="Observables"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="agents.html" title="Agents"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="api_documentation.html" >API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

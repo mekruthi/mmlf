@@ -1,0 +1,44 @@
+worldPackage : mountain_car
+environment:
+    moduleName : "mcar_env"
+    configDict: 
+        maxStepsPerEpisode : 500    
+        accelerationFactor : 0.001
+        maxGoalVelocity : 0.07
+        positionNoise : 0.0
+        velocityNoise : 0.0
+agent:
+    moduleName : "fitted_r_max_agent"
+    configDict:
+        actionDimensionResolution : 9
+        gamma : 0.99
+        min_exploration_value : 1.0
+        RMax : 0.0
+        max_episode_length : 500
+        planner:
+            name : "PrioritizedSweeping"
+            updatesPerStep : 100
+            minSweepDelta : 0.1
+        model : 
+            name: 'KNNModel'
+            k: 100
+            b_Sa: 0.03
+            exampleSetSize: 2500
+        function_approximator :
+           name : 'KNN'
+           k : 20
+           b_X : 0.01
+monitor:
+    policyLogFrequency : 10
+    stateActionValuesLogging:
+        active : True
+        logFrequency : 25
+        stateDims: None
+        actions : None
+        rasterPoints : 50
+    functionOverStateSpaceLogging:
+        active : True
+        logFrequency : 25
+        stateDims : None
+        rasterPoints : 50
+        

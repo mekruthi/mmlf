@@ -1,0 +1,35 @@
+worldPackage : po_double_pole_balancing
+environment:
+    moduleName : "po_double_pole_balancing_environment"
+    configDict:
+        GRAVITY : -9.8    
+        MASSCART : 1.0 
+        TAU : 0.02                         
+        MASSPOLE_1 : 0.1
+        MASSPOLE_2 : 0.01
+        LENGTH_1 : 0.5
+        LENGTH_2 : 0.05
+        MUP: 0.000002
+        MUC: 0.0005
+        INITIALPOLEANGULARPOSITION1 : 4.0
+        MAXCARTPOSITION : 2.4
+        MAXPOLEANGULARPOSITION1 : 36.0
+        MAXPOLEANGULARPOSITION2 : 36.0
+        MAXSTEPS : 100000
+agent:
+    moduleName : "dps_agent"
+    configDict:
+        policy_search : 
+            method: 'fixed_parametrization'
+            policy: 
+                type: 'linear'
+                numOfDuplications: 1
+                bias: True
+            optimizer: 
+                name: 'evolution_strategy'
+                sigma:  5.0
+                populationSize : 5
+                evalsPerIndividual: 1
+                numChildren: 10
+monitor:
+    policyLogFrequency : 100

@@ -1,0 +1,340 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Policies &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Resources" href="resources.html" />
+    <link rel="next" title="Policy Search Methods" href="policy_search.html" />
+    <link rel="prev" title="Planner" href="planner.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="policy_search.html" title="Policy Search Methods"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="planner.html" title="Planner"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" >API-documentation</a> &raquo;</li>
+          <li><a href="resources.html" accesskey="U">Resources</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-resources.policies.policy">
+<span id="policies"></span><h1>Policies<a class="headerlink" href="#module-resources.policies.policy" title="Permalink to this headline">¶</a></h1>
+<p>Interface for MMLF policies</p>
+<p>A policy is a mapping from state to action. Different learning algorithms of 
+the MMLF have different representation of policies, for example neural networks
+which represents the policy directly or polcies based on value functions.</p>
+<p>This module encapsulates these details so that a stored policy can be 
+loaded directly.</p>
+<dl class="docutils">
+<dt>MMLF policies must implement the following methods:</dt>
+<dd><ul class="first last simple">
+<li>evaluate</li>
+<li>getParameters</li>
+<li>setParameters</li>
+</ul>
+</dd>
+</dl>
+<dl class="class">
+<dt id="resources.policies.policy.Policy">
+<em class="property">class </em><tt class="descclassname">resources.policies.policy.</tt><tt class="descname">Policy</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.policies.policy.Policy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface for MMLF policies</p>
+<dl class="docutils">
+<dt>MMLF policies must implement the following methods:</dt>
+<dd><ul class="first last simple">
+<li>evaluate(state): Evaluates the deterministic policy for the given state</li>
+<li>getParameters(): Returns the parameters of this policy</li>
+<li>setParameters(parameters): Sets the parameters of the policy to the given parameters</li>
+</ul>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="resources.policies.policy.Policy.create">
+<em class="property">static </em><tt class="descname">create</tt><big>(</big><em>policySpec</em>, <em>numStateDims</em>, <em>actionSpace</em><big>)</big><a class="headerlink" href="#resources.policies.policy.Policy.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory method that creates policy based on spec-dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.policies.policy.Policy.evaluate">
+<tt class="descname">evaluate</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.policies.policy.Policy.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluates the deterministic policy for the given state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.policies.policy.Policy.getParameters">
+<tt class="descname">getParameters</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.policies.policy.Policy.getParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the parameters of this policy</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="resources.policies.policy.Policy.getPolicyDict">
+<em class="property">static </em><tt class="descname">getPolicyDict</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.policies.policy.Policy.getPolicyDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns dict that contains a mapping from policy name to policy class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.policies.policy.Policy.setParameters">
+<tt class="descname">setParameters</tt><big>(</big><em>parameters</em><big>)</big><a class="headerlink" href="#resources.policies.policy.Policy.setParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the parameters of the policy to the given parameters</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="module-resources.policies.linear_policy">
+<span id="linear-policy"></span><h2>Linear Policy<a class="headerlink" href="#module-resources.policies.linear_policy" title="Permalink to this headline">¶</a></h2>
+<p>Linear Policies for discrete and continuous action spaces</p>
+<p>This module contains classes that represent linear policies for discrete and
+continuous action spaces.</p>
+<dl class="class">
+<dt id="resources.policies.linear_policy.LinearDiscreteActionPolicy">
+<em class="property">class </em><tt class="descclassname">resources.policies.linear_policy.</tt><tt class="descname">LinearDiscreteActionPolicy</tt><big>(</big><em>inputDims</em>, <em>actionSpace</em>, <em>bias=True</em>, <em>numOfDuplications=1</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.policies.linear_policy.LinearDiscreteActionPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linear policy for discrete action spaces</p>
+<p>Class for linear policies on discrete action space using a 1-of-n encoding,
+i.e. pi(s) = argmax_{a_j} sum_{i=0}^n w_ij s_i</p>
+<p>For each discrete action, <em>numOfDuplications</em> outputs in the
+1-of-n encoding are created, i.e. n=numOfActions*numOfDuplications.
+This allows to represent more complex policies.</p>
+<dl class="docutils">
+<dt>Expected parameters:</dt>
+<dd><ul class="first last simple">
+<li><em>inputDims</em>: The number of input (state) dimensions</li>
+<li><em>actionSpace</em>: The action space which determines which actions are allowed.</li>
+</ul>
+</dd>
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">bias:</th><td class="field-body">: Determines whether or not an additional bias (state dimension always equals to 1) is added</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">numOfDuplications:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Determines how many outputs there are for each discrete action  in the 1-of-n encoding.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="resources.policies.linear_policy.LinearContinuousActionPolicy">
+<em class="property">class </em><tt class="descclassname">resources.policies.linear_policy.</tt><tt class="descname">LinearContinuousActionPolicy</tt><big>(</big><em>inputDims</em>, <em>actionSpace</em>, <em>bias=True</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.policies.linear_policy.LinearContinuousActionPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linear policy for continuous action spaces</p>
+<p>Class for linear policies on continuous action space ,
+i.e. pi(s) = [sum_{i=0}^n w_i0 s_i, dots, sum_{i=0}^n w_ij s_i]</p>
+<dl class="docutils">
+<dt>Expected parameters:</dt>
+<dd><ul class="first last">
+<li><p class="first"><em>inputDims</em>: The number of input (state) dimensions</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>actionSpace</em>: The action space which determines which actions are allowed.</dt>
+<dd><p class="first last">It is currently only possible to use this policy with
+one-dimensional action space with contiguous value ranges</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">bias:</th><td class="field-body">: Determines whether or not an additional bias (state dimension 
+always equals to 1) is added</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-resources.policies.mlp_policy">
+<span id="multi-layer-perceptron-policy"></span><h2>Multi-layer Perceptron Policy<a class="headerlink" href="#module-resources.policies.mlp_policy" title="Permalink to this headline">¶</a></h2>
+<p>Policies for discrete and continuous action spaces based on an MLP</p>
+<p>This module contains classes that represent policies for discrete and
+continuous action spaces that are based on an multi-layer perceptron
+representation.</p>
+<dl class="class">
+<dt id="resources.policies.mlp_policy.MLPPolicy">
+<em class="property">class </em><tt class="descclassname">resources.policies.mlp_policy.</tt><tt class="descname">MLPPolicy</tt><big>(</big><em>inputDims</em>, <em>actionSpace</em>, <em>hiddenUnits=5</em>, <em>bias=True</em>, <em>independentOutputs=False</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.policies.mlp_policy.MLPPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Policy based on a MLP representation for disc. and cont. action spaces</p>
+<p>The MLP are based on the ffnet module. It can be
+specified how many <em>hiddenUnits</em> should be contained in the MLP and
+whether the neurons should get an addition <em>bias</em> input. If 
+<em>independentOutputs</em> is set to True, for each output, the hidden layer is 
+cloned, i.e. different outputs do not share common neurons in the network.    
+The <em>actionSpace</em> defines which actions the agent can choose.</p>
+<p>If the action space has no continuous actions, the finite set of (n) 
+possible action selections is determined. Action
+selection is based on a 1-of-n encoding, meaning that for each
+available action the MLP has one output. The action whose corresponding
+network output has maximal activation is chosen.</p>
+<p>If the action space has continuous actions, it is assumed that the action 
+space is one-dimensional. The MLP hase one output falling 
+in the range [0,1]. This output is scaled to the allowed action range to
+yield the action. Currently, it is assumed that continuous action spaces are 
+one-dimensional and contiguous.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">bias:</th><td class="field-body">: Determines whether or not an additional bias (state dimension always equals to 1) is added</td>
+</tr>
+<tr class="field"><th class="field-name">hiddenUnits:</th><td class="field-body">: Determines hte number of neurons in the hidden layer of the multi-layer perceptron</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">independentOutputs:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: If True, for each output the hidden layer is cloned, i.e. different outputs do not share common neurons in the network</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-resources.policies.value_function_policy">
+<span id="value-function-policy"></span><h2>Value Function Policy<a class="headerlink" href="#module-resources.policies.value_function_policy" title="Permalink to this headline">¶</a></h2>
+<p>Policies that are represented using value function</p>
+<p>This module contains a class that wraps function approximators such that
+they can be used directly as policies (i.e. implement the policy interface)</p>
+<dl class="class">
+<dt id="resources.policies.value_function_policy.ValueFunctionPolicy">
+<em class="property">class </em><tt class="descclassname">resources.policies.value_function_policy.</tt><tt class="descname">ValueFunctionPolicy</tt><big>(</big><em>valueFunction</em>, <em>actions</em><big>)</big><a class="headerlink" href="#resources.policies.value_function_policy.ValueFunctionPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class for policies that are represented using value function</p>
+<p>This class wraps a function approximator such that it can be used directly
+as policy (i.e. implement the policy interface)</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api_documentation.html">API-documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../0_mmlf_interface.html">MMLF package interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../agents.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../observables.html">Observables</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="resources.html">Resources</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="function_approximators.html">Function Approximators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learning_algorithms.html">Learning Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="planner.html">Planner</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="policy_search.html">Policy Search Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skill_discovery.html">Skill Discovery</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../framework/framework.html">Framework</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="planner.html"
+                        title="previous chapter">Planner</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="policy_search.html"
+                        title="next chapter">Policy Search Methods</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/api_documentation/resources/policies.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="policy_search.html" title="Policy Search Methods"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="planner.html" title="Planner"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" >API-documentation</a> &raquo;</li>
+          <li><a href="resources.html" >Resources</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

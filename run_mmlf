@@ -1,0 +1,89 @@
+#!/usr/bin/env python
+import sys
+import os
+from optparse import OptionParser
+
+import matplotlib
+matplotlib.use('pdf')
+
+import mmlf
+
+usage = "Usage: [%(prog)s --config <config_dir/file.yaml>] or "\
+        "[%(prog)s --experiment <experiment_dir>]" % {'prog' :sys.argv[0]}
+parser = OptionParser(usage=usage)
+
+def parseOptions():
+    parser.add_option("-c", "--config")
+    parser.add_option("-e", "--experiment")
+    parser.add_option("--logging", default="info")
+    parser.add_option("--rwpath")
+    parser.add_option("--episodes", default=__import__("numpy").inf)
+    parser.add_option("-d", "--debug", action="store_true", default=False)
+
+    (options, args) = parser.parse_args()
+    
+    return options
+         
+def startSingleWorld(configPath, episodes):
+    if configPath != None:
+        try:
+            # Create world based on config file
+            mmlf.log.info("Loading world from config file %s." % options.config)
+            world = mmlf.loadWorldFromConfigFile(configPath=configPath,
+                                                 useGUI=False)
+                        
+            # Run specified number of episodes in the world
+            mmlf.log.debug("Running %s episodes in world..." % episodes)
+            world.run(episodes)
+            mmlf.log.debug("Running world...Done!")                      
+        except KeyboardInterrupt:
+            mmlf.log.info("Interrupting world because of keyboard interrupt")
+            
+        # Stop the world
+        mmlf.log.debug("Stopping world...")
+        world.stop()
+        mmlf.log.debug("Stopping world... Done!")
+        sys.exit(0)  
+    else:
+        parser.error("wrong parameters")
+        mmlf.log.info("Exiting due to wrong parameters")
+                
+def startExperiment(experimentPath):               
+    # Load experiment configuration from path
+    experimentConf = mmlf.loadExperimentConfig(experimentPath)
+    
+    # Execute experiment
+    mmlf.runExperiment(experimentConf)
+        
+if __name__ == "__main__":
+    options = parseOptions()
+    mmlf.setupConsoleLogging(level = options.logging)
+    
+    # Check for further dependencies
+    try:
+        import scikits.ann
+    except ImportError:
+        mmlf.log.warning("You do not have the scikits.ann package. Without this package, "
+                    "the KNN function approximator and model-based learning are not " 
+                    "available. "
+                    "Please install it with 'sudo easy_install scikits.ann' "
+                    "or visit http://www.scipy.org/scipy/scikits/wiki/AnnWrapper.")
+    
+    mmlf.initializeRWArea(rwPath=options.rwpath)
+    if options.config:
+        try:
+            startSingleWorld(configPath=options.config, episodes=float(options.episodes))
+        except Exception, e:
+            mmlf.log.error("An exception of type %s occurred: %s" % (e.__class__.__name__, e))
+            if options.debug:
+                raise
+    elif options.experiment:
+        startExperiment(experimentPath=options.experiment)
+    else: 
+        raise Exception("Either --config or --experiment must be given.\n%s" % usage)
+    
+    
+# For profiling agents, edit
+# framework.interaction_server.InteractionServer.loopIteration
+# or
+# framework.interaction_server.InteractionServer.run

@@ -1,0 +1,246 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Maja Machine Learning Framework’s documentation! &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="#" />
+    <link rel="next" title="Tutorials" href="tutorials/tutorials.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorials/tutorials.html" title="Tutorials"
+             accesskey="N">next</a> |</li>
+        <li><a href="#">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-maja-machine-learning-framework-s-documentation">
+<h1>Welcome to Maja Machine Learning Framework&#8217;s documentation!<a class="headerlink" href="#welcome-to-maja-machine-learning-framework-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The Maja Machine Learning Framework (MMLF) (<a class="reference external" href="http://sourceforge.net/projects/mmlf/">download here</a>) is a general framework for problems in the domain of Reinforcement Learning (RL) written in python. It provides a set of RL related algorithms and a set of benchmark domains. Furthermore it is easily extensible and allows to automate benchmarking of different agents. Among the RL algorithms are TD(lambda), CMA-ES, Fitted R-Max, Monte-Carlo learning, the DYNA-TD and the actor-critic architecture. MMLF contains different variants of the maze-world and pole-balancing problem class as well as the mountain-car testbed and the pinball maze domain.</p>
+<p>A certain scenario which is studied is called a &#8220;world&#8221;. An example of such a scenario would be a robot that tries to find its way through a maze. In RL, the world is typically decomposed into the &#8220;agent(s)&#8221; and the &#8220;environment&#8221;. In the example, the robot would be the agent and the maze would be the environment. The MMLF adopts this view since it provides a natural modularization, which allows to write general agents capable of learning and to test them in a multitude of environments. All learning (optimization of behavior) is usually done within an agent while simulation of physics and other kinds of dynamics are performed within an environment.</p>
+<p>Agents and enviroments are only loosely coupled. In order to allow agents and environments to interact, the MMLF uses an &#8220;interaction server&#8221; which controls how the information between these two types of entities are exchanged. For example, an environment might inform an agent about its current state and which actions the agent can perform, while the agent might inform the environment which action he actually performed. This communication via the interaction server is completely transparent for agents and environments, the only constraint they have to fulfill is that they must offer certain methods which are called from the interaction server.</p>
+<p class="rubric">Download MMLF</p>
+<p>MMLF is available at <a class="reference external" href="http://sourceforge.net/projects/mmlf/">http://sourceforge.net/projects/mmlf/</a></p>
+<p class="rubric">Getting support</p>
+<p>Contact the <a class="reference external" href="mailto:MMLF-support&#37;&#52;&#48;lists&#46;sourceforge&#46;net">MMLF support mailing list</a>.</p>
+<p class="rubric">Documentation</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/installation.html">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/installation.html#local-installation">Local Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/installation.html#global-installation">Global Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/quick_start.html">Quick start (command line interface)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/quick_start_gui.html">Quick start (graphical user interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/quick_start_gui.html#explorer">Explorer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/quick_start_gui.html#experimenter">Experimenter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/writing_agents.html">Writing an agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/writing_agents.html#learning-about-the-basic-structure-of-mmlf-agents">Learning about the basic structure of MMLF agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/writing_agents.html#writing-a-new-mmlf-agent">Writing a new MMLF agent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/writing_agents.html#randomagent">RandomAgent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/writing_agents.html#exampleagent">ExampleAgent</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/writing_environments.html">Writing an environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/writing_environments.html#learning-about-the-basic-structure-of-mmlf-environments">Learning about the basic structure of MMLF environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/writing_environments.html#writing-a-new-mmlf-environment">Writing a new MMLF environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials/writing_environments.html#linearmarkovchainenvironment">LinearMarkovChainEnvironment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="learn_more/learn_more.html">Learn more about...</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="learn_more/agents_and_environments.html">Existing Agents and Environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/agents_and_environments.html#existing-agents">Existing agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/agents_and_environments.html#existing-environments">Existing environments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="learn_more/evaluating_experiments.html">Experiments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/evaluating_experiments.html#conducting-experiments">Conducting experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/evaluating_experiments.html#evaluating-experiments">Evaluating experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/evaluating_experiments.html#scripting-experiments">Scripting experiments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="learn_more/logging.html">Logging</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/logging.html#basic-logging">Basic logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/logging.html#monitor">Monitor</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="learn_more/state_and_action_spaces.html">State and Action Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/state_and_action_spaces.html#single-dimension-of-a-space">Single dimension of a space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/state_and_action_spaces.html#base-class-for-state-and-action-spaces">Base class for state and action spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/state_and_action_spaces.html#state-spaces">State spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/state_and_action_spaces.html#action-spaces">Action spaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="learn_more/viewers.html">Viewers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/viewers.html#general-purpose">General-purpose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learn_more/viewers.html#environment-specific">Environment specific</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_documentation/api_documentation.html">API-documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_documentation/0_mmlf_interface.html">MMLF package interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_documentation/agents.html">Agents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#module-agents.agent_base">Agent base-class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#module-agents.actor_critic_agent">Actor-critic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#module-agents.dps_agent">Direct Policy Search (DPS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#module-agents.dyna_td_agent">Dyna TD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#module-agents.fitted_r_max_agent">Fitted R-Max</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#module-agents.mbdps_agent">Model-based Direct Policy Search (MBDPS)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#module-agents.monte_carlo_agent">Monte-Carlo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#option">Option</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#module-agents.random_agent">Random</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/agents.html#temporal-difference-learning">Temporal Difference Learning</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_documentation/environments.html">Environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-environments.single_agent_environment">Single-agent environment base-class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-worlds.double_pole_balancing.environments.double_pole_balancing_environment">Fully-observable Double Pole Balancing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-worlds.linear_markov_chain.environments.linear_markov_chain_environment">Linear Markov Chain</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-worlds.maze2d.environments.maze2d_environment">Maze 2D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-worlds.maze_cliff.environments.maze_cliff_environment">Maze Cliff</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-worlds.mountain_car.environments.mcar_env">Mountain Car</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-worlds.po_double_pole_balancing.environments.po_double_pole_balancing_environment">Partially-observable Double Pole Balancing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-worlds.pinball_maze.environments.pinball_maze_environment">Pinball</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-worlds.seventeen_and_four.environments.seventeen_and_four">Seventeen and Four</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/environments.html#module-worlds.single_pole_balancing.environments.single_pole_balancing_environment">Single Pole Balancing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_documentation/observables.html">Observables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_documentation/resources/resources.html">Resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/resources/function_approximators.html">Function Approximators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/resources/learning_algorithms.html">Learning Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/resources/models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/resources/optimization.html">Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/resources/planner.html">Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/resources/policies.html">Policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/resources/policy_search.html">Policy Search Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/resources/skill_discovery.html">Skill Discovery</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_documentation/framework/framework.html">Framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/framework/framework.html#module-framework.world">World</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/framework/framework.html#module-framework.spaces">Spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/framework/framework.html#module-framework.state">State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/framework/framework.html#module-framework.monitor">Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/framework/framework.html#module-framework.experiment">Experiment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/framework/framework.html#module-framework.filesystem">Filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/framework/framework.html#module-framework.interaction_server">Interaction Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api_documentation/framework/framework.html#module-framework.protocol">Protocol</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and Tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="#">
+              <img class="logo" src="_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="#">Table Of Contents</a></h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="tutorials/tutorials.html"
+                        title="next chapter">Tutorials</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="tutorials/tutorials.html" title="Tutorials"
+             >next</a> |</li>
+        <li><a href="#">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

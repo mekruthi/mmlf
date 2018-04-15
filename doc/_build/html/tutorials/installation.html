@@ -1,0 +1,166 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Quick start (command line interface)" href="quick_start.html" />
+    <link rel="prev" title="Tutorials" href="tutorials.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="quick_start.html" title="Quick start (command line interface)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tutorials.html" title="Tutorials"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>For installing of the most recent version of the MMLF, please download the tar.gz file from <a class="reference external" href="https://sourceforge.net/projects/mmlf/">https://sourceforge.net/projects/mmlf/</a>. With this file, the MMLF can either be installed locally or globally (see below).</p>
+<p>The MMLF has been tested on Python v2.6 and v2.7 and requires that the python packages <a class="reference external" href="http://numpy.scipy.org/">numpy</a> (tested on version 1.3.0), <a class="reference external" href="http://www.scipy.org/">scipy</a> (v0.7.0), <a class="reference external" href="http://matplotlib.sourceforge.net/">matplotlib</a>  (v1.0), and <a class="reference external" href="http://pyyaml.org/">pyyaml</a> (v3.0.9) are installed. If you want to use the graphical user interface, the <a class="reference external" href="http://www.riverbankcomputing.co.uk/software/pyqt/download">PyQt4</a> (v4.7.2) package is required additional. Specific configurations of agents may require additional packages (e.g., <a class="reference external" href="http://scikits.appspot.com/ann">scikits.ann</a> and <a class="reference external" href="http://www.ipab.inf.ed.ac.uk/slmc/software/lwpr/index.html">lwpr</a>); however, most of the MMLF should be usable when the core dependencies are fulfilled. The easiest way to install the dependencies depends on your operating system. Under Windows you may use the <a class="reference external" href="http://www.pythonxy.com/">python(x,y)</a> distribution. Under Mac OSX, you may use <a class="reference external" href="http://www.macports.org/">MacPorts</a>, and under Linux, your packaging tool will most likely ship these packages out-of-the-box.</p>
+<div class="section" id="local-installation">
+<h2>Local Installation<a class="headerlink" href="#local-installation" title="Permalink to this headline">¶</a></h2>
+<p>This kind of installation is most useful for developers that don&#8217;t have access to the MMLF revision control system. Installing MMLF locally means to simply extract the tar.gz archive. The resulting directory consists of the mmlf package, this documentation, the configuration directory, and two python-scripts: <tt class="docutils literal"><span class="pre">run_mmlf</span></tt> (for running MMLF in a non-graphical way) and <tt class="docutils literal"><span class="pre">mmlf_gui</span></tt> (for starting a GUI which allows to configure and run the MMLF). The additional script setup.py is required for installing the MMLF globally. Running the MMLF via the <tt class="docutils literal"><span class="pre">run_mlf</span></tt> and <tt class="docutils literal"><span class="pre">mmlf_gui</span></tt> scripts is possible without requiring any further adjustments (see <a class="reference internal" href="quick_start.html#quickstart"><em>Quick Start Tutorial</em></a>). If the MMLF should be made available as a module to other python code, please add the directory into which you extracted the MMLF to your pythonpath. It will then be possible to use <tt class="docutils literal"><span class="pre">import</span> <span class="pre">mmlf</span></tt> in a python script or interactive interpreter session.  Any changes made in the code in the mmlf directory are directly active (changes to config files should be made in the <tt class="docutils literal"><span class="pre">$HOME/.mmlf</span></tt> directory however &#8211; see the note below).</p>
+</div>
+<div class="section" id="global-installation">
+<h2>Global Installation<a class="headerlink" href="#global-installation" title="Permalink to this headline">¶</a></h2>
+<p>This kind of installation is most useful for people who don&#8217;t want to modify or extend the MMLF, but only wish to use it. A global installation allows the MMLF to be installed in a way such that all users of a system can use it. In order to install globally, extract the tar.gz archive and run <tt class="docutils literal"><span class="pre">python</span> <span class="pre">setup.py</span> <span class="pre">install</span></tt>. This command may require superuser privileges, and uses the Python Distribution Utilities (<a class="reference external" href="http://docs.python.org/distutils/index.html">distutils</a>) to install the MMLF into the site-packages/dist-packages directory of your python distribution. You may have to install <a class="reference external" href="http://pypi.python.org/pypi/setuptools">setuptools</a> before. After installing, you can run the mmlf via the <tt class="docutils literal"><span class="pre">run_mmlf</span></tt> (for running MMLF in a non-graphical way) and <tt class="docutils literal"><span class="pre">mmlf_gui</span></tt> (for starting a GUI which allows to configure and run the MMLF) scripts. See <a class="reference internal" href="quick_start.html#quickstart"><em>Quick Start Tutorial</em></a> for more details. Furthermore, you can now also import and use the <tt class="docutils literal"><span class="pre">mmlf</span></tt> module in your own python scripts by <tt class="docutils literal"><span class="pre">import</span> <span class="pre">mmlf</span></tt> (see <a class="reference internal" href="../api_documentation/0_mmlf_interface.html#mmlf-package-interface"><em>MMLF python package interface</em></a>).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Under Windows, you have to call <tt class="docutils literal"><span class="pre">python</span> <span class="pre">mmlf_gui</span></tt> in the <tt class="docutils literal"><span class="pre">Scripts</span></tt> subdirectory of your python directory (e.g. <tt class="docutils literal"><span class="pre">C:\Python26\Scripts</span></tt>)</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Performing a global installation copies MMLF config files into <tt class="docutils literal"><span class="pre">/etc/mmlf</span></tt> (unix-like OSes) or <tt class="docutils literal"><span class="pre">$APPDATA/mmlf</span></tt> (Windows). However, the data in these directories only defines some default world setups, and <strong>is not meant for modification</strong>. If you wish to modify a world&#8217;s setup, modify the configuration files in the <tt class="docutils literal"><span class="pre">$HOME/.mmlf</span></tt> directory that is created after the first start of the MMLF. For more information on that, see the <a class="reference internal" href="quick_start.html#quickstart"><em>Quick Start Tutorial</em></a></p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Tutorial <a class="reference internal" href="quick_start.html#quickstart"><em>Quick start (command line interface)</em></a></dt>
+<dd>Learn how to use the MMLF with a non-grapical user interface</dd>
+<dt>Tutorial <a class="reference internal" href="quick_start_gui.html#quickstart-gui"><em>Quick start (graphical user interface)</em></a></dt>
+<dd>Learn how to use the MMLF&#8217;s graphical user interface</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#local-installation">Local Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#global-installation">Global Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html">Quick start (command line interface)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start_gui.html">Quick start (graphical user interface)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_agents.html">Writing an agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_environments.html">Writing an environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="tutorials.html"
+                        title="previous chapter">Tutorials</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="quick_start.html"
+                        title="next chapter">Quick start (command line interface)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorials/installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="quick_start.html" title="Quick start (command line interface)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="tutorials.html" title="Tutorials"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

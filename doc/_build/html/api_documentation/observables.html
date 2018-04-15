@@ -1,0 +1,296 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Observables &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="API-documentation" href="api_documentation.html" />
+    <link rel="next" title="Resources" href="resources/resources.html" />
+    <link rel="prev" title="Environments" href="environments.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="resources/resources.html" title="Resources"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="environments.html" title="Environments"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="api_documentation.html" accesskey="U">API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-framework.observables">
+<span id="observables"></span><h1>Observables<a class="headerlink" href="#module-framework.observables" title="Permalink to this headline">¶</a></h1>
+<p>Module for that implements various kinds of observables</p>
+<dl class="docutils">
+<dt>Currently implemented observables are</dt>
+<dd><ul class="first last simple">
+<li>FloatStreamObservable</li>
+<li>TrajectoryObservable</li>
+<li>StateActionValuesObservable</li>
+<li>FunctionOverStateSpaceObservable</li>
+<li>ModelObservable</li>
+</ul>
+</dd>
+</dl>
+<dl class="class">
+<dt id="framework.observables.AllObservables">
+<em class="property">class </em><tt class="descclassname">framework.observables.</tt><tt class="descname">AllObservables</tt><a class="headerlink" href="#framework.observables.AllObservables" title="Permalink to this definition">¶</a></dt>
+<dd><p>The set of observables is itself observable, too</p>
+<dl class="method">
+<dt id="framework.observables.AllObservables.addObservable">
+<tt class="descname">addObservable</tt><big>(</big><em>observable</em><big>)</big><a class="headerlink" href="#framework.observables.AllObservables.addObservable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new observable to the set of all observables.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.observables.AllObservables.getAllObservablesOfType">
+<tt class="descname">getAllObservablesOfType</tt><big>(</big><em>type</em><big>)</big><a class="headerlink" href="#framework.observables.AllObservables.getAllObservablesOfType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all observables of a given type.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.observables.AllObservables.getObservable">
+<tt class="descname">getObservable</tt><big>(</big><em>observableName</em>, <em>type</em><big>)</big><a class="headerlink" href="#framework.observables.AllObservables.getObservable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all observable of a given type with given observableName.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.observables.AllObservables.removeObservable">
+<tt class="descname">removeObservable</tt><big>(</big><em>observable</em><big>)</big><a class="headerlink" href="#framework.observables.AllObservables.removeObservable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove an observable from the set of all observables.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.observables.FloatStreamObservable">
+<em class="property">class </em><tt class="descclassname">framework.observables.</tt><tt class="descname">FloatStreamObservable</tt><big>(</big><em>title</em>, <em>time_dimension_name</em>, <em>value_name</em><big>)</big><a class="headerlink" href="#framework.observables.FloatStreamObservable" title="Permalink to this definition">¶</a></dt>
+<dd><p>An observable class that handles a stream of floats</p>
+<dl class="method">
+<dt id="framework.observables.FloatStreamObservable.addValue">
+<tt class="descname">addValue</tt><big>(</big><em>time</em>, <em>value</em><big>)</big><a class="headerlink" href="#framework.observables.FloatStreamObservable.addValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new value for the given point in time to the observable.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.observables.FunctionOverStateSpaceObservable">
+<em class="property">class </em><tt class="descclassname">framework.observables.</tt><tt class="descname">FunctionOverStateSpaceObservable</tt><big>(</big><em>title</em>, <em>discreteValues</em><big>)</big><a class="headerlink" href="#framework.observables.FunctionOverStateSpaceObservable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Observable class for observing functions over the state space.</p>
+<p>This class implements an observable for observing (one-dimensional) functions
+defined over the state space. This function can either implement an mapping
+f: S -&gt; R (real numbers, <a href="#id1"><span class="problematic" id="id2">*</span></a>discreteValues*=False) or a mapping f: S -&gt; C 
+(some discrete finite set of values, <a href="#id3"><span class="problematic" id="id4">*</span></a>discreteValues*=True). An example 
+for the first kind of function would be the optimal value function V(s), an
+example for the second case a deterministic policy pi(s), with C being the
+action space.</p>
+<dl class="method">
+<dt id="framework.observables.FunctionOverStateSpaceObservable.plot">
+<tt class="descname">plot</tt><big>(</big><em>function</em>, <em>fig</em>, <em>stateSpace</em>, <em>actionSpace</em>, <em>plotStateDims=None</em>, <em>rasterPoints=100</em><big>)</big><a class="headerlink" href="#framework.observables.FunctionOverStateSpaceObservable.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a graphical representation of a FunctionOverStateSpace.</p>
+<p>Creates a plot of <em>policy</em> in the 2D subspace of the state space
+spanned by <em>stateIndex1</em> and <em>stateIndex2</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.observables.FunctionOverStateSpaceObservable.updateFunction">
+<tt class="descname">updateFunction</tt><big>(</big><em>function</em><big>)</big><a class="headerlink" href="#framework.observables.FunctionOverStateSpaceObservable.updateFunction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inform observable that the encapsulated function has changed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.observables.ModelObservable">
+<em class="property">class </em><tt class="descclassname">framework.observables.</tt><tt class="descname">ModelObservable</tt><big>(</big><em>title</em><big>)</big><a class="headerlink" href="#framework.observables.ModelObservable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Observable class for observing models.</p>
+<p>This class implements an observable for observing MMLF models. Whenever a 
+new state transition, a new start state or a new terminal state is added to
+the model, this observable notifies all observers of this change.</p>
+<dl class="method">
+<dt id="framework.observables.ModelObservable.plot">
+<tt class="descname">plot</tt><big>(</big><em>model</em>, <em>fig</em>, <em>stateSpace</em>, <em>colouring</em>, <em>plotSamples</em>, <em>minExplorationValue</em>, <em>plotStateDims</em>, <em>dimValues</em><big>)</big><a class="headerlink" href="#framework.observables.ModelObservable.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Does the actual plotting (either for viewer or for log-graphic).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.observables.ModelObservable.updateModel">
+<tt class="descname">updateModel</tt><big>(</big><em>model</em><big>)</big><a class="headerlink" href="#framework.observables.ModelObservable.updateModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inform observable that the encapsulated model has changed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.observables.Observable">
+<em class="property">class </em><tt class="descclassname">framework.observables.</tt><tt class="descname">Observable</tt><big>(</big><em>title</em><big>)</big><a class="headerlink" href="#framework.observables.Observable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all MMLf observables.</p>
+<dl class="method">
+<dt id="framework.observables.Observable.addObserver">
+<tt class="descname">addObserver</tt><big>(</big><em>observer</em><big>)</big><a class="headerlink" href="#framework.observables.Observable.addObserver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an observer that gets informed of all changes of this observable.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.observables.Observable.removeObserver">
+<tt class="descname">removeObserver</tt><big>(</big><em>observer</em><big>)</big><a class="headerlink" href="#framework.observables.Observable.removeObserver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove an observer of this observable.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.observables.StateActionValuesObservable">
+<em class="property">class </em><tt class="descclassname">framework.observables.</tt><tt class="descname">StateActionValuesObservable</tt><big>(</big><em>title</em><big>)</big><a class="headerlink" href="#framework.observables.StateActionValuesObservable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Observable class for real valued functions over the state action space.</p>
+<p>This might be for instance a Q-function or the eligibility traces or a 
+stochastic policy.</p>
+<dl class="method">
+<dt id="framework.observables.StateActionValuesObservable.plot">
+<tt class="descname">plot</tt><big>(</big><em>function</em>, <em>actions</em>, <em>fig</em>, <em>stateSpace</em>, <em>plotStateDims=None</em>, <em>plotActions=None</em>, <em>rasterPoints=100</em><big>)</big><a class="headerlink" href="#framework.observables.StateActionValuesObservable.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plots the q-Function for the case of a 2-dim subspace of the state space.</p>
+<p>plotStateDims :The 2 dims that should be plotted
+plotActions : The action that should be plotted
+rasterPoints : How many raster points per dimension</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.observables.StateActionValuesObservable.updateValues">
+<tt class="descname">updateValues</tt><big>(</big><em>valueAccessFunction</em>, <em>actions</em><big>)</big><a class="headerlink" href="#framework.observables.StateActionValuesObservable.updateValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inform observable that the encapsulated function has changed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.observables.TrajectoryObservable">
+<em class="property">class </em><tt class="descclassname">framework.observables.</tt><tt class="descname">TrajectoryObservable</tt><big>(</big><em>title</em><big>)</big><a class="headerlink" href="#framework.observables.TrajectoryObservable" title="Permalink to this definition">¶</a></dt>
+<dd><p>An observable class that can monitor an agent&#8217;s trajectory</p>
+<dl class="method">
+<dt id="framework.observables.TrajectoryObservable.addTransition">
+<tt class="descname">addTransition</tt><big>(</big><em>state</em>, <em>action</em>, <em>reward</em>, <em>succState</em>, <em>episodeTerminated=False</em><big>)</big><a class="headerlink" href="#framework.observables.TrajectoryObservable.addTransition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new transition to the observable.</p>
+<p>Adds the transition from <em>state</em> to <em>succState</em> for chosen action 
+<em>action</em> and obtained reward <em>reward</em> to the observable. 
+If <em>episodeTerminated</em>, succState is a terminal state of the environment.</p>
+</dd></dl>
+
+</dd></dl>
+
+<img src="../_images/inheritance959250a6bf.png" usemap="#inheritance959250a6bf" class="inheritance"/><map id="inheritance959250a6bf" name="inheritance959250a6bf">
+</map>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api_documentation.html">API-documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="0_mmlf_interface.html">MMLF package interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="agents.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environments.html">Environments</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Observables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="resources/resources.html">Resources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="framework/framework.html">Framework</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="environments.html"
+                        title="previous chapter">Environments</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="resources/resources.html"
+                        title="next chapter">Resources</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api_documentation/observables.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="resources/resources.html" title="Resources"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="environments.html" title="Environments"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="api_documentation.html" >API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

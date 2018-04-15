@@ -1,0 +1,15 @@
+worldPackage : maze_cliff
+environment:
+    moduleName : "maze_cliff_environment"
+    configDict: 
+       cliffPenalty : -100
+       stochasticity : 0.0
+agent:
+    moduleName : "monte_carlo_agent"
+    configDict:
+        gamma : 1.0
+        epsilon : 0.1
+        visit : "first"
+        defaultQ : 0.0
+monitor:
+    policyLogFrequency : 1000

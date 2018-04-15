@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Existing Agents and Environments &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Learn more about..." href="learn_more.html" />
+    <link rel="next" title="Experiments" href="evaluating_experiments.html" />
+    <link rel="prev" title="Learn more about..." href="learn_more.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="evaluating_experiments.html" title="Experiments"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="learn_more.html" title="Learn more about..."
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" accesskey="U">Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="existing-agents-and-environments">
+<h1>Existing Agents and Environments<a class="headerlink" href="#existing-agents-and-environments" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="existing-agents">
+<span id="agent-list"></span><h2>Existing agents<a class="headerlink" href="#existing-agents" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This list of agents has been automatically generated from the source code</p>
+</div>
+<span class="target" id="module-agents"></span><p>Package that contains all available MMLF agents.</p>
+<dl class="docutils">
+<dt>A list of all agents:</dt>
+<dd><ul class="first last">
+<li><p class="first">Agent &#8216;<em>Model-based Direct Policy Search</em>&#8216; from module mbdps_agent
+implemented in class MBDPS_Agent.</p>
+<blockquote>
+<div><p>An agent that uses the state-action-reward-successor_state transitions to 
+learn a model of the environment. It performs direct policy search
+(similar to the direct policy search agent using a black-box optimization
+algorithm to optimize the parameters of a parameterized policy) in the model
+in order to optimize a criterion defined by a fitness function. This fitness
+function can be e.g. the estimated accumulated reward obtained by this
+policy in the model environment. In order to enforce exploration, the model
+is wrapped for an RMax-like behavior so that it returns the reward RMax for 
+all states that have not been sufficiently explored. RMax should be an upper
+bound to the actual achievable return in order to enforce optimism in the
+face of uncertainty.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Monte-Carlo</em>&#8216; from module monte_carlo_agent
+implemented in class MonteCarloAgent.</p>
+<blockquote>
+<div><p>An agent which uses Monte Carlo policy evaluation to optimize its behavior
+in a given environment.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Dyna TD</em>&#8216; from module dyna_td_agent
+implemented in class DynaTDAgent.</p>
+<blockquote>
+<div><p>Dyna-TD uses temporal difference learning along with 
+learning a model of the environment and doing planning in it.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Temporal Difference + Eligibility</em>&#8216; from module td_lambda_agent
+implemented in class TDLambdaAgent.</p>
+<blockquote>
+<div><p>An agent that uses temporal difference learning  (e.g. Sarsa)
+with eligibility traces and function approximation (e.g. linear tile
+coding CMAC) to optimize its behavior in a given environment</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Policy Replay</em>&#8216; from module policy_replay_agent
+implemented in class PolicyReplayAgent.</p>
+<blockquote>
+<div><p>Agent which loads a stored policy and follows it without improving it.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Random</em>&#8216; from module random_agent
+implemented in class RandomAgent.</p>
+</li>
+<li><p class="first">Agent &#8216;<em>Actor Critic</em>&#8216; from module actor_critic_agent
+implemented in class ActorCriticAgent.</p>
+<blockquote>
+<div><p>This agent learns based on the actor critic architecture.   
+It uses standard TD(lambda) to learn the value function of
+the critic. For this reason, it subclasses TDLambdaAgent. The main
+difference to TD(lambda) is the means for action selection. Instead of
+deriving an epsilon-greedy policy from its Q-function, it learns an 
+explicit stochastic policy. To this end, it maintains preferences for each
+action in each state. These preferences are updated after each action
+execution according to the following rule:</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>RoundRobin</em>&#8216; from module example_agent
+implemented in class ExampleAgent.</p>
+</li>
+<li><p class="first">Agent &#8216;<em>Direct Policy Search</em>&#8216; from module dps_agent
+implemented in class DPS_Agent.</p>
+<blockquote>
+<div><p>This agent uses a black-box optimization algorithm to optimize the parameters 
+of a parametrized policy such that the accumulated (undiscounted) reward of the
+the policy is maximized.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Agent &#8216;<em>Fitted-RMax</em>&#8216; from module fitted_r_max_agent
+implemented in class FittedRMaxAgent.</p>
+<blockquote>
+<div><p>Fitted R-Max is a model-based RL algorithm that uses the RMax heuristic for
+exploration control, uses a fitted function approximator (even though this can
+be configured differently), and uses Dynamic Programming (boosted by prioritized
+sweeping) for deriving a value function from the model. Fitted R-Max learns 
+usually very sample-efficient (meaning that a good policy is learned with only a 
+few interactions with the environment) but requires a huge amount of 
+computational resources.</p>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Tutorial <a class="reference internal" href="../tutorials/writing_agents.html#writing-agents"><em>Writing an agent</em></a></dt>
+<dd>Learn how to write your own MMLF agent</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="existing-environments">
+<span id="environment-list"></span><h2>Existing environments<a class="headerlink" href="#existing-environments" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This list of environments has been automatically generated from the source code</p>
+</div>
+<span class="target" id="module-worlds"></span><p>Package that contains all available MMLF world environments.</p>
+<dl class="docutils">
+<dt>A list of all environments:</dt>
+<dd><ul class="first last">
+<li><p class="first">Environment &#8216;<em>Maze Cliff</em>&#8216; from module maze_cliff_environment
+implemented in class MazeCliffEnvironment.</p>
+<blockquote>
+<div><p>In this maze, there are two alternative ways from the start to the goal 
+state: one short way which leads along a dangerous cliff and one long 
+but secure way. If the agent happens to step into the maze, it will
+get a huge negative reward (configurable via <em>cliffPenalty</em>) and is reset
+into the start state. Per default, the maze is deterministic, i.e. the agent 
+always moves in the direction it chooses. However, the parameter
+<em>stochasticity</em> allows to control the stochasticity of the environment.
+For instance, when stochasticity is set to 0.01, the the agent performs a
+random move instead of the chosen one with probability 0.01.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Pinball 2D</em>&#8216; from module pinball_maze_environment
+implemented in class PinballMazeEnvironment.</p>
+<blockquote>
+<div><p>The pinball maze environment class.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Linear Markov Chain</em>&#8216; from module linear_markov_chain_environment
+implemented in class LinearMarkovChainEnvironment.</p>
+<blockquote>
+<div><p>The agent starts in the middle of this linear markov chain. He can either
+move right or left. The chain is not stochastic, i.e. when the agent 
+wants to move right, the state is decreased with probability 1 by 1.  
+When the agent wants to move left, the state is increased with probability 1
+by 1 accordingly.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Maze 2D</em>&#8216; from module maze2d_environment
+implemented in class Maze2dEnvironment.</p>
+<blockquote>
+<div><p>A 2d maze world, in which the agent is situated at each moment in time in a 
+certain field (specified by its (row,column) coordinate) and can move
+either upwards, downwards, left or right. The structure of the maze can be
+configured via a text-based config file.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Double Pole Balancing</em>&#8216; from module double_pole_balancing_environment
+implemented in class DoublePoleBalancingEnvironment.</p>
+<blockquote>
+<div><p>In the double pole balancing environment, the task of the agent is to control
+a cart such that two poles which are mounted on the cart stay in a nearly
+vertical position (to balance them). At the same time, the cart has to stay
+in a confined region.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Partial Observable Double Pole Balancing</em>&#8216; from module po_double_pole_balancing_environment
+implemented in class PODoublePoleBalancingEnvironment.</p>
+<blockquote>
+<div><p>In the partially observable double pole balancing environment, 
+the task of the agent is to control a cart such that two poles which are mounted
+on the cart stay in a nearly vertical position (to balance them). At the same 
+time, the cart has to stay in a confined region. In contrast to the fully
+observable double pole balancing environment, the agent only observes the
+current position of cart and the two poles but not their velocities.
+This renders the problem to be not markovian.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Mountain Car</em>&#8216; from module mcar_env
+implemented in class MountainCarEnvironment.</p>
+<blockquote>
+<div><p>In the mountain car environment, the agent has to control a car which is
+situated somewhere in a valley between two hills. The goal of the agent
+is to reach the top of the right hill. Unfortunately, the engine of the
+car is not strong enough to reach the top of the hill directly from many
+start states. Thus, it has first to drive in the wrong direction to gather
+enough potential energy.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Single Pole Balancing</em>&#8216; from module single_pole_balancing_environment
+implemented in class SinglePoleBalancingEnvironment.</p>
+<blockquote>
+<div><p>In the single pole balancing environment, the task of the agent is to control
+a cart such that a pole which is mounted on the cart stays in a nearly
+vertical position (to balance it). At the same time, the cart has to stay
+in a confined region.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Environment &#8216;<em>Seventeen and Four</em>&#8216; from module seventeen_and_four
+implemented in class SeventeenAndFourEnvironment.</p>
+<blockquote>
+<div><p>This environment implements a simplified form of the card game seventeen &amp; four,
+in which the agent takes the role of the player and plays against a hard-coded 
+dealer.</p>
+</div></blockquote>
+</li>
+</ul>
+</dd>
+</dl>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Tutorial <a class="reference internal" href="../tutorials/writing_environments.html#writing-environments"><em>Writing an environment</em></a></dt>
+<dd>Learn how to write your own MMLF environment</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="learn_more.html">Learn more about...</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Existing Agents and Environments</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#existing-agents">Existing agents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#existing-environments">Existing environments</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="evaluating_experiments.html">Experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_and_action_spaces.html">State and Action Spaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="viewers.html">Viewers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="learn_more.html"
+                        title="previous chapter">Learn more about...</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="evaluating_experiments.html"
+                        title="next chapter">Experiments</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/learn_more/agents_and_environments.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="evaluating_experiments.html" title="Experiments"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="learn_more.html" title="Learn more about..."
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" >Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

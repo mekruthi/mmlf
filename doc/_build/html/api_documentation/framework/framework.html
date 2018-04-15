@@ -1,0 +1,892 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Framework &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../../index.html" />
+    <link rel="up" title="API-documentation" href="../api_documentation.html" />
+    <link rel="prev" title="Skill Discovery" href="../resources/skill_discovery.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../resources/skill_discovery.html" title="Skill Discovery"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" accesskey="U">API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-framework">
+<span id="framework"></span><h1>Framework<a class="headerlink" href="#module-framework" title="Permalink to this headline">¶</a></h1>
+<p>Package that contains the core components of the MMLF.</p>
+<div class="section" id="module-framework.world">
+<span id="world"></span><h2>World<a class="headerlink" href="#module-framework.world" title="Permalink to this headline">¶</a></h2>
+<p>Module containing a class that represents a RL world in the MMLF.</p>
+<dl class="class">
+<dt id="framework.world.World">
+<em class="property">class </em><tt class="descclassname">framework.world.</tt><tt class="descname">World</tt><big>(</big><em>worldConfigObject</em>, <em>baseUserDir</em>, <em>useGUI</em><big>)</big><a class="headerlink" href="#framework.world.World" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a world consisting of one agent and environment</p>
+<p>The world is created based on a configuration dictionary (worldConfigObject).
+and provides methods for creating agent and environment based on this
+specification and for running the world a given number of steps or epsiodes.</p>
+<dl class="method">
+<dt id="framework.world.World.agentPollMethod">
+<tt class="descname">agentPollMethod</tt><big>(</big><em>commandObject</em><big>)</big><a class="headerlink" href="#framework.world.World.agentPollMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Let the agent execute the given command object.</p>
+<p>Valid command objects are found in the mmlf.framework.protocol module.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.createMonitor">
+<tt class="descname">createMonitor</tt><big>(</big><em>monitorConf=None</em><big>)</big><a class="headerlink" href="#framework.world.World.createMonitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create monitor based on monitorConf.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.environmentPollMethod">
+<tt class="descname">environmentPollMethod</tt><big>(</big><em>commandObject</em><big>)</big><a class="headerlink" href="#framework.world.World.environmentPollMethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Let the environment execute the given command object.</p>
+<p>Valid command objects are found in the mmlf.framework.protocol module.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.executeEpisode">
+<tt class="descname">executeEpisode</tt><big>(</big><em>monitorConf=None</em><big>)</big><a class="headerlink" href="#framework.world.World.executeEpisode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes one episode in the current world.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.executeSteps">
+<tt class="descname">executeSteps</tt><big>(</big><em>n=1</em>, <em>monitorConf=None</em><big>)</big><a class="headerlink" href="#framework.world.World.executeSteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes n steps of the current world.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.getAgent">
+<tt class="descname">getAgent</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.world.World.getAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the world&#8217;s agent</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.getEnvironment">
+<tt class="descname">getEnvironment</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.world.World.getEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the world&#8217;s environment</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.loadAgent">
+<tt class="descname">loadAgent</tt><big>(</big><em>agentConfig</em>, <em>useGUI</em><big>)</big><a class="headerlink" href="#framework.world.World.loadAgent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create agent based on agent config dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.loadEnvironment">
+<tt class="descname">loadEnvironment</tt><big>(</big><em>envConfig</em>, <em>useGUI</em><big>)</big><a class="headerlink" href="#framework.world.World.loadEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create environment based on environment config dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.run">
+<tt class="descname">run</tt><big>(</big><em>numOfEpisodes=inf</em>, <em>monitorConf=None</em><big>)</big><a class="headerlink" href="#framework.world.World.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the execution of the current world.</p>
+<p>Let the world run for <em>numOfEpisodes</em> episodes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.setWorldPackageName">
+<tt class="descname">setWorldPackageName</tt><big>(</big><em>worldPackageName</em><big>)</big><a class="headerlink" href="#framework.world.World.setWorldPackageName" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the name of the python package from which the world should be taken.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.world.World.stop">
+<tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.world.World.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Halt the execution of the current world.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-framework.spaces">
+<span id="spaces"></span><h2>Spaces<a class="headerlink" href="#module-framework.spaces" title="Permalink to this headline">¶</a></h2>
+<p>Modules for state and action spaces</p>
+<p>State and action spaces define the range of possible states the agent might
+perceive and the actions that are available to the agent. These spaces are 
+dict-like objects that map dimension names (the dict keys) to dimension objects 
+that contain information about this dimension. The number of items in this 
+dict-like structure is the dimensionality of the (state/action) space.</p>
+<dl class="class">
+<dt id="framework.spaces.Dimension">
+<em class="property">class </em><tt class="descclassname">framework.spaces.</tt><tt class="descname">Dimension</tt><big>(</big><em>dimensionName</em>, <em>dimensionType</em>, <em>dimensionValues</em>, <em>limitType=None</em><big>)</big><a class="headerlink" href="#framework.spaces.Dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>A single dimension of a (state or action) space</p>
+<p>A dimension is either continuous or discrete. A &#8220;discrete&#8221; dimension
+might take on only a finite, discrete number of values.</p>
+<p>For instance, consider a dimension of a state space describing the color of
+a fruit. This dimension take on the values &#8220;red&#8221;, &#8220;blue&#8221;, or &#8220;green&#8221;. 
+In contrast, consider a second &#8220;continuous&#8221; dimension, e.g. the weight of 
+a fruit. This weight might be somewhere between 0g and 1000g. 
+If we allow any arbitrary weight (not only full gramms), the dimension is 
+truly continuous.</p>
+<dl class="docutils">
+<dt>This properties of a dimension can be checked using the method:</dt>
+<dd><ul class="first last">
+<li><p class="first"><em>isDiscrete</em> : Returns whether the respective dimension is discrete</p>
+</li>
+<li><p class="first"><em>isContinuous</em> : Returns whether the respective dimension is continuous</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>getValueRanges</em> <span class="classifier-delimiter">:</span> <span class="classifier">Returns the allowed values a continuous! dimension</span></dt>
+<dd><p class="first last">might take on.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>getValues</em> <span class="classifier-delimiter">:</span> <span class="classifier">Returns the allowed values a discrete! dimension</span></dt>
+<dd><p class="first last">might take on.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="framework.spaces.Dimension.getValueRanges">
+<tt class="descname">getValueRanges</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Dimension.getValueRanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the ranges the value of this dimension can take on</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Dimension.getValues">
+<tt class="descname">getValues</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Dimension.getValues" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all possible values of this dimension</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Dimension.isContinuous">
+<tt class="descname">isContinuous</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Dimension.isContinuous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether this is a continuous dimension</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Dimension.isDiscrete">
+<tt class="descname">isDiscrete</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Dimension.isDiscrete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether this is a discrete dimension</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.spaces.Space">
+<em class="property">class </em><tt class="descclassname">framework.spaces.</tt><tt class="descname">Space</tt><a class="headerlink" href="#framework.spaces.Space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for state and action spaces.</p>
+<p>Class which represents the state space of an environment or the action space
+of an agent.</p>
+<p>This is essentially a dictionary whose keys are the names of the dimensions,
+and whose values are <em>Dimension</em> objects.</p>
+<dl class="method">
+<dt id="framework.spaces.Space.addContinuousDimension">
+<tt class="descname">addContinuousDimension</tt><big>(</big><em>dimensionName</em>, <em>dimensionValues</em>, <em>limitType='soft'</em><big>)</big><a class="headerlink" href="#framework.spaces.Space.addContinuousDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the named continuous dimension to the space.</p>
+<p>dimensionValues is a list of (rangeStart, rangeEnd) 2-tuples which define the valid ranges
+of this dimension. (i.e. [(0, 50), (75.5, 82)] )</p>
+<p>If limitType is set to &#8220;hard&#8221;, then the agent is responsible to check that the limits are
+not exceeded.  When it is set to &#8220;soft&#8221;, then the agent should not expect that all the values
+of this dimension will be strictly within the bounds of the specified ranges, but that
+the ranges serve as an approximate values of where the values will be (i.e. as
+[mean-std.dev., mean+std.dev] instead of [absolute min. value, absolute max. value])</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.addDiscreteDimension">
+<tt class="descname">addDiscreteDimension</tt><big>(</big><em>dimensionName</em>, <em>dimensionValues</em><big>)</big><a class="headerlink" href="#framework.spaces.Space.addDiscreteDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the named continuous dimension to the space.</p>
+<p>dimensionValues is a list of strings representing possible discrete states of this dimension.
+(i.e. [&#8220;red&#8221;, &#8220;green&#8221;, &#8220;blue&#8221;])</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.addOldStyleSpace">
+<tt class="descname">addOldStyleSpace</tt><big>(</big><em>oldStyleSpace</em>, <em>limitType='soft'</em><big>)</big><a class="headerlink" href="#framework.spaces.Space.addOldStyleSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes an old-style (using the old format) space dictionary, and adds its dimensions to this
+object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.getDimensionNames">
+<tt class="descname">getDimensionNames</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.getDimensionNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the names of the space dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.getDimensions">
+<tt class="descname">getDimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.getDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the names of the space dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.getNumberOfDimensions">
+<tt class="descname">getNumberOfDimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.getNumberOfDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns how many dimensions this space has</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.hasContinuousDimensions">
+<tt class="descname">hasContinuousDimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.hasContinuousDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether this space has continuous dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.hasDiscreteDimensions">
+<tt class="descname">hasDiscreteDimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.hasDiscreteDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether this space has discrete dimensions</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.spaces.StateSpace">
+<em class="property">class </em><tt class="descclassname">framework.spaces.</tt><tt class="descname">StateSpace</tt><a class="headerlink" href="#framework.spaces.StateSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specialization of Space for state spaces.</p>
+<p>For instance, a state space could be defined as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span> <span class="s">&quot;color&quot;</span><span class="p">:</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">dimensionType</span> <span class="o">=</span> <span class="s">&quot;discrete&quot;</span><span class="p">,</span>
+                     <span class="n">dimensionValues</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="s">&quot;green&quot;</span><span class="p">,</span> <span class="s">&quot;blue&quot;</span><span class="p">]),</span>
+  <span class="s">&quot;weight&quot;</span><span class="p">:</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">dimensionType</span> <span class="o">=</span> <span class="s">&quot;continuous&quot;</span><span class="p">,</span>
+                      <span class="n">dimensionValues</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)])</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This state space has two dimensions (&#8220;color&#8221; and &#8220;weight&#8221;), a discrete and a 
+continuous one. The discrete dimension &#8220;color&#8221; can take on three values
+(&#8220;red&#8221;,&#8221;green&#8221;, or &#8220;blue&#8221;) and the continuous dimension &#8220;weight&#8221; any value
+between 0 and 1000.</p>
+<p>A valid state of the state space defined above would be:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s1</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;color&quot;</span><span class="p">:</span> <span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="s">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">300</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Invalid states (s2 since the color is invalid and s3 since its weight is
+too large):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s2</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;color&quot;</span><span class="p">:</span> <span class="s">&quot;yellow&quot;</span><span class="p">,</span> <span class="s">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">300</span><span class="p">}</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;color&quot;</span><span class="p">:</span> <span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="s">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">1300</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The class provides additional methods for checking if a certain state is  
+valid according to this state space (<em>isValidState</em>) and to scale a state 
+such that it lies within a certain interval (<em>scaleState</em>).</p>
+<dl class="method">
+<dt id="framework.spaces.StateSpace.getStateList">
+<tt class="descname">getStateList</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.StateSpace.getStateList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all possible states.</p>
+<p>Even if this state space has more than one dimension, it returns a one
+dimensional list that contains all possible states.</p>
+<p>This is achieved by creating the crossproduct of the values of
+all dimensions. It requires that all dimensions are discrete.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.spaces.ActionSpace">
+<em class="property">class </em><tt class="descclassname">framework.spaces.</tt><tt class="descname">ActionSpace</tt><a class="headerlink" href="#framework.spaces.ActionSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specialization of Space for action spaces.</p>
+<p>For instance, an action space could be defined as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span> <span class="s">&quot;gasPedalForce&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;discrete&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;low&quot;</span><span class="p">,</span> <span class="s">&quot;medium&quot;</span><span class="p">,</span> <span class="s">&quot;floored&quot;</span><span class="p">]),</span>
+  <span class="s">&quot;steeringWheelAngle&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;continuous&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="o">-</span><span class="mi">120</span><span class="p">,</span><span class="mi">120</span><span class="p">)])</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This action space has two dimensions (&#8220;gasPedalForce&#8221; and
+&#8220;steeringWheelAngle&#8221;), a discrete and a continuous one. 
+The discrete dimension &#8220;gasPedalForce&#8221; can take on three values
+(&#8220;low&#8221;,&#8221;medium&#8221;, or &#8220;floored&#8221;) and the continuous dimension 
+&#8220;steeringWheelAngle&#8221; any value between -120 and 120.</p>
+<p>A valid action according to this action space would be:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a1</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;gasPedalForce&quot;</span><span class="p">:</span> <span class="s">&quot;low&quot;</span><span class="p">,</span> <span class="s">&quot;steeringWheelAngle&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">50</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Invalid actions (a2 since the gasPedalForce is invalid and s3 since its 
+steeringWheelAngle is too small):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a2</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;gasPedalForce&quot;</span><span class="p">:</span> <span class="s">&quot;extreme&quot;</span><span class="p">,</span> <span class="s">&quot;steeringWheelAngle&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}</span>
+<span class="n">a3</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;gasPedalForce&quot;</span><span class="p">:</span> <span class="s">&quot;medium&quot;</span><span class="p">,</span> <span class="s">&quot;steeringWheelAngle&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">150</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The class provides additional methods for discretizing an action space
+(<em>discretizedActionSpace</em>) and to return a list of all available actions
+(<em>getActionList</em>).</p>
+<dl class="method">
+<dt id="framework.spaces.ActionSpace.chopContinuousAction">
+<tt class="descname">chopContinuousAction</tt><big>(</big><em>action</em><big>)</big><a class="headerlink" href="#framework.spaces.ActionSpace.chopContinuousAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Chop a continuous action into the range of allowed values.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.ActionSpace.discretizedActionSpace">
+<tt class="descname">discretizedActionSpace</tt><big>(</big><em>discreteActionsPerDimension</em><big>)</big><a class="headerlink" href="#framework.spaces.ActionSpace.discretizedActionSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a discretized version of this action space</p>
+<p>Returns a discretized version of this action space. Every continuous
+action space dimension is discretized into <em>discreteActionsPerDimension</em>
+actions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.ActionSpace.getActionList">
+<tt class="descname">getActionList</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.ActionSpace.getActionList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of all allowed action an agent might take.</p>
+<p>Even if this action space has more than one dimension, it returns a one
+dimensional list that contains all allowed action combinations.</p>
+<p>This is achieved by creating the crossproduct of the values of
+all dimensions. It requires that all dimensions are discrete.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.ActionSpace.sampleRandomAction">
+<tt class="descname">sampleRandomAction</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.ActionSpace.sampleRandomAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a randomly sampled, valid action from the action space.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-framework.state">
+<span id="state"></span><h2>State<a class="headerlink" href="#module-framework.state" title="Permalink to this headline">¶</a></h2>
+<p>Module that contains the main State class of the MMLF</p>
+<p>The MMLF uses a state class that is derived from numpy.array. In contrast
+to numpy.array, MMLF states can be hashed and thus be used as keys for 
+dictionaries and set. This is realized by calling 
+&#8220;hashlib.sha1(self).hexdigest()&#8221;
+In order to improve performance, State classes cache their hash value. Because
+of this, it is necessary to consider a state object to be constant, i.e. not
+changeable (except for calling &#8220;scale&#8221;).</p>
+<p>Each state object stores its state dimension definition. Furthermore, it 
+implements a method &#8220;scale(self, minValue = 0, maxValue = 1):&#8221; which scales each
+dimension into the range (minValue, maxValue).</p>
+<dl class="class">
+<dt id="framework.state.State">
+<em class="property">class </em><tt class="descclassname">framework.state.</tt><tt class="descname">State</tt><a class="headerlink" href="#framework.state.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>State class for the MMLF.</p>
+<p>Based on numpy arrays, but can be used as dictionary key</p>
+<dl class="method">
+<dt id="framework.state.State.hasDimension">
+<tt class="descname">hasDimension</tt><big>(</big><em>dimension</em><big>)</big><a class="headerlink" href="#framework.state.State.hasDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether this state has the dimension <em>dimension</em></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.state.State.isContinuous">
+<tt class="descname">isContinuous</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.state.State.isContinuous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether this state is in a continuous state space</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.state.State.scale">
+<tt class="descname">scale</tt><big>(</big><em>minValue=0</em>, <em>maxValue=1</em><big>)</big><a class="headerlink" href="#framework.state.State.scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scale state such that it falls into the range (minValue, maxValue)</p>
+<p>Scale the state so that (for each dimension) the range specified
+in this state space is scaled to the interval (minValue, maxValue)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-framework.monitor">
+<span id="monitor"></span><h2>Monitor<a class="headerlink" href="#module-framework.monitor" title="Permalink to this headline">¶</a></h2>
+<p>Monitoring of the MMLF based on logging performance metrics and graphics.</p>
+<dl class="class">
+<dt id="framework.monitor.Monitor">
+<em class="property">class </em><tt class="descclassname">framework.monitor.</tt><tt class="descname">Monitor</tt><big>(</big><em>world</em>, <em>configDict</em><big>)</big><a class="headerlink" href="#framework.monitor.Monitor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Monitor of the MMLF.</p>
+<p>The monitor supervises the execution of a world within the MMLF and stores
+certain selected information periodically. It always stores the values a
+FloatStreamObservable takes on into a file with the suffix &#8220;fso&#8221;. For other 
+observables (FunctionOverStateSpaceObservable, StateActionValuesObservable,
+ModelObservable) a plot is generated and stored into files if this is 
+specified in the monitor&#8217;s config dict (using functionOverStateSpaceLogging,
+stateActionValuesLogging, modelLogging).</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">policyLogFrequency:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Frequency of storing the agent&#8217;s policy in a serialized version to a file.
+The policy is stored in the file policy_x in the 
+subdirectory &#8220;policy&#8221; of the agent&#8217;s log directory 
+where x is the episodes&#8217; numbers.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">plotObservables:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The names of the observables that should be stored to a file. If &#8220;All&#8221;, all observables are stored.
+Defaults to &#8220;All&#8221; (also if plotObservables is not specified in a config file).</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">stateActionValuesLogging:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Configuration of periodically plotting StateActionValuesObservables.
+Examples for StateActionValuesObservable are
+state-action value functions or stochastic policies.
+The plots are stored in the file episode_x.pdf in a 
+subdirectory  of the agent&#8217;s log directory
+with the observable&#8217;s name where x is the episodes&#8217; numbers.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">functionOverStateSpaceLogging:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: Configuration of periodically plotting FunctionOverStateSpaceObservables.
+Examples for FunctionOverStateSpaceObservable are
+state value functions or deterministic policies.
+The plots are stored in the file episode_x.pdf in a 
+subdirectory  of the agent&#8217;s log directory
+with the observable&#8217;s name where x is the episodes&#8217; numbers.</td>
+</tr>
+<tr class="field"><th class="field-name">modelLogging:</th><td class="field-body">: Configuration of periodically plotting ModelObservables.
+Examples for ModelObservables are models.
+The plots are stored in the file episode_x.pdf in a 
+subdirectory  of the agent&#8217;s log directory
+with the observable&#8217;s name where x is the episodes&#8217; numbers.</td>
+</tr>
+<tr class="field"><th class="field-name">active:</th><td class="field-body">: Whether the respective kind of logging is activated</td>
+</tr>
+<tr class="field"><th class="field-name">logFrequency:</th><td class="field-body">: Frequency (in episodes) of creating a plot based on the respective observable and storing it to a file.</td>
+</tr>
+<tr class="field"><th class="field-name">stateDims:</th><td class="field-body">: The state space dimensions that are varied in the plot. All other state space dimensions are kept constant.
+If None, the stateDims are automatically deduced. This is only possible under specific conditions (2d state space)</td>
+</tr>
+<tr class="field"><th class="field-name">actions:</th><td class="field-body">: The actions for which separate plots are created for each StateActionValuesObservable.</td>
+</tr>
+<tr class="field"><th class="field-name">rasterPoints:</th><td class="field-body">: The resolution (rasterPoint*rasterPoint) of the plot in continuous domain.</td>
+</tr>
+<tr class="field"><th class="field-name">colouring:</th><td class="field-body">: The background colouring of a model plot. Can be either &#8220;Rewards&#8221; or &#8220;Exploration&#8221;.
+If &#8220;Rewards&#8221;, the reward predicted by the model is used for 
+as background, while for &#8220;Exploration&#8221;, each state-action 
+pair tried at least minExplorationValue times is coloured
+with one colour, the others with an other colour.</td>
+</tr>
+<tr class="field"><th class="field-name">plotSamples:</th><td class="field-body">: If true, the state-action pairs that have been observed are plotted into the model-plot. Otherwise the model&#8217;s predictions.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">minExplorationValue:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: If the colouring is &#8220;Exploration&#8221;, each state-action pair tried at least minExplorationValue times is coloured with one colour, the others with an other colour.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+<dl class="method">
+<dt id="framework.monitor.Monitor.notifyEndOfEpisode">
+<tt class="descname">notifyEndOfEpisode</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.monitor.Monitor.notifyEndOfEpisode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Notify monitor that an episode in the world has terminated.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-framework.experiment">
+<span id="experiment"></span><h2>Experiment<a class="headerlink" href="#module-framework.experiment" title="Permalink to this headline">¶</a></h2>
+<p>Classes and functions used for MMLF experiments.</p>
+<dl class="class">
+<dt id="framework.experiment.RetryQueue">
+<em class="property">class </em><tt class="descclassname">framework.experiment.</tt><tt class="descname">RetryQueue</tt><big>(</big><em>maxsize=0</em><big>)</big><a class="headerlink" href="#framework.experiment.RetryQueue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queue which will retry if interrupted with EINTR.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.experiment.WorldRunner">
+<em class="property">class </em><tt class="descclassname">framework.experiment.</tt><tt class="descname">WorldRunner</tt><big>(</big><em>worldConfigObject</em>, <em>numberOfEpisodes</em>, <em>exceptionOccurredSignal=None</em><big>)</big><a class="headerlink" href="#framework.experiment.WorldRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class which encapsulates running of a world in an MMLF experiment.</p>
+<p>This class contains code for supporting the distributed, concurrent execution
+of worlds in an MMLF experiment. One instance of the class WorldRunner
+should be created for every run of a world. By calling this instance,
+the world is executed. This may happen in a separate thread or process since
+the instances of WorldRunner can be passed between threads and processes.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">worldConfigObject:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The world configuration (in a dictionary)</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">numberOfEpisodes:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The number of episodes that should be conducted in the world</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">exceptionOccurredSignal:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: An optional PyQt signal to which exceptions can be send</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="framework.experiment.runExperiment">
+<tt class="descclassname">framework.experiment.</tt><tt class="descname">runExperiment</tt><big>(</big><em>experimentConfig</em>, <em>observableQueue</em>, <em>updateQueue</em>, <em>exceptionOccurredSignal</em>, <em>useGUI=True</em><big>)</big><a class="headerlink" href="#framework.experiment.runExperiment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the execution of an experiment.</p>
+<p>This function handles the concurrent or sequential execution of an experiment.</p>
+<dl class="docutils">
+<dt><strong>Parameters</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">experimentConfig:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The experiment configuration (in a dictionary)</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">observableQueue:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: A multiprocessing.Queue. Used for informing the main 
+process (e.g. the GUI) of observables created in the
+world runs.</td>
+</tr>
+<tr class="field"><th class="field-name">updateQueue:</th><td class="field-body">: A multiprocessing.Queue. Used for informing the main 
+process (e.g. the GUI) of changes in observables.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">exceptionOccurredSignal:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: An optional PyQt signal to which exceptions 
+can be send</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-framework.filesystem">
+<span id="filesystem"></span><h2>Filesystem<a class="headerlink" href="#module-framework.filesystem" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="framework.filesystem.BaseUserDirectory">
+<em class="property">class </em><tt class="descclassname">framework.filesystem.</tt><tt class="descname">BaseUserDirectory</tt><big>(</big><em>basePath='/home/jmetzen/.mmlf'</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a user&#8217;s base-directory (typically $HOME/.mmlf)</p>
+<p>In this directory, the user can define worlds, YAML configuration files, 
+and the interaction server logs information while running a world.</p>
+<dl class="method">
+<dt id="framework.filesystem.BaseUserDirectory.addAbsolutePath">
+<tt class="descname">addAbsolutePath</tt><big>(</big><em>absDirPath</em>, <em>pathRef</em>, <em>force=False</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory.addAbsolutePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add an absolute path to self.pathDict.  This is so that other commands can use this path
+via the pathRef shortcut.</p>
+<p>The force argument allows an existing pathRef to be overridden.  Normally this is
+not recommended, unless the pathRef is known not to be used globally.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.filesystem.BaseUserDirectory.appendStringToPath">
+<tt class="descname">appendStringToPath</tt><big>(</big><em>pathRef</em>, <em>stringToAppend=None</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory.appendStringToPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modify the absolute path stored under pathRef, appending a &#8220;_&lt;timestamp&gt;&#8221; string to the end
+of the path (where &lt;timestamp&gt; will be something like 20070929_12_59_59, which represents
+12:59:59 on 2007-09-29).  If _&lt;timestamp&gt; has already been appended to the end of the path,
+it is replaced with a current timestamp.</p>
+<p>If stringToAppend is provided, then a timestamp is <em>NOT</em> added, and instead, only the
+specified string is appended.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.filesystem.BaseUserDirectory.createPath">
+<tt class="descname">createPath</tt><big>(</big><em>pathList</em>, <em>refName=None</em>, <em>baseRef=None</em>, <em>force=False</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory.createPath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Attept to create the path specified in pathList.  pathList is a list which contains a series
+of directory names.  For example, it might be [&#8216;abc&#8217;,&#8217;def&#8217;,&#8217;ghi&#8217;], which would cause this
+method to create all the necessary directories such that the following path exists:</p>
+<blockquote>
+<div>$HOME/.mmlf/abc/def/ghi</div></blockquote>
+<p>refName is a quick reference name which can be used to refer to the path.  If specified,
+the full path will be added to a dictionary, in which the key is the value of refName
+(a string, for example).</p>
+<p>If the baseRef argument is provided, it will be looked up and used as the base directory to
+which the path defined in pathList will be appended.  For example, if there already exists
+a &#8216;logdir&#8217; refName in self.pathDict, then writing createPath([&#8216;a&#8217;,&#8217;b&#8217;,&#8217;c&#8217;], baseRef=&#8217;logdir&#8217;)
+might create (depending on how &#8216;logdir&#8217; is defined) the directories needed for the path
+&#8220;$HOME/.mmlf/logs/a/b/c/&#8221;.</p>
+<p>The force argument allows an existing refName to be overridden.  Normally this is
+not recommended, unless the refName is known not to be used globally.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.filesystem.BaseUserDirectory.fileExists">
+<tt class="descname">fileExists</tt><big>(</big><em>pathRef</em>, <em>fileName</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory.fileExists" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check to see if the file (located in the path referred to by pathRef) exists.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.filesystem.BaseUserDirectory.getAbsolutePath">
+<tt class="descname">getAbsolutePath</tt><big>(</big><em>pathRef</em>, <em>fileName=None</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory.getAbsolutePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the absolute path to file fileName located in the directory referred to by pathRef.
+If no filename is specified, then only the path corresponding to pathRef is returned.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.filesystem.BaseUserDirectory.getFileAsText">
+<tt class="descname">getFileAsText</tt><big>(</big><em>pathRef</em>, <em>fileName</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory.getFileAsText" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the contents of the file fileName located in the directory referred to by pathRef, and
+return it as a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.filesystem.BaseUserDirectory.getFileObj">
+<tt class="descname">getFileObj</tt><big>(</big><em>pathRef</em>, <em>fileName</em>, <em>fileOpenMode='rb'</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory.getFileObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a file handle object for the fileName specified, assuming that the file is located in
+the directory referred to by pathRef (in self.pathDict).  It is the programmer&#8217;s 
+responsibility to close this file object later on after it has been created..</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.filesystem.BaseUserDirectory.setBasePath">
+<tt class="descname">setBasePath</tt><big>(</big><em>absolutePath=None</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory.setBasePath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set (and create if necessary) the base user-directory path.  If a path is specified
+(as an absolute path string), then it is used.  Otherwise, the default path is
+used.</p>
+<p>If for some reason this fails, then a writeable temporary directory is chosen.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.filesystem.BaseUserDirectory.setTime">
+<tt class="descname">setTime</tt><big>(</big><em>timeStr=None</em><big>)</big><a class="headerlink" href="#framework.filesystem.BaseUserDirectory.setTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the time string of baseUserDir (which is used to distinguish the logs of different runs).</p>
+<p>If no timeString is given, it defaults to the current time</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.filesystem.LogFile">
+<em class="property">class </em><tt class="descclassname">framework.filesystem.</tt><tt class="descname">LogFile</tt><big>(</big><em>baseUserDir</em>, <em>logFileName</em>, <em>baseRef=None</em><big>)</big><a class="headerlink" href="#framework.filesystem.LogFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a logfile, to which data can be written.</p>
+<dl class="method">
+<dt id="framework.filesystem.LogFile.addText">
+<tt class="descname">addText</tt><big>(</big><em>text</em><big>)</big><a class="headerlink" href="#framework.filesystem.LogFile.addText" title="Permalink to this definition">¶</a></dt>
+<dd><p>add the specified text to the logfile.  Note, no newline is added to the logfile, so this
+must be included in the text string if it is desired.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-framework.interaction_server">
+<span id="interaction-server"></span><h2>Interaction Server<a class="headerlink" href="#module-framework.interaction_server" title="Permalink to this headline">¶</a></h2>
+<p>InteractionServer that handles the communication between environment and agent.</p>
+<dl class="class">
+<dt id="framework.interaction_server.InteractionServer">
+<em class="property">class </em><tt class="descclassname">framework.interaction_server.</tt><tt class="descname">InteractionServer</tt><big>(</big><em>world</em>, <em>monitor</em>, <em>initialize=True</em><big>)</big><a class="headerlink" href="#framework.interaction_server.InteractionServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>InteractionServer that handles the communication between environment and agent.</p>
+<p>It controls the interaction between the environment and the agents, and allows
+direct control of various aspects of this interaction.</p>
+<dl class="method">
+<dt id="framework.interaction_server.InteractionServer.loopInitialize">
+<tt class="descname">loopInitialize</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.interaction_server.InteractionServer.loopInitialize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inform environment about agent by giving its agentInfo.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.interaction_server.InteractionServer.loopIteration">
+<tt class="descname">loopIteration</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.interaction_server.InteractionServer.loopIteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform one iteration of the interaction server loop.</p>
+<p>Call the environmentPollMethod once and based on the result,
+decide if and how to call the agentPollMethod</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.interaction_server.InteractionServer.run">
+<tt class="descname">run</tt><big>(</big><em>numOfEpisodes</em><big>)</big><a class="headerlink" href="#framework.interaction_server.InteractionServer.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run an MMLF world for <em>numOfEpisodes</em> epsiodes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.interaction_server.InteractionServer.stop">
+<tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.interaction_server.InteractionServer.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop the execution of a world.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-framework.protocol">
+<span id="protocol"></span><h2>Protocol<a class="headerlink" href="#module-framework.protocol" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="framework.protocol.Message">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">Message</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#framework.protocol.Message" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base class which represents a command or response sent between the interaction server and agents/environment.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.GiveAgentInfo">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">GiveAgentInfo</tt><big>(</big><em>agentInfo</em><big>)</big><a class="headerlink" href="#framework.protocol.GiveAgentInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives the Environment all information about the agents which the agents report on themselves.</p>
+<p>AgentInfoList is a list of AgentInfo() objects.  Each agent must make available such an object
+instance named &#8220;agentInfo&#8221;.  i.e. one can access an agents info by looking at agentObj.agentInfo</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.GetWish">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">GetWish</tt><a class="headerlink" href="#framework.protocol.GetWish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the next wish/command of the Environment</p>
+<p>The environment&#8217;s transact method should return a single message object in response to receiving
+this message object via transact().</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.ActionTaken">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">ActionTaken</tt><big>(</big><em>action=None</em><big>)</big><a class="headerlink" href="#framework.protocol.ActionTaken" title="Permalink to this definition">¶</a></dt>
+<dd><p>Communicate to the environment (from the interaction server) the action taken by an agent.</p>
+<p>This message must be communicated via Env.transact() right after the &#8216;wish&#8217; is requested by
+the environment.  In other words, there should be no other message communicated via transact()
+before this message is communicated.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.SetStateSpace">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">SetStateSpace</tt><big>(</big><em>stateSpace</em><big>)</big><a class="headerlink" href="#framework.protocol.SetStateSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the state space of one or more agents</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.SetState">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">SetState</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#framework.protocol.SetState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the state of one or more agents</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.SetActionSpace">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">SetActionSpace</tt><big>(</big><em>actionSpace</em><big>)</big><a class="headerlink" href="#framework.protocol.SetActionSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the action space of one or more agents</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.GetAction">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">GetAction</tt><big>(</big><em>extendedTestingIsActive=False</em><big>)</big><a class="headerlink" href="#framework.protocol.GetAction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Request (demand) an action from one or more agents.</p>
+<p>If this request is issued from the Environment, then it will receive a response via a subsequent
+GiveResponse command.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.GiveReward">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">GiveReward</tt><big>(</big><em>reward</em><big>)</big><a class="headerlink" href="#framework.protocol.GiveReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give a reward to one or more agents</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.NextEpisodeStarted">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">NextEpisodeStarted</tt><a class="headerlink" href="#framework.protocol.NextEpisodeStarted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Communicate to an agent that a new episode has begun</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.AgentInfo">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">AgentInfo</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#framework.protocol.AgentInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class which represents the capabilities of an agent.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="framework.protocol.EnvironmentInfo">
+<em class="property">class </em><tt class="descclassname">framework.protocol.</tt><tt class="descname">EnvironmentInfo</tt><big>(</big><em>**kwargs</em><big>)</big><a class="headerlink" href="#framework.protocol.EnvironmentInfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class which represents the configuration of an environment.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api_documentation.html">API-documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../0_mmlf_interface.html">MMLF package interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../agents.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../observables.html">Observables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../resources/resources.html">Resources</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Framework</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-framework.world">World</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-framework.spaces">Spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-framework.state">State</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-framework.monitor">Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-framework.experiment">Experiment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-framework.filesystem">Filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-framework.interaction_server">Interaction Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-framework.protocol">Protocol</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../resources/skill_discovery.html"
+                        title="previous chapter">Skill Discovery</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/api_documentation/framework/framework.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../resources/skill_discovery.html" title="Skill Discovery"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" >API-documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

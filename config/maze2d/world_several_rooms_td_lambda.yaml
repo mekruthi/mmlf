@@ -1,0 +1,31 @@
+worldPackage : maze2d
+environment:
+    moduleName : "maze2d_environment"
+    configDict:
+        episodesUntilDoorChange : 10000
+        MAZE : "maze_several_rooms.cfg"
+agent:
+    moduleName : "td_lambda_agent"
+    configDict:
+        update_rule: WatkinsQ
+        gamma : 0.99
+        epsilon : 0.1
+        lambda : 0.99
+        minTraceValue : 0.1
+        function_approximator :  
+            name: 'TabularStorage'
+            default: 0.0
+            learning_rate : 1.0
+monitor:
+    policyLogFrequency : 100
+    stateActionValuesLogging:
+        active : True
+        logFrequency : 100
+        stateDims: None
+        actions : None
+        rasterPoints : 50
+    functionOverStateSpaceLogging:
+        active : True
+        logFrequency : 100
+        stateDims : None
+        rasterPoints : 50

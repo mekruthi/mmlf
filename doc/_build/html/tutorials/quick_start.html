@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quick start (command line interface) &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Quick start (graphical user interface)" href="quick_start_gui.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="quick_start_gui.html" title="Quick start (graphical user interface)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="quick-start-command-line-interface">
+<span id="quickstart"></span><h1>Quick start (command line interface)<a class="headerlink" href="#quick-start-command-line-interface" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial explains how you can let an agent learn in a certain environment using the command line interface. It assumes that you already <a class="reference internal" href="installation.html#installation"><em>installed</em></a> the MMLF successfully.</p>
+<p>Lets assume you just want to test the TD Lambda agent in the Mountain Car environment. Starting this is essentially a one-liner at the command line:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="n">run_mmlf</span> <span class="o">--</span><span class="n">config</span> <span class="n">mountain_car</span><span class="o">/</span><span class="n">world_td_lambda_exploration</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>or for unix users with a local MMLF installation:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="o">.</span><span class="sr">/run_mmlf --config mountain_car/</span><span class="n">world_td_lambda_exploration</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>This will start the MMLF and execute the world defined in the <tt class="docutils literal"><span class="pre">world_td_lambda_exploration.yaml</span></tt> file.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If this is your very first run of the MMLF, the MMLF will create the so-called &#8220;rw-directory&#8221; for your user. This rw-directory is essentially the place where the MMLF stores the configurations of all worlds, the log files, etc. By default this directory is <tt class="docutils literal"><span class="pre">$HOME/.mmlf</span></tt> (under MS Windows, <tt class="docutils literal"><span class="pre">$USERPROFILE\.</span></tt> is used for the <tt class="docutils literal"><span class="pre">$HOME</span></tt> directory). If you want to change the configuration of a world, the rw-directory is the place to do it (<strong>not</strong> <tt class="docutils literal"><span class="pre">/etc/mmlf</span></tt>). If you want to use a different directory as the rw-directory, you can specify this with the option <tt class="docutils literal"><span class="pre">--rwpath</span></tt>. For instance, <tt class="docutils literal"><span class="pre">run_mmlf</span> <span class="pre">--config</span> <span class="pre">mountain_car/world_td_lambda_exploration.yaml</span> <span class="pre">--rwpath</span> <span class="pre">/home/someuser/Temp/mmlfrw</span></tt> would use the directory <tt class="docutils literal"><span class="pre">/home/someuser/Temp/mmlfrw</span></tt> as the rw-directory. Note that <strong>the MMLF does not remember this path</strong> &#8211; this directory must be specified every time the MMLF is invoked.</p>
+</div>
+<p>Once the MMLF rw-directory is created, the world will be started. Some information is printed out, such as information received by the agent about state and action space from the environment. Then, the agent starts to perform in the environment and the environment prints out some information about how the agent performs:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="s">&#39;2011-02-15 11:12:39,700 FrameworkLog         INFO     Using MMLF RW area /home/jmetzen/.mmlf</span>
+<span class="s">&#39;</span><span class="mi">2011</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">15</span> <span class="mi">11</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">39</span><span class="p">,</span><span class="mi">700</span> <span class="n">FrameworkLog</span>         <span class="n">INFO</span>     <span class="n">Loading</span> <span class="n">world</span> <span class="n">from</span> <span class="n">config</span> <span class="n">file</span> <span class="n">mountain_car</span><span class="o">/</span><span class="n">world_td_lambda_exploration</span><span class="o">.</span><span class="n">yaml</span><span class="o">.</span>
+<span class="s">&#39;2011-02-15 11:12:40,642 AgentLog             INFO     TDLambdaAgent got new state-space:</span>
+<span class="s">        StateSpace:</span>
+<span class="s">                position        : ContinuousDimension(LimitType: soft, Limits: (-1.200,0.600))</span>
+<span class="s">                velocity        : ContinuousDimension(LimitType: soft, Limits: (-0.070,0.070))</span>
+<span class="s">&#39;</span><span class="mi">2011</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">15</span> <span class="mi">11</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">40</span><span class="p">,</span><span class="mi">646</span> <span class="n">AgentLog</span>             <span class="n">INFO</span>     <span class="n">TDLambdaAgent</span> <span class="n">got</span> <span class="k">new</span> <span class="n">action</span><span class="o">-</span><span class="n">space:</span>
+        <span class="n">ActionSpace:</span>
+                <span class="n">thrust</span>          <span class="p">:</span> <span class="n">DiscreteDimension</span><span class="p">(</span><span class="n">Values:</span> <span class="p">[</span><span class="s">&#39;left&#39;</span><span class="p">,</span> <span class="s">&#39;right&#39;</span><span class="p">,</span> <span class="s">&#39;none&#39;</span><span class="p">])</span>
+<span class="s">&#39;2011-02-15 11:12:59,130 EnvironmentLog       INFO     No goal reached but 500 steps expired!</span>
+<span class="s">&#39;</span><span class="mi">2011</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">15</span> <span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span><span class="mi">181</span> <span class="n">EnvironmentLog</span>       <span class="n">INFO</span>     <span class="n">No</span> <span class="n">goal</span> <span class="n">reached</span> <span class="n">but</span> <span class="mi">500</span> <span class="n">steps</span> <span class="n">expired</span><span class="o">!</span>
+<span class="s">&#39;2011-02-15 11:13:22,174 EnvironmentLog       INFO     No goal reached but 500 steps expired!</span>
+<span class="s">&#39;</span><span class="mi">2011</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">15</span> <span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">28</span><span class="p">,</span><span class="mi">678</span> <span class="n">EnvironmentLog</span>       <span class="n">INFO</span>     <span class="n">Goal</span> <span class="n">reached</span> <span class="n">after</span> <span class="mi">202</span> <span class="n">steps</span><span class="o">!</span>
+<span class="s">&#39;2011-02-15 11:13:28,797 EnvironmentLog       INFO     Goal reached after 6 steps!</span>
+<span class="s">&#39;</span><span class="mi">2011</span><span class="o">-</span><span class="mo">02</span><span class="o">-</span><span class="mi">15</span> <span class="mi">11</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">31</span><span class="p">,</span><span class="mi">143</span> <span class="n">EnvironmentLog</span>       <span class="n">INFO</span>     <span class="n">Goal</span> <span class="n">reached</span> <span class="n">after</span> <span class="mi">137</span> <span class="n">steps</span><span class="o">!</span>
+
+<span class="o">....</span>
+</pre></div>
+</div>
+<p>This shows that the agent wasn&#8217;t able to reach the goal during the first episodes but over time it finds its way to the goal more frequently and faster. You can observe the performance of the agent for some time and see if its performance improves. You can stop the world by pressing Ctrl-C.</p>
+<p>Once you have stopped the learning, you can take a look in the MMLF RW area (the one created during your first run of the MMLF). There are now two subdirectories: config and logs. The logs directory contains information about the run you just conducted. Among other things, the length of the episodes is stored in a separated log file that can be used for later analysis of the agents performance. To learn more about this, you can take a look at the <a class="reference internal" href="../learn_more/logging.html#logging"><em>Logging</em></a> page. In this tutorial, we only focus on the config directory.</p>
+<p>The config directory contains configuration files for all worlds contained in the MMLF. Lets start with the world configuration file we just used to start our first MMLF run, which is located in <tt class="docutils literal"><span class="pre">config/mountain_car</span></tt>. The <tt class="docutils literal"><span class="pre">world_td_lambda_exploration.yaml</span></tt> file contains the following:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">worldPackage</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mountain_car</span>
+<span class="l-Scalar-Plain">environment</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">moduleName</span> <span class="p-Indicator">:</span> <span class="s">&quot;mcar_env&quot;</span>
+    <span class="l-Scalar-Plain">configDict</span><span class="p-Indicator">:</span> 
+        <span class="l-Scalar-Plain">maxStepsPerEpisode</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">500</span>    
+        <span class="l-Scalar-Plain">accelerationFactor</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.001</span>
+        <span class="l-Scalar-Plain">maxGoalVelocity</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.07</span>
+        <span class="l-Scalar-Plain">positionNoise</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0</span>
+        <span class="l-Scalar-Plain">velocityNoise</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0</span>
+<span class="l-Scalar-Plain">agent</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">moduleName</span> <span class="p-Indicator">:</span> <span class="s">&quot;td_lambda_agent&quot;</span>
+    <span class="l-Scalar-Plain">configDict</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">update_rule</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">SARSA</span>
+        <span class="l-Scalar-Plain">gamma</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1.0</span>
+        <span class="l-Scalar-Plain">epsilon</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.01</span>
+        <span class="l-Scalar-Plain">lambda</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.95</span>
+        <span class="l-Scalar-Plain">minTraceValue</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.5</span>
+        <span class="l-Scalar-Plain">stateDimensionResolution</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">9</span>
+        <span class="l-Scalar-Plain">actionDimensionResolution</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">7</span>
+        <span class="l-Scalar-Plain">function_approximator</span> <span class="p-Indicator">:</span> 
+            <span class="l-Scalar-Plain">name</span> <span class="p-Indicator">:</span> <span class="s">&#39;CMAC&#39;</span>
+            <span class="l-Scalar-Plain">number_of_tilings</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10</span>
+            <span class="l-Scalar-Plain">learning_rate</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.5</span>
+            <span class="l-Scalar-Plain">update_rule</span> <span class="p-Indicator">:</span> <span class="s">&#39;exaggerator&#39;</span>
+            <span class="l-Scalar-Plain">default</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0</span>
+<span class="l-Scalar-Plain">monitor</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">policyLogFrequency</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10</span>
+</pre></div>
+</div>
+<p>This file specifies where the python-modules for the agent and the environment are located and what parameters to use for the agent and environment. Furthermore, it specifies which information a module called &#8220;Monitor&#8221; will store periodically in the log directory (see <a class="reference internal" href="../learn_more/logging.html#monitor"><em>Monitor</em></a> for more details on that). The config directory contains several world specification files, for instance <tt class="docutils literal"><span class="pre">world_dps.yaml</span></tt> in the <tt class="docutils literal"><span class="pre">mountain_car</span></tt> directory:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">worldPackage</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">mountain_car</span>
+<span class="l-Scalar-Plain">environment</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">moduleName</span> <span class="p-Indicator">:</span> <span class="s">&quot;mcar_env&quot;</span>
+    <span class="l-Scalar-Plain">configDict</span><span class="p-Indicator">:</span> 
+        <span class="l-Scalar-Plain">maxStepsPerEpisode</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">500</span>    
+        <span class="l-Scalar-Plain">accelerationFactor</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.001</span>
+        <span class="l-Scalar-Plain">maxGoalVelocity</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.07</span>
+        <span class="l-Scalar-Plain">positionNoise</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0</span>
+        <span class="l-Scalar-Plain">velocityNoise</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">0.0</span>
+<span class="l-Scalar-Plain">agent</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">moduleName</span> <span class="p-Indicator">:</span> <span class="s">&quot;dps_agent&quot;</span>
+    <span class="l-Scalar-Plain">configDict</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">policy_search</span> <span class="p-Indicator">:</span> 
+            <span class="l-Scalar-Plain">method</span><span class="p-Indicator">:</span> <span class="s">&#39;fixed_parametrization&#39;</span>
+            <span class="l-Scalar-Plain">policy</span><span class="p-Indicator">:</span> 
+                <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="s">&#39;linear&#39;</span>
+                <span class="l-Scalar-Plain">numOfDuplications</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1</span>
+                <span class="l-Scalar-Plain">bias</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">True</span>
+            <span class="l-Scalar-Plain">optimizer</span><span class="p-Indicator">:</span> 
+                <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="s">&#39;evolution_strategy&#39;</span>
+                <span class="l-Scalar-Plain">sigma</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">1.0</span>
+                <span class="l-Scalar-Plain">populationSize</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">5</span>
+                <span class="l-Scalar-Plain">evalsPerIndividual</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10</span>
+                <span class="l-Scalar-Plain">numChildren</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10</span>
+<span class="l-Scalar-Plain">monitor</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">policyLogFrequency</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">10</span>
+    <span class="l-Scalar-Plain">functionOverStateSpaceLogging</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">active</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">True</span>
+        <span class="l-Scalar-Plain">logFrequency</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">250</span>
+        <span class="l-Scalar-Plain">stateDims</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">None</span>
+        <span class="l-Scalar-Plain">rasterPoints</span> <span class="p-Indicator">:</span> <span class="l-Scalar-Plain">50</span>
+</pre></div>
+</div>
+<p>As you can see, the environments in the two configuration files are identical but the agents are different. This world can be started with a similar command as the first one, namely using</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="n">run_mmlf</span>  <span class="o">--</span><span class="n">config</span> <span class="n">mountain_car</span><span class="o">/</span><span class="n">world_dps</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>This will start a different learning agent (one using a Direct Policy Search algorithm for learning) and let it learn the mountain car task.</p>
+<p>If you are more interested in further experiments with the td_lambda_agent, you simply modify and use the <tt class="docutils literal"><span class="pre">world_td_lambda_exploration.yaml</span></tt> file, editing the agent part of it.  The interesting part of this configuration file is the agent&#8217;s <tt class="docutils literal"><span class="pre">configDict</span></tt> dictionary, which contains the parameter values that are used by the agent. For instance, we see that the agent in <tt class="docutils literal"><span class="pre">world_td_lambda_exploration.yaml</span></tt> uses a discount factor gamma of 1.0 and follows an epsilon-greedy policy with epsilon=0.01 (for those are unfamiliar with the concepts behind how this agent works, check out the excellent (and <strong>free</strong>) <a class="reference external" href="http://www.cs.ualberta.ca/%7Esutton/book/ebook/the-book">book by Sutton and Barto</a>). You can now modify the parameters and see how the learning performance is influenced. For instance, set epsilon to <tt class="docutils literal"><span class="pre">0.0</span></tt> to get an agent that always acts greedily and store the file as <tt class="docutils literal"><span class="pre">world_td_lambda_no_exploration.yaml</span></tt>. To start the world, simply run</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="n">run_mmlf</span>  <span class="o">--</span><span class="n">config</span> <span class="n">mountain_car</span><span class="o">/</span><span class="n">world_td_lambda_exploration</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>If you want to run a specific world only for a certain number of episodes (say 100), you can give an additional parameter at the command line:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="n">run_mmlf</span>  <span class="o">--</span><span class="n">config</span> <span class="n">mountain_car</span><span class="o">/</span><span class="n">world_td_lambda_exploration</span><span class="o">.</span><span class="n">yaml</span> <span class="o">--</span><span class="n">episodes</span> <span class="mi">100</span>
+</pre></div>
+</div>
+<p>You can now use the basic features of the MMLF. Starting other worlds is done similarly, for instance</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="n">run_mmlf</span>  <span class="o">--</span><span class="n">config</span> <span class="n">single_pole_balancing</span><span class="o">/</span><span class="n">world_dps</span><span class="o">.</span><span class="n">yaml</span>
+</pre></div>
+</div>
+<p>will start the single-pole-balancing scenario with the DPS agent enabled.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Tutorial <a class="reference internal" href="quick_start_gui.html#quickstart-gui"><em>Quick start (graphical user interface)</em></a></dt>
+<dd>Learn how to use the MMLF&#8217;s graphical user interface</dd>
+<dt>Learn more about <a class="reference internal" href="../learn_more/agents_and_environments.html#agent-list"><em>Existing agents</em></a> and <a class="reference internal" href="../learn_more/agents_and_environments.html#environment-list"><em>Existing environments</em></a></dt>
+<dd>Get an overview over the agents and environments that are shipped with the MMLF</dd>
+<dt>Tutorial <a class="reference internal" href="writing_agents.html#writing-agents"><em>Writing an agent</em></a></dt>
+<dd>Learn how to write your own MMLF agent</dd>
+<dt>Tutorial <a class="reference internal" href="writing_environments.html#writing-environments"><em>Writing an environment</em></a></dt>
+<dd>Learn how to write your own MMLF environment</dd>
+<dt>Learn more about <a class="reference internal" href="../learn_more/evaluating_experiments.html#running-experiments"><em>Experiments</em></a></dt>
+<dd>Learn how to do a serious benchmarking and statistical comparison of the performance of different agents/environments</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Quick start (command line interface)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start_gui.html">Quick start (graphical user interface)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_agents.html">Writing an agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_environments.html">Writing an environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="quick_start_gui.html"
+                        title="next chapter">Quick start (graphical user interface)</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorials/quick_start.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="quick_start_gui.html" title="Quick start (graphical user interface)"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

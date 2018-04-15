@@ -1,0 +1,20 @@
+worldPackage : maze2d
+environment:
+    moduleName : "maze2d_environment"
+    configDict:
+        episodesUntilDoorChange : 25
+        MAZE : "maze_shortcut.cfg"
+agent:
+    moduleName : "td_lambda_agent"
+    configDict:
+        update_rule: SARSA
+        gamma : 0.9
+        epsilon : 0.1
+        lambda : 0.9
+        minTraceValue : 0.1
+        function_approximator :  
+            name: 'TabularStorage'
+            default: 0.0
+            learning_rate : 1.0
+monitor:
+    policyLogFrequency : 1000

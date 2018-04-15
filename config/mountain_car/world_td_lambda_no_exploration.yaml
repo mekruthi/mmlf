@@ -1,0 +1,27 @@
+worldPackage : mountain_car
+environment:
+    moduleName : "mcar_env"
+    configDict: 
+        maxStepsPerEpisode : 500    
+        accelerationFactor : 0.001
+        maxGoalVelocity : 0.07
+        positionNoise : 0.0
+        velocityNoise : 0.0
+agent:
+    moduleName : "td_lambda_agent"
+    configDict:
+        update_rule: SARSA
+        gamma : 1.0
+        epsilon : 0.0
+        lambda : 0.95
+        minTraceValue : 0.5
+        stateDimensionResolution : 9
+        actionDimensionResolution : 7
+        function_approximator : 
+            name : 'CMAC'
+            number_of_tilings : 10
+            learning_rate : 0.5
+            update_rule : 'exaggerator'
+            default : 0.0
+monitor:
+    policyLogFrequency : 10

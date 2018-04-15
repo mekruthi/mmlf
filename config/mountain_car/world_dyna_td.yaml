@@ -1,0 +1,49 @@
+worldPackage : mountain_car
+environment:
+    moduleName : "mcar_env"
+    configDict: 
+        maxStepsPerEpisode : 500    
+        accelerationFactor : 0.001
+        maxGoalVelocity : 0.07
+        positionNoise : 0.0
+        velocityNoise : 0.0
+agent:
+    moduleName : "dyna_td_agent"
+    configDict:
+        stateDimensionResolution : 5
+        actionDimensionResolution : 7
+        gamma : 0.99
+        epsilon : 0.1
+        lambda : 0.0
+        minTraceValue : 0.5
+        update_rule : "WatkinsQ"
+        planner:
+            name : "TrajectorySampling"
+            updatesPerStep : 100
+            maxTrajectoryLength : 50
+            onPolicy : True
+        model : 
+            name: 'KNNModel'
+            k: 20
+            b_Sa: 0.03
+            exampleSetSize: 2500
+        function_approximator :
+           name : 'CMAC'
+           learning_rate : 0.5
+           update_rule : 'exaggerator'
+           number_of_tilings : 10
+           default : 0.0
+monitor:
+    policyLogFrequency : 10
+    stateActionValuesLogging:
+        active : True
+        logFrequency : 25
+        stateDims: None
+        actions : None
+        rasterPoints : 50
+    functionOverStateSpaceLogging:
+        active : True
+        logFrequency : 25
+        stateDims : None
+        rasterPoints : 50
+        

@@ -1,0 +1,718 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Models &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Resources" href="resources.html" />
+    <link rel="next" title="Optimization" href="optimization.html" />
+    <link rel="prev" title="Learning Algorithms" href="learning_algorithms.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="optimization.html" title="Optimization"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="learning_algorithms.html" title="Learning Algorithms"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" >API-documentation</a> &raquo;</li>
+          <li><a href="resources.html" accesskey="U">Resources</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-resources.model.model">
+<span id="models"></span><h1>Models<a class="headerlink" href="#module-resources.model.model" title="Permalink to this headline">¶</a></h1>
+<p>Interfaces for MMLF models</p>
+<p>This module contains the Model class that specifies the interface for models
+in the MMLF. The following  methods must be implemented by each model class:</p>
+<blockquote>
+<div><ul class="simple">
+<li>addExperience</li>
+<li>sampleStateAction</li>
+<li>sampleSuccessorState</li>
+<li>getSuccessorDistribution</li>
+<li>getExpectedReward</li>
+<li>getExplorationValue</li>
+</ul>
+</div></blockquote>
+<p>The standard way of implementing a model is to learn a model for each
+action separately. In order to simplify this task, the Model interface 
+contains a standard implementation in the case that an ActionModelClass
+parameter is passed to constructor. This parameters must be a class that
+implements the interface ActionModel that is also contained in this 
+module. If the ActionModelClass parameter is passed to the Model
+constructor, for each action one instance of it is constructed
+an all methods are per default forwarded to the respective method
+of the ActionModel.</p>
+<img src="../../_images/inheritance44e94e4005.png" usemap="#inheritance44e94e4005" class="inheritance"/><map id="inheritance44e94e4005" name="inheritance44e94e4005">
+</map>
+<dl class="class">
+<dt id="resources.model.model.Model">
+<em class="property">class </em><tt class="descclassname">resources.model.model.</tt><tt class="descname">Model</tt><big>(</big><em>agent</em>, <em>userDirObj</em>, <em>stateSpace</em>, <em>actions</em>, <em>ActionModelClass=None</em>, <em>cyclicDimensions=False</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.model.model.Model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface for MMLF models</p>
+<p>This class specifies the interface for models
+in the MMLF. The following  methods must be implemented by each model:</p>
+<blockquote>
+<div><ul class="simple">
+<li>addExperience</li>
+<li>getSample</li>
+<li>sampleSuccessorState</li>
+<li>getSuccessorDistribution (optional)</li>
+<li>getExpectedReward</li>
+<li>getExplorationValue (optional)</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt>Additional, this class already implements the following methods:</dt>
+<dd><ul class="first last simple">
+<li>addStartState</li>
+<li>addTerminalState</li>
+<li>drawStartState</li>
+<li>getNearestNeighbor</li>
+<li>getNearestNeighbors</li>
+<li>isTerminalState</li>
+<li>plot</li>
+</ul>
+</dd>
+</dl>
+<p>The class contains a standard implementation in the case that an 
+ActionModelClass parameter is passed to constructor.
+This parameters must be a class that implements the interface ActionModel
+that is also contained in this module. 
+If the ActionModelClass parameter is passed to the Model
+constructor, for each action one instance of it is constructed
+an all methods are per default forwarded to the respective method
+of the ActionModel.</p>
+<dl class="docutils">
+<dt>The constructor expects the following parameters:</dt>
+<dd><ul class="first last">
+<li><p class="first"><em>agent</em> : The agent that is using this model</p>
+</li>
+<li><p class="first"><em>userDirObj</em> : The userDirObj object of the agent</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>actions</em> <span class="classifier-delimiter">:</span> <span class="classifier">A sequence of all allowed actions </span></dt>
+<dd><p class="first last">(note: discrete action space assumed)</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>ActionModelClass</em> <span class="classifier-delimiter">:</span> <span class="classifier">A class implementing the ActionModel interface</span></dt>
+<dd><p class="first last">If specified, for each available action a separate
+instance is created and all method calls are 
+forwarded to the respective instance</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>cyclicDimensions</em> If some (or all) of the dimensions of the state space </dt>
+<dd><p class="first last">are cyclic (i.e. the value 1.0 and 0.0 are equivalent)
+this parameter should be set to True. Defaults to
+False.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="resources.model.model.Model.addExperience">
+<tt class="descname">addExperience</tt><big>(</big><em>state</em>, <em>action</em>, <em>succState</em>, <em>reward</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.addExperience" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the model based on the given experience tuple</p>
+<p>Update the model based on the given experience tuple consisting
+of a <em>state</em>, an <em>action</em> taken in this state, the resulting
+successor state <em>succState</em> and the obtained <em>reward</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.addStartState">
+<tt class="descname">addStartState</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.addStartState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the given state to the set of start states</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.addTerminalState">
+<tt class="descname">addTerminalState</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.addTerminalState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the given state to the set of terminal states</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="resources.model.model.Model.create">
+<em class="property">static </em><tt class="descname">create</tt><big>(</big><em>modelSpec</em>, <em>agent</em>, <em>stateSpace</em>, <em>actionSpace</em>, <em>userDirObj</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory method that creates model-learners based on spec-dictionary.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.drawStartState">
+<tt class="descname">drawStartState</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.model.model.Model.drawStartState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a random start state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.getConfidence">
+<tt class="descname">getConfidence</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.getConfidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return how confident the model is in its prediction for the given state
+action pair</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.getExpectedReward">
+<tt class="descname">getExpectedReward</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.getExpectedReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns expected reward when action is performed in state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.getExplorationValue">
+<tt class="descname">getExplorationValue</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.getExplorationValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns how often the pair state-action has been explored</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="resources.model.model.Model.getModelDict">
+<em class="property">static </em><tt class="descname">getModelDict</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.model.model.Model.getModelDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns dict that contains a mapping from model name to model class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.getNearestNeighbor">
+<tt class="descname">getNearestNeighbor</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.getNearestNeighbor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the most similar known state to the given <em>state</em></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.getNearestNeighbors">
+<tt class="descname">getNearestNeighbors</tt><big>(</big><em>state</em>, <em>k</em>, <em>b</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.getNearestNeighbors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines <em>k</em> most similar states to the given <em>state</em></p>
+<p>Determines <em>k</em> most similar states to the given <em>state</em>. Returns an
+iterator over (weight, neighbor), where weight is the guassian weigthed
+influence of the neighbor onto <em>state</em>. The weight is computed via
+exp(-dist/b**2)/sum_over_neighbors(exp(-dist_1/b**2)).
+Note that the weights sum to 1.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.getPredecessorDistribution">
+<tt class="descname">getPredecessorDistribution</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.getPredecessorDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator that yields predecessor state probabilities</p>
+<p>Return an iterator that yields the pairs of state along with their 
+probabilities of being the predecessor state of <em>state</em> when <em>action</em>
+is performed by the agent.
+Note: This assumes a discrete (or discretized) state space since</p>
+<blockquote>
+<div>otherwise this there will be infinitely many states with 
+probability &gt; 0.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.getSample">
+<tt class="descname">getSample</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.model.model.Model.getSample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a sample drawn randomly</p>
+<p>Return a random sample (i.e. a state, action, reward, successor
+state 4-tuple).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.getStates">
+<tt class="descname">getStates</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.model.model.Model.getStates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return all states that are contained in the example set or are terminal</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.getSuccessorDistribution">
+<tt class="descname">getSuccessorDistribution</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.getSuccessorDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator that yields successor state probabilities</p>
+<p>Return an iterator that yields the pairs of state along with their 
+probabilities of being the successor state of <em>state</em> when <em>action</em>
+is performed by the agent.
+Note: This assummes a discrete (or discretized) state space since</p>
+<blockquote>
+<div>otherwise this there will be infinitely many states with 
+probability &gt; 0.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.isTerminalState">
+<tt class="descname">isTerminalState</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.isTerminalState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an estimate of whether the given state is a terminal one</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.samplePredecessorState">
+<tt class="descname">samplePredecessorState</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.samplePredecessorState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return sample predecessor state of state-action.</p>
+<p>Return a state drawn randomly from the predecessor distribution 
+of <em>state</em>-<em>action</em></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.Model.sampleSuccessorState">
+<tt class="descname">sampleSuccessorState</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.Model.sampleSuccessorState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return sample successor state of state-action.</p>
+<p>Return a state drawn randomly from the successor distribution 
+of <em>state</em>-<em>action</em></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="resources.model.model.JointStateActionModel">
+<em class="property">class </em><tt class="descclassname">resources.model.model.</tt><tt class="descname">JointStateActionModel</tt><big>(</big><em>agent</em>, <em>actionRange</em>, <em>actionSpace</em>, <em>ActionModelClass</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface for models for continuous action spaces.</p>
+<p>The <em>JointStateActionModel</em> subclasses <em>Model</em> and changes its default 
+behaviour: Instead of forwarding every action to a separate ActionModel,
+state and action are concatenated and one ActionModel is used to learn
+the behaviour within this &#8220;State-Action-Space&#8221;, i.e. a mapping from 
+(state, action_1) -&gt; (succState, action_2). Since action_2 depends on the
+policy, it cannot be learned by a model and is thus ignored. For training
+of the ActionModel, action_2 is set to action_1.</p>
+<p>NOTE: Currently, only one action dimension is supported!</p>
+<p>The constructor expects two parameter:
+* <em>actionRange</em> : A tuple indicating the minimal and maximal value of the</p>
+<blockquote>
+<div>action space dimension.</div></blockquote>
+<ul>
+<li><dl class="first docutils">
+<dt><em>ActionModelClass</em> <span class="classifier-delimiter">:</span> <span class="classifier">A class implementing the ActionModel interface. This</span></dt>
+<dd><p class="first last">class is used to learn the State-Action Space 
+dynamics.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="method">
+<dt id="resources.model.model.JointStateActionModel.addExperience">
+<tt class="descname">addExperience</tt><big>(</big><em>state</em>, <em>action</em>, <em>succState</em>, <em>reward</em><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel.addExperience" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the model based on the given experience tuple</p>
+<p>Update the model based on the given experience tuple consisting
+of a <em>state</em>, an <em>action</em> taken in this state, the resulting
+successor state <em>succState</em> and the obtained <em>reward</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.JointStateActionModel.getConfidence">
+<tt class="descname">getConfidence</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel.getConfidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return how confident the model is in its prediction for the given state
+action pair</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.JointStateActionModel.getExpectedReward">
+<tt class="descname">getExpectedReward</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel.getExpectedReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns expected reward when action is performed in state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.JointStateActionModel.getExplorationValue">
+<tt class="descname">getExplorationValue</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel.getExplorationValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns how often the pair state-action has been explored</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.JointStateActionModel.getPredecessorDistribution">
+<tt class="descname">getPredecessorDistribution</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel.getPredecessorDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator that yields predecessor state probabilities</p>
+<p>Return an iterator that yields the pairs of state along with their 
+probabilities of being the predecessor state of <em>state</em> when <em>action</em>
+is performed by the agent.
+Note: This assumes a discrete (or discretized) state space since</p>
+<blockquote>
+<div>otherwise this there will be infinitely many states with 
+probability &gt; 0.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.JointStateActionModel.getSample">
+<tt class="descname">getSample</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel.getSample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a sample drawn randomly</p>
+<p>Return a random sample (i.e. a state, action, reward, successor
+state 4-tuple).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.JointStateActionModel.getSuccessorDistribution">
+<tt class="descname">getSuccessorDistribution</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel.getSuccessorDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an iterator that yields successor state probabilities</p>
+<p>Return an iterator that yields the pairs of state along with their 
+probabilities of being the successor state of <em>state</em> when <em>action</em>
+is performed by the agent.
+Note: This assumes a discrete (or discretized) state space since</p>
+<blockquote>
+<div>otherwise this there will be infinitely many states with 
+probability &gt; 0.</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.JointStateActionModel.samplePredecessorState">
+<tt class="descname">samplePredecessorState</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel.samplePredecessorState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return sample predecessor state of state-action.</p>
+<p>Return a state drawn randomly from the predecessor distribution 
+of <em>state</em>-<em>action</em></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.JointStateActionModel.sampleSuccessorState">
+<tt class="descname">sampleSuccessorState</tt><big>(</big><em>state</em>, <em>action</em><big>)</big><a class="headerlink" href="#resources.model.model.JointStateActionModel.sampleSuccessorState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return sample successor state of state-action.</p>
+<p>Return a state drawn randomly from the successor distribution 
+of <em>state</em>-<em>action</em></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="resources.model.model.ActionModel">
+<em class="property">class </em><tt class="descclassname">resources.model.model.</tt><tt class="descname">ActionModel</tt><big>(</big><em>stateSpace</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface for MMLF action models</p>
+<dl class="method">
+<dt id="resources.model.model.ActionModel.addExperience">
+<tt class="descname">addExperience</tt><big>(</big><em>state</em>, <em>succState</em>, <em>reward</em><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel.addExperience" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the action model based on the given experience tupel</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.ActionModel.getConfidence">
+<tt class="descname">getConfidence</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel.getConfidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return how confident the model is in its prediction for the given state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.ActionModel.getExpectedReward">
+<tt class="descname">getExpectedReward</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel.getExpectedReward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the expected reward for the given state under this action</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.ActionModel.getExplorationValue">
+<tt class="descname">getExplorationValue</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel.getExplorationValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the exploration value for the given state</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.ActionModel.getPredecessorDistribution">
+<tt class="descname">getPredecessorDistribution</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel.getPredecessorDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates over pairs of predecessor states and their probabilities</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.ActionModel.getSuccessorDistribution">
+<tt class="descname">getSuccessorDistribution</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel.getSuccessorDistribution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Iterates over pairs of successor states and their probabilities</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.ActionModel.samplePredecessorState">
+<tt class="descname">samplePredecessorState</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel.samplePredecessorState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample a predecessor state for this state for this action-model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.ActionModel.sampleState">
+<tt class="descname">sampleState</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel.sampleState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample a state randomly from this action model</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.model.model.ActionModel.sampleSuccessorState">
+<tt class="descname">sampleSuccessorState</tt><big>(</big><em>state</em><big>)</big><a class="headerlink" href="#resources.model.model.ActionModel.sampleSuccessorState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sample a successor state for this state for this action-model</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="module-resources.model.grid_model">
+<span id="grid-based"></span><h2>Grid-based<a class="headerlink" href="#module-resources.model.grid_model" title="Permalink to this headline">¶</a></h2>
+<p>Grid-based model based on a grid that spans the state space.</p>
+<dl class="class">
+<dt id="resources.model.grid_model.GridModel">
+<em class="property">class </em><tt class="descclassname">resources.model.grid_model.</tt><tt class="descname">GridModel</tt><big>(</big><em>stateSpace</em>, <em>nodesPerDim</em>, <em>activationRadius</em>, <em>b=None</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.model.grid_model.GridModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Grid-based model based on a grid that spans the state space.</p>
+<p>The state transition probabilities and reward probabilities are 
+estimated only for the nodes of this grid. Experience samples
+are used to update the estimates of nearby grid nodes. Using a discrete
+grid has the advantage that there is only a finite amount of states for 
+which probabilities needs to be estimated.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">nodesPerDim:</th><td class="field-body">: The number of nodes of the grid in each dimensions. The total number of grid nodes is thus nodesPerDim**dims.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">activationRadius:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The radius of the region around the query state in which grid nodes are activated</td>
+</tr>
+<tr class="field"><th class="field-name">b:</th><td class="field-body">: Parameter controlling how fast activation decreases with distance from query state. If None, set to &#8220;activationRadius / sqrt(-log (0.01))&#8221;</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-resources.model.knn_model">
+<span id="k-nearest-neighbors"></span><h2>K-Nearest Neighbors<a class="headerlink" href="#module-resources.model.knn_model" title="Permalink to this headline">¶</a></h2>
+<p>An action model class based on KNN state transition modeling.</p>
+<p>This model is based on the model proposed in:
+Nicholas K. Jong and Peter Stone,
+&#8220;Model-based function approximation in reinforcement learning&#8221;,
+in Proceedings of the 6th international joint conference on Autonomous agents and multiagent systems 
+Honolulu, Hawaii: ACM, 2007, 1-8, <a class="reference external" href="http://portal.acm.org/citation.cfm?id=1329125.1329242">http://portal.acm.org/citation.cfm?id=1329125.1329242</a>.</p>
+<dl class="class">
+<dt id="resources.model.knn_model.KNNModel">
+<em class="property">class </em><tt class="descclassname">resources.model.knn_model.</tt><tt class="descname">KNNModel</tt><big>(</big><em>stateSpace</em>, <em>k=10</em>, <em>b_Sa=0.10000000000000001</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.model.knn_model.KNNModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>An action model class based on KNN state transition modeling.</p>
+<p>This model learns the state successor (and predecessor)
+function using the &#8220;k-Nearest Neighbors&#8221; (KNN) regression 
+learner. This learner learns a stochastic model, mapping each state $s$ to the
+successor $s&#8217; = s + (s^&#8217;_{neighbor} - s_{neighbor})$ with probability
+exp(-(||s - s_{neighbor}||/b_Sa)^2)/ sum_{neighbor in knn(s)} exp(-(||s - s_{neighbor}||/b_Sa)^2).
+The reward function is learned using an KNN model, too.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">exampleSetSize:</th><td class="field-body">: The maximum number of example transitions that is remembered in the example set. If the example set is full, old examples must be deleted or now new examples are accepted.</td>
+</tr>
+<tr class="field"><th class="field-name">k:</th><td class="field-body">: The number of neighbors considered in k-Nearest Neighbors</td>
+</tr>
+<tr class="field"><th class="field-name">b_Sa:</th><td class="field-body">: The width of the gaussian weighting function. Smaller values of <em>b_Sa</em> correspond to increased weight of more similar states</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-resources.model.lwpr_model">
+<span id="locally-weighted-projection-regression-lwpr"></span><h2>Locally Weighted Projection Regression (LWPR)<a class="headerlink" href="#module-resources.model.lwpr_model" title="Permalink to this headline">¶</a></h2>
+<p>An action model class based on LWPR state transition modeling.</p>
+<dl class="class">
+<dt id="resources.model.lwpr_model.LWPRModel">
+<em class="property">class </em><tt class="descclassname">resources.model.lwpr_model.</tt><tt class="descname">LWPRModel</tt><big>(</big><em>stateSpace</em>, <em>exampleSetSize=1000</em>, <em>examplesPerModelUpdate=10000</em>, <em>init_d=25</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.model.lwpr_model.LWPRModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>An action model class based on LWPR state transition modeling.</p>
+<p>This model learns the state successor (and predecessor) function using the 
+&#8220;Locally Weighted Projection Regression&#8221; (LWPR) regression learner. This
+learner learns a deterministic model, i.e. each state is mapped onto the
+successor state the learner considers to be most likely (and thus not onto
+a probability distribution).</p>
+<p>The reward function is learned using a nearest neighbor (NN) model. The
+reason that NN is used and not LWPR is that the reward function is usually
+non-smooth and every more sophisticated learning scheme might introduce
+additional unjustified bias.</p>
+<p>This model stores a fixed number of example transitions in a so called 
+example set and relearns the model whenever necessary (i.e. when predictions
+are requested and new examples have been addedsince the last learning).
+The model is relearned from scratch.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">exampleSetSize:</th><td class="field-body">: The maximum number of example transitions that is remembered in the example set. If the example set is full, old examples must be deleted or now new examples are accepted.</td>
+</tr>
+<tr class="field"><th class="field-name" colspan="2">examplesPerModelUpdate:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The number of examples presented to LWPR before the learning is stopped</td>
+</tr>
+<tr class="field"><th class="field-name">init_d:</th><td class="field-body">: The init_d parameter for LWPR that controls the smoothness of the learned function. Smaller values correspond to more smooth functions.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-resources.model.rmax_model_wrapper">
+<span id="r-max-model-wrapper"></span><h2>R-Max Model Wrapper<a class="headerlink" href="#module-resources.model.rmax_model_wrapper" title="Permalink to this headline">¶</a></h2>
+<p>A wrapper for models that changes them to have RMax like behavior</p>
+<p>A wrapper that wraps a given <em>model</em>  and changes its behavior to be 
+RMax-like, i.e. return <em>RMax</em> instead of the reward predicted by
+<em>model</em> if the exploration value is below <em>minExplorationValue</em>.
+The implementation is based on the adapter pattern.</p>
+<dl class="class">
+<dt id="resources.model.rmax_model_wrapper.RMaxModelWrapper">
+<em class="property">class </em><tt class="descclassname">resources.model.rmax_model_wrapper.</tt><tt class="descname">RMaxModelWrapper</tt><big>(</big><em>model</em>, <em>RMax</em>, <em>minExplorationValue</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.model.rmax_model_wrapper.RMaxModelWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for models that changes them to have RMax like behavior</p>
+<p>A wrapper that wraps a given <em>model</em>  and changes its behavior to be 
+RMax-like, i.e. return <em>RMax</em> instead of the reward predicted by
+<em>model</em> if the exploration value is below <em>minExplorationValue</em>.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.9.</span></p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong> </dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name" colspan="2">minExplorationValue:</th></tr>
+<tr><td>&nbsp;</td><td class="field-body">: The agent explores in a state until the given exploration value (approx. number of exploratory actions in proximity of state action pair) is reached for all actions</td>
+</tr>
+<tr class="field"><th class="field-name">RMax:</th><td class="field-body">: An upper bound on the achievable return an agent can obtain in a single episode</td>
+</tr>
+<tr class="field"><th class="field-name">model:</th><td class="field-body">The actual model (this is only a wrapper arount the true model that implements optimism in the face of uncertainty)</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-resources.model.tabular_model">
+<span id="tabular-model"></span><h2>Tabular Model<a class="headerlink" href="#module-resources.model.tabular_model" title="Permalink to this headline">¶</a></h2>
+<p>An action model class that is suited for discrete environments</p>
+<p>This module contains a model that learns a distribution model for discrete
+environments.</p>
+<dl class="class">
+<dt id="resources.model.tabular_model.TabularModel">
+<em class="property">class </em><tt class="descclassname">resources.model.tabular_model.</tt><tt class="descname">TabularModel</tt><big>(</big><em>stateSpace</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#resources.model.tabular_model.TabularModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>An action model class that is suited for discrete environments</p>
+<p>This module contains a model that learns a distribution model for discrete
+environments.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 0.9.9.</span></p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">exampleSetSize:</th><td class="field-body">: The maximum number of example transitions that is remembered in the example set. If the example set is full, old examples must be deleted or now new examples are accepted.</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api_documentation.html">API-documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../0_mmlf_interface.html">MMLF package interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../agents.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../observables.html">Observables</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="resources.html">Resources</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="function_approximators.html">Function Approximators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learning_algorithms.html">Learning Algorithms</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="planner.html">Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="policies.html">Policies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="policy_search.html">Policy Search Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skill_discovery.html">Skill Discovery</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../framework/framework.html">Framework</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="learning_algorithms.html"
+                        title="previous chapter">Learning Algorithms</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="optimization.html"
+                        title="next chapter">Optimization</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/api_documentation/resources/models.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="optimization.html" title="Optimization"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="learning_algorithms.html" title="Learning Algorithms"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" >API-documentation</a> &raquo;</li>
+          <li><a href="resources.html" >Resources</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

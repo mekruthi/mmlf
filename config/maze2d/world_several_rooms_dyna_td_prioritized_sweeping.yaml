@@ -1,0 +1,29 @@
+agent:
+  configDict:
+    epsilon: 0.1
+    function_approximator:
+      default: 0.0
+      learning_rate: 1.0
+      name: TabularStorage
+    gamma: 0.99
+    lambda: 0.0
+    minTraceValue: 0.5
+    model:
+      exampleSetSize: 2500
+      name: TabularModel
+    planner:
+      updatesPerStep : 100
+      minSweepDelta : 0.1
+      maxTrajectoryLength: 50
+      name: PrioritizedSweeping
+    update_rule: WatkinsQ
+  moduleName: dyna_td_agent
+environment:
+  configDict:
+    MAZE: maze_several_rooms.cfg
+    blockingInitially: true
+    episodesUntilDoorChange: 10000
+  moduleName: maze2d_environment
+worldPackage: maze2d
+monitor:
+    policyLogFrequency : 100

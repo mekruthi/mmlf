@@ -1,0 +1,247 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Policy Search Methods &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Resources" href="resources.html" />
+    <link rel="next" title="Skill Discovery" href="skill_discovery.html" />
+    <link rel="prev" title="Policies" href="policies.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="skill_discovery.html" title="Skill Discovery"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="policies.html" title="Policies"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" >API-documentation</a> &raquo;</li>
+          <li><a href="resources.html" accesskey="U">Resources</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-resources.policy_search.policy_search">
+<span id="policy-search-methods"></span><h1>Policy Search Methods<a class="headerlink" href="#module-resources.policy_search.policy_search" title="Permalink to this headline">¶</a></h1>
+<p>Interface for MMLF policy search methods</p>
+<dl class="docutils">
+<dt>MMLF policy search methods must implement the following methods:</dt>
+<dd><ul class="first last simple">
+<li>getActivePolicy</li>
+<li>getBestPolicy</li>
+<li>tellFitness</li>
+</ul>
+</dd>
+</dl>
+<dl class="class">
+<dt id="resources.policy_search.policy_search.PolicySearch">
+<em class="property">class </em><tt class="descclassname">resources.policy_search.policy_search.</tt><tt class="descname">PolicySearch</tt><a class="headerlink" href="#resources.policy_search.policy_search.PolicySearch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interface for MMLF policy search methods</p>
+<dl class="docutils">
+<dt>MMLF optimizers must implement the following methods:</dt>
+<dd><ul class="first last">
+<li><p class="first">getActivePolicy(): Returns the currently active policy</p>
+</li>
+<li><p class="first">getBestPolicy(): Returns the best policy found so far</p>
+</li>
+<li><dl class="first docutils">
+<dt>tellFitness(fitnessSample): Gives one fitness sample for the currently </dt>
+<dd><p class="first last">active policy</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+<dl class="staticmethod">
+<dt id="resources.policy_search.policy_search.PolicySearch.create">
+<em class="property">static </em><tt class="descname">create</tt><big>(</big><em>policySearchSpec</em>, <em>stateSpace</em>, <em>actionSpace</em>, <em>stateDims</em><big>)</big><a class="headerlink" href="#resources.policy_search.policy_search.PolicySearch.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory method that creates policy search method based on spec.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.policy_search.policy_search.PolicySearch.getActivePolicy">
+<tt class="descname">getActivePolicy</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.policy_search.policy_search.PolicySearch.getActivePolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the currently active policy</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.policy_search.policy_search.PolicySearch.getBestPolicy">
+<tt class="descname">getBestPolicy</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.policy_search.policy_search.PolicySearch.getBestPolicy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the best policy found so far</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="resources.policy_search.policy_search.PolicySearch.getPolicySearchDict">
+<em class="property">static </em><tt class="descname">getPolicySearchDict</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.policy_search.policy_search.PolicySearch.getPolicySearchDict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns dict that contains a mapping from PS name to PS class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.policy_search.policy_search.PolicySearch.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#resources.policy_search.policy_search.PolicySearch.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the policy search method</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="resources.policy_search.policy_search.PolicySearch.tellFitness">
+<tt class="descname">tellFitness</tt><big>(</big><em>fitnessSample</em><big>)</big><a class="headerlink" href="#resources.policy_search.policy_search.PolicySearch.tellFitness" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives one fitness sample for the currently active policy</p>
+<p>Provides the fitness <em>fitnessSample</em> obtained in one evaluation of
+the currently active policy.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="module-resources.policy_search.fixed_parametrization">
+<span id="fixed-parametrization"></span><h2>Fixed Parametrization<a class="headerlink" href="#module-resources.policy_search.fixed_parametrization" title="Permalink to this headline">¶</a></h2>
+<p>Policy search method that optimizes the parameters of a fixed policy class</p>
+<p>The module contains a policy search method that optimizes the parameters of 
+an externally predefined, parametrized policy class. It can use an arbitrary 
+black-box optimization algorithm for this purpose.</p>
+<dl class="class">
+<dt id="resources.policy_search.fixed_parametrization.FixedParametrization">
+<em class="property">class </em><tt class="descclassname">resources.policy_search.fixed_parametrization.</tt><tt class="descname">FixedParametrization</tt><big>(</big><em>policy</em>, <em>optimizer</em><big>)</big><a class="headerlink" href="#resources.policy_search.fixed_parametrization.FixedParametrization" title="Permalink to this definition">¶</a></dt>
+<dd><p>Policy search method that optimizes the parameters of a policy</p>
+<p>The module contains a policy search method that optimizes the parameters of 
+an externally predefined policy.</p>
+<dl class="docutils">
+<dt><strong>CONFIG DICT</strong></dt>
+<dd><table class="first last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field"><th class="field-name">policy:</th><td class="field-body">: A parametrized class of policies</td>
+</tr>
+<tr class="field"><th class="field-name">optimizer:</th><td class="field-body">: An arbitrary black-box optimizer</td>
+</tr>
+</tbody>
+</table>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../../index.html">
+              <img class="logo" src="../../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api_documentation.html">API-documentation</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../0_mmlf_interface.html">MMLF package interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../agents.html">Agents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../environments.html">Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../observables.html">Observables</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="resources.html">Resources</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="function_approximators.html">Function Approximators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="learning_algorithms.html">Learning Algorithms</a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html">Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optimization.html">Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="planner.html">Planner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="policies.html">Policies</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Policy Search Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skill_discovery.html">Skill Discovery</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../framework/framework.html">Framework</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="policies.html"
+                        title="previous chapter">Policies</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="skill_discovery.html"
+                        title="next chapter">Skill Discovery</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/api_documentation/resources/policy_search.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="skill_discovery.html" title="Skill Discovery"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="policies.html" title="Policies"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="../api_documentation.html" >API-documentation</a> &raquo;</li>
+          <li><a href="resources.html" >Resources</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

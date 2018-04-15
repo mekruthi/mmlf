@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Viewers &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Learn more about..." href="learn_more.html" />
+    <link rel="next" title="API-documentation" href="../api_documentation/api_documentation.html" />
+    <link rel="prev" title="State and Action Spaces" href="state_and_action_spaces.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api_documentation/api_documentation.html" title="API-documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="state_and_action_spaces.html" title="State and Action Spaces"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" accesskey="U">Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="viewers">
+<span id="id1"></span><h1>Viewers<a class="headerlink" href="#viewers" title="Permalink to this headline">¶</a></h1>
+<p>Viewers can be used within the MMLF Explorer GUI to monitor online the progress of a learning agent while he is interacting with the environment.</p>
+<div class="section" id="general-purpose">
+<h2>General-purpose<a class="headerlink" href="#general-purpose" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt>TrajectoryViewer</dt>
+<dd><p class="first">The TrajectoryViewer allows to visualize trajectories (the pathes an agent has taken through the state space in an episode). For environments with more than two dimensions, one can specify which two state dimensions are shown. The other dimensions are ignored. Onecan also choose how many trajectories (i.e. episodes) are shown at a time.</p>
+<img alt="../_images/trajectory_viewer.png" class="last" src="../_images/trajectory_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>FloatStreamViewer</dt>
+<dd><p class="first">The FloatStreamViewer allows to show how a scalar metric (like the return per episode, the episode lentgth etc.) change over time. It shows the development of this metric as well as a smoothed moving-window-average of the metric. It allows to configure which window of time (e.g. how many episodes) are shown at a time and over how many values the moving-window-average is computed. Any observable of type FloatStreamObservable defined in environment or agent may be visualized.</p>
+<img alt="../_images/gui_float_stream_viewer.png" class="last" src="../_images/gui_float_stream_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>ModelViewer</dt>
+<dd><p class="first">The ModelViewer is available when using an agent which internally learns a model of its environment. It currently supports only continuous state spaces and is most useful when the state space is two-dimensional (e.g. in mountain-car). For higher dimensional state spaces, one has to select two dimensions (&#8220;Dimension X axis&#8221; and &#8220;Dimension Y axis&#8221;) which are plotted. For the remaining dimensions, a default value is assumed. One can either plot the model&#8217;s predictions (Foreground=Predictions):</p>
+<blockquote>
+<div><img alt="../_images/model_prediction_viewer.png" src="../_images/model_prediction_viewer.png" style="width: 800px;" />
+</div></blockquote>
+<p>or plot which state-action combinations have been explored by the agent (blue dots, Foreground=Samples):</p>
+<blockquote>
+<div><img alt="../_images/model_samples_viewer.png" src="../_images/model_samples_viewer.png" style="width: 800px;" />
+</div></blockquote>
+<p class="last">In the background, one can either plot the expected immediate reward for a state-action combination (color-coded) or the exploration value (how &#8220;explored&#8221; a certain region of the state-action space is). For the latter, one can define a threshold &#8220;Min visits&#8221; which specifies how many visits of a state-action pair are required to be considered as explored. Since the state space is continuous, visits are usually distributed over a local neighborhood. Furthermore, &#8220;Plot resolution&#8221; defines the resolution N of the 2d grid (N*N nodes) which is layed over the 2d state space. The higher the resolution, the slower the plotting becomes.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="environment-specific">
+<h2>Environment specific<a class="headerlink" href="#environment-specific" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><dl class="first docutils">
+<dt>DiscreteBrioViewer</dt>
+<dd><img alt="../_images/discrete_brio_viewer.png" class="first last" src="../_images/discrete_brio_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Maze2DDetailedViewer</dt>
+<dd><p class="first">Allows to visualize the policy as well as the Q-function for all available actions in the Maze2D environment. In the Q-function viewer, a separate window is shown for each action. For each state, two values are given: The upper is the current Q-value and the lower one is the number of visits of the states. Note: The number of visits is the number of visits since adding this viewer; thus, it only equals the total number of visits if the viewer is created before starting the world.</p>
+<img alt="../_images/maze2d_detailed_viewer.png" class="last" src="../_images/maze2d_detailed_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Maze2DFunctionViewer</dt>
+<dd><p class="first">Allows to visualize any FunctionOverStateSpaceObservable or StateActionValuesObservable defined in an agent that is used in combination with the Maze2D environment. For the StateActionValuesObservable, the action to be shown must be selected (called suboption in the GUI). This viewer can either ba updated automatically with a certain frequence, or only manually by pressing &#8220;Update Plot&#8221; when UpdateFrequency is 0.</p>
+<img alt="../_images/maze2d_function_viewer.png" class="last" src="../_images/maze2d_function_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>MountainCarPolicyViewer</dt>
+<dd><p class="first">Displays the policy (actually any FunctionOverStateSpaceObservable) over the two dimensional mountain car state space. The policy is evaluated for a grid of N*N equidistand states over the state space. N can be configured using &#8220;Grid Nodes Per Dimension&#8221;.</p>
+<img alt="../_images/mcar_policy_viewer.png" class="last" src="../_images/mcar_policy_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>MountainCarValueFunctionViewer</dt>
+<dd><p class="first">Displays the value function (actually any StateActionValuesObservable) over the two dimensional mountain car state space. The value function is evaluated for a grid of N*N equidistand states over the state space. N can be configured using &#8220;Grid Nodes Per Dimension&#8221;.</p>
+<img alt="../_images/mcar_value_function_viewer.png" class="last" src="../_images/mcar_value_function_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>PinballMazeTrajectoryViewer</dt>
+<dd><p class="first">Displays the path of the ball through the pinball maze. Drawing can either be &#8220;Last Episode&#8221;, which would show the trajectory taken in the last completed episode, &#8220;Current Position&#8221;, which only shows the current position of the ball, or &#8220;Online (All)&#8221; which shows the whole trajectory taken by the agent in all episodes since drawin has been started. The trajectory can be coloured either according to the taken action, the obtained reward or the value of the value function.</p>
+<img alt="../_images/pinball_maze_trajectory_viewer.png" class="last" src="../_images/pinball_maze_trajectory_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>PinballMazeFunctionViewer</dt>
+<dd><p class="first">Shows a two-dimensional slice of a FunctionOverStateSpaceObservable in the pinball domain. The two dimensions shown are the x and y position. The values for the two velocity dimensions must be explicitly specified.</p>
+<img alt="../_images/pinball_maze_function_viewer.png" class="last" src="../_images/pinball_maze_function_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>SeventeenAndFourValueFunctionViewer</dt>
+<dd><p class="first">Visualizes an arbitrary StateActionValuesObservable (e.g. an agent&#8217;s value function) in the Seventeen and Four domain.</p>
+<img alt="../_images/seventeen_and_four_valuefunction_viewer.png" class="last" src="../_images/seventeen_and_four_valuefunction_viewer.png" style="width: 800px;" />
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="learn_more.html">Learn more about...</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="agents_and_environments.html">Existing Agents and Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluating_experiments.html">Experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="state_and_action_spaces.html">State and Action Spaces</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Viewers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general-purpose">General-purpose</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environment-specific">Environment specific</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="state_and_action_spaces.html"
+                        title="previous chapter">State and Action Spaces</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../api_documentation/api_documentation.html"
+                        title="next chapter">API-documentation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/learn_more/viewers.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../api_documentation/api_documentation.html" title="API-documentation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="state_and_action_spaces.html" title="State and Action Spaces"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" >Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

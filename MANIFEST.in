@@ -1,0 +1,7 @@
+recursive-include mmlf/worlds/pinball_maze *.cfg
+recursive-include doc/_build/html *.html *.css *.png *.inv *.js *.zip
+recursive-include config *.yaml *.cfg
+include MMLF_manual.pdf
+include mmlf.desktop
+include gpl.txt
+include mmlf

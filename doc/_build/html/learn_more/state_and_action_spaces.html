@@ -1,0 +1,322 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>State and Action Spaces &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Learn more about..." href="learn_more.html" />
+    <link rel="next" title="Viewers" href="viewers.html" />
+    <link rel="prev" title="Logging" href="logging.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="viewers.html" title="Viewers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="logging.html" title="Logging"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" accesskey="U">Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-framework.spaces">
+<span id="id1"></span><span id="state-and-action-spaces"></span><h1>State and Action Spaces<a class="headerlink" href="#module-framework.spaces" title="Permalink to this headline">¶</a></h1>
+<p>Modules for state and action spaces</p>
+<p>State and action spaces define the range of possible states the agent might
+perceive and the actions that are available to the agent. These spaces are 
+dict-like objects that map dimension names (the dict keys) to dimension objects 
+that contain information about this dimension. The number of items in this 
+dict-like structure is the dimensionality of the (state/action) space.</p>
+<div class="section" id="single-dimension-of-a-space">
+<h2>Single dimension of a space<a class="headerlink" href="#single-dimension-of-a-space" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="framework.spaces.Dimension">
+<em class="property">class </em><tt class="descclassname">framework.spaces.</tt><tt class="descname">Dimension</tt><big>(</big><em>dimensionName</em>, <em>dimensionType</em>, <em>dimensionValues</em>, <em>limitType=None</em><big>)</big><a class="headerlink" href="#framework.spaces.Dimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>A single dimension of a (state or action) space</p>
+<p>A dimension is either continuous or discrete. A &#8220;discrete&#8221; dimension
+might take on only a finite, discrete number of values.</p>
+<p>For instance, consider a dimension of a state space describing the color of
+a fruit. This dimension take on the values &#8220;red&#8221;, &#8220;blue&#8221;, or &#8220;green&#8221;. 
+In contrast, consider a second &#8220;continuous&#8221; dimension, e.g. the weight of 
+a fruit. This weight might be somewhere between 0g and 1000g. 
+If we allow any arbitrary weight (not only full gramms), the dimension is 
+truly continuous.</p>
+<dl class="docutils">
+<dt>This properties of a dimension can be checked using the method:</dt>
+<dd><ul class="first last">
+<li><p class="first"><em>isDiscrete</em> : Returns whether the respective dimension is discrete</p>
+</li>
+<li><p class="first"><em>isContinuous</em> : Returns whether the respective dimension is continuous</p>
+</li>
+<li><dl class="first docutils">
+<dt><em>getValueRanges</em> <span class="classifier-delimiter">:</span> <span class="classifier">Returns the allowed values a continuous! dimension</span></dt>
+<dd><p class="first last">might take on.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><em>getValues</em> <span class="classifier-delimiter">:</span> <span class="classifier">Returns the allowed values a discrete! dimension</span></dt>
+<dd><p class="first last">might take on.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="base-class-for-state-and-action-spaces">
+<h2>Base class for state and action spaces<a class="headerlink" href="#base-class-for-state-and-action-spaces" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="framework.spaces.Space">
+<em class="property">class </em><tt class="descclassname">framework.spaces.</tt><tt class="descname">Space</tt><a class="headerlink" href="#framework.spaces.Space" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for state and action spaces.</p>
+<p>Class which represents the state space of an environment or the action space
+of an agent.</p>
+<p>This is essentially a dictionary whose keys are the names of the dimensions,
+and whose values are <em>Dimension</em> objects.</p>
+<dl class="method">
+<dt id="framework.spaces.Space.addContinuousDimension">
+<tt class="descname">addContinuousDimension</tt><big>(</big><em>dimensionName</em>, <em>dimensionValues</em>, <em>limitType='soft'</em><big>)</big><a class="headerlink" href="#framework.spaces.Space.addContinuousDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the named continuous dimension to the space.</p>
+<p>dimensionValues is a list of (rangeStart, rangeEnd) 2-tuples which define the valid ranges
+of this dimension. (i.e. [(0, 50), (75.5, 82)] )</p>
+<p>If limitType is set to &#8220;hard&#8221;, then the agent is responsible to check that the limits are
+not exceeded.  When it is set to &#8220;soft&#8221;, then the agent should not expect that all the values
+of this dimension will be strictly within the bounds of the specified ranges, but that
+the ranges serve as an approximate values of where the values will be (i.e. as
+[mean-std.dev., mean+std.dev] instead of [absolute min. value, absolute max. value])</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.addDiscreteDimension">
+<tt class="descname">addDiscreteDimension</tt><big>(</big><em>dimensionName</em>, <em>dimensionValues</em><big>)</big><a class="headerlink" href="#framework.spaces.Space.addDiscreteDimension" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the named continuous dimension to the space.</p>
+<p>dimensionValues is a list of strings representing possible discrete states of this dimension.
+(i.e. [&#8220;red&#8221;, &#8220;green&#8221;, &#8220;blue&#8221;])</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.addOldStyleSpace">
+<tt class="descname">addOldStyleSpace</tt><big>(</big><em>oldStyleSpace</em>, <em>limitType='soft'</em><big>)</big><a class="headerlink" href="#framework.spaces.Space.addOldStyleSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Takes an old-style (using the old format) space dictionary, and adds its dimensions to this
+object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.getDimensionNames">
+<tt class="descname">getDimensionNames</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.getDimensionNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the names of the space dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.getDimensions">
+<tt class="descname">getDimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.getDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the names of the space dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.getNumberOfDimensions">
+<tt class="descname">getNumberOfDimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.getNumberOfDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns how many dimensions this space has</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.hasContinuousDimensions">
+<tt class="descname">hasContinuousDimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.hasContinuousDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether this space has continuous dimensions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="framework.spaces.Space.hasDiscreteDimensions">
+<tt class="descname">hasDiscreteDimensions</tt><big>(</big><big>)</big><a class="headerlink" href="#framework.spaces.Space.hasDiscreteDimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether this space has discrete dimensions</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="state-spaces">
+<span id="id2"></span><h2>State spaces<a class="headerlink" href="#state-spaces" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="framework.spaces.StateSpace">
+<em class="property">class </em><tt class="descclassname">framework.spaces.</tt><tt class="descname">StateSpace</tt><a class="headerlink" href="#framework.spaces.StateSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specialization of Space for state spaces.</p>
+<p>For instance, a state space could be defined as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span> <span class="s">&quot;color&quot;</span><span class="p">:</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">dimensionType</span> <span class="o">=</span> <span class="s">&quot;discrete&quot;</span><span class="p">,</span>
+                     <span class="n">dimensionValues</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;red&quot;</span><span class="p">,</span><span class="s">&quot;green&quot;</span><span class="p">,</span> <span class="s">&quot;blue&quot;</span><span class="p">]),</span>
+  <span class="s">&quot;weight&quot;</span><span class="p">:</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">dimensionType</span> <span class="o">=</span> <span class="s">&quot;continuous&quot;</span><span class="p">,</span>
+                      <span class="n">dimensionValues</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000</span><span class="p">)])</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This state space has two dimensions (&#8220;color&#8221; and &#8220;weight&#8221;), a discrete and a 
+continuous one. The discrete dimension &#8220;color&#8221; can take on three values
+(&#8220;red&#8221;,&#8221;green&#8221;, or &#8220;blue&#8221;) and the continuous dimension &#8220;weight&#8221; any value
+between 0 and 1000.</p>
+<p>A valid state of the state space defined above would be:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s1</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;color&quot;</span><span class="p">:</span> <span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="s">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">300</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Invalid states (s2 since the color is invalid and s3 since its weight is
+too large):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">s2</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;color&quot;</span><span class="p">:</span> <span class="s">&quot;yellow&quot;</span><span class="p">,</span> <span class="s">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">300</span><span class="p">}</span>
+<span class="n">s3</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;color&quot;</span><span class="p">:</span> <span class="s">&quot;red&quot;</span><span class="p">,</span> <span class="s">&quot;weight&quot;</span><span class="p">:</span> <span class="mi">1300</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The class provides additional methods for checking if a certain state is  
+valid according to this state space (<em>isValidState</em>) and to scale a state 
+such that it lies within a certain interval (<em>scaleState</em>).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="action-spaces">
+<span id="id3"></span><h2>Action spaces<a class="headerlink" href="#action-spaces" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="framework.spaces.ActionSpace">
+<em class="property">class </em><tt class="descclassname">framework.spaces.</tt><tt class="descname">ActionSpace</tt><a class="headerlink" href="#framework.spaces.ActionSpace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specialization of Space for action spaces.</p>
+<p>For instance, an action space could be defined as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span> <span class="s">&quot;gasPedalForce&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;discrete&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;low&quot;</span><span class="p">,</span> <span class="s">&quot;medium&quot;</span><span class="p">,</span> <span class="s">&quot;floored&quot;</span><span class="p">]),</span>
+  <span class="s">&quot;steeringWheelAngle&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;continuous&quot;</span><span class="p">,</span> <span class="p">[(</span><span class="o">-</span><span class="mi">120</span><span class="p">,</span><span class="mi">120</span><span class="p">)])</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>This action space has two dimensions (&#8220;gasPedalForce&#8221; and
+&#8220;steeringWheelAngle&#8221;), a discrete and a continuous one. 
+The discrete dimension &#8220;gasPedalForce&#8221; can take on three values
+(&#8220;low&#8221;,&#8221;medium&#8221;, or &#8220;floored&#8221;) and the continuous dimension 
+&#8220;steeringWheelAngle&#8221; any value between -120 and 120.</p>
+<p>A valid action according to this action space would be:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a1</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;gasPedalForce&quot;</span><span class="p">:</span> <span class="s">&quot;low&quot;</span><span class="p">,</span> <span class="s">&quot;steeringWheelAngle&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">50</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Invalid actions (a2 since the gasPedalForce is invalid and s3 since its 
+steeringWheelAngle is too small):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a2</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;gasPedalForce&quot;</span><span class="p">:</span> <span class="s">&quot;extreme&quot;</span><span class="p">,</span> <span class="s">&quot;steeringWheelAngle&quot;</span><span class="p">:</span> <span class="mi">30</span><span class="p">}</span>
+<span class="n">a3</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;gasPedalForce&quot;</span><span class="p">:</span> <span class="s">&quot;medium&quot;</span><span class="p">,</span> <span class="s">&quot;steeringWheelAngle&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">150</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>The class provides additional methods for discretizing an action space
+(<em>discretizedActionSpace</em>) and to return a list of all available actions
+(<em>getActionList</em>).</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="learn_more.html">Learn more about...</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="agents_and_environments.html">Existing Agents and Environments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluating_experiments.html">Experiments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">State and Action Spaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#single-dimension-of-a-space">Single dimension of a space</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#base-class-for-state-and-action-spaces">Base class for state and action spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#state-spaces">State spaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#action-spaces">Action spaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="viewers.html">Viewers</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="logging.html"
+                        title="previous chapter">Logging</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="viewers.html"
+                        title="next chapter">Viewers</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/learn_more/state_and_action_spaces.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="viewers.html" title="Viewers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="logging.html" title="Logging"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="learn_more.html" >Learn more about...</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

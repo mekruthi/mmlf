@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+
+Exec=mmlf_gui
+
+Name=MMLF
+GenericName=Maja Machine Learning Framework
+
+Categories=Education;Science
+Icon=MMLF_white
+

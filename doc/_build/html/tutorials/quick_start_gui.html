@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quick start (graphical user interface) &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Writing an agent" href="writing_agents.html" />
+    <link rel="prev" title="Quick start (command line interface)" href="quick_start.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="writing_agents.html" title="Writing an agent"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="quick_start.html" title="Quick start (command line interface)"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="quick-start-graphical-user-interface">
+<span id="quickstart-gui"></span><h1>Quick start (graphical user interface)<a class="headerlink" href="#quick-start-graphical-user-interface" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial explains how you can use the MMLF&#8217;s graphical user interface. It assumes that you already <a class="reference internal" href="installation.html#installation"><em>installed</em></a> the MMLF successfully. It might be helpful to read the <a class="reference internal" href="quick_start.html#quickstart"><em>Quick start (command line interface)</em></a> tutorial first in order to have some understanding of what is going on &#8220;under the hood&#8221;.</p>
+<p>The MMLF&#8217;s GUI can be started from the command line with the command</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="n">mmlf_gui</span>
+</pre></div>
+</div>
+<p>or for unix-based local installations:</p>
+<div class="highlight-guess"><div class="highlight"><pre><span class="o">./</span><span class="n">mmlf_gui</span>
+</pre></div>
+</div>
+<p>This should create a window that looks like this:</p>
+<img alt="../_images/gui_main_window.png" src="../_images/gui_main_window.png" style="width: 800px;" />
+<p>The main window consists of three tabs: the &#8220;Explorer&#8221;, the &#8220;Experimenter&#8221;, and the &#8220;Documentation&#8221;. The last tab displays the documentation you&#8217;re now reading. The other two tabs will be explained in more detail in this tutorial.</p>
+<div class="section" id="explorer">
+<span id="id1"></span><h2>Explorer<a class="headerlink" href="#explorer" title="Permalink to this headline">¶</a></h2>
+<p>The explorer&#8217;s main purpose is to investigate the behaviour of a specific agent in a specific environment. It provides different kinds of visualizations (depending on the world) of what is going on.
+In the explorer tab, the environment and the agent that should be used in the world can be selected from combo boxes. The selected agents and environments can be configured by pressing the configure button. This creates a popup window like the following:</p>
+<img alt="../_images/gui_configure_popup.png" src="../_images/gui_configure_popup.png" style="width: 600px;" />
+<p>In this popup, the agent&#8217;s and environment&#8217;s parameters can be modified and stored by pressing &#8220;Save&#8221;. Furthermore, help on a specific parameter is provided as a tooltip of the respective edit field. An alternative to manually configuring agent and environment is to load a world with predefined agent and environment using the &#8220;Load Config&#8221; button. Accordingly, &#8220;Store Config&#8221; allows to store a manual configuration of a world such that it can be easily reloaded later on.</p>
+<p>Back in the explorer tab, the selected agent and environment can be loaded by pressing &#8220;Init World&#8221;. Now, the <a class="reference internal" href="../learn_more/logging.html#monitor"><em>Monitor</em></a> which controls the information that are automatically stored during running a world in the MMLF can be configured by pressing &#8220;Configure Monitor&#8221;. Once this is done, we can start the configured world. One step in this world can be performed by pressing &#8220;Step&#8221;, one single episode by pressing &#8220;Episode&#8221;,  and infinitely many by pressing &#8220;Start World&#8221;. This indefinite run can be stopped by pressing &#8220;Pause World&#8221; and resumed by pressing &#8220;Resume World&#8221;. By pressing &#8220;Stop World&#8221;, the execution of the particular world is irrevocably terminated and a new world could be loaded using &#8220;Init World&#8221;.</p>
+<p>The tab &#8220;StdOut/Err&#8221; shows the output of the program to standard output and standard error. Some more detailed information about the currently running experiment can be obtained via the text output in the &#8220;MMLF Log&#8221; Tab. Additionally, the &#8220;World Info&#8221; tab shows some information about the currently selected agent and environment. Furthermore, so called
+<a class="reference internal" href="../learn_more/viewers.html#viewers"><em>viewers</em></a> can be added that visualize the progress in a graphical manner. In all environments, the so called &#8220;FloatStreamViewer&#8221; is available that allows to monitor the development of a real-valued metric over time. This viewer looks like the following:</p>
+<img alt="../_images/gui_float_stream_viewer.png" src="../_images/gui_float_stream_viewer.png" style="width: 800px;" />
+<p>This viewer shows the change of the metric over time as well as its moving window average (in red). The metric can be selected via the combobox and the range of shown window as well as the length of the moving window average window can be specified.</p>
+<p>For several worlds, additional viewers become available after loading a world using &#8220;Init World&#8221;. For instance, in the maze2d_environment, an additional viewer is available that shows the current policy and value function (see below):</p>
+<img alt="../_images/gui_maze_viewer.png" src="../_images/gui_maze_viewer.png" style="width: 800px;" />
+<p>For an overview over all availabe viewers, please take a look at  <a class="reference internal" href="../learn_more/viewers.html#viewers"><em>Viewers</em></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Adding viewers might slow down the MMLF (the learning of the agents) considerably since updating the viewers with a high frequency might consume most of the CPU time. However, by closing the viewers, the MMLF should run with its former speed again. Thus, one can use viewers to introspect the current state of the world and close them after that.</p>
+</div>
+<p>A good way of getting to know the MMLF is to load different world configurations shipped with the MMLF (using &#8220;Load Config&#8221;), run these worlds, and visualize whats going on with different viewers.</p>
+</div>
+<div class="section" id="experimenter">
+<span id="id2"></span><h2>Experimenter<a class="headerlink" href="#experimenter" title="Permalink to this headline">¶</a></h2>
+<p>The &#8220;Experimenter&#8221; is meant to be used when one wants to compare the learning performance in different settings (for example different agents/agent parametrizations in the same environment or the same agent in slightly different environments etc.). It looks like the following:</p>
+<img alt="../_images/experimenter.png" src="../_images/experimenter.png" style="width: 800px;" />
+<p>The &#8220;Create World&#8221; button launches a window in which agent and environment of a world can be configured in the same way as in the Explorer. Once this is done, &#8220;Save&#8221; adds this world to the list of worlds in the upper left part of the Explorer tab. Alternatively, one can also load a stored world configuration using &#8220;Load World&#8221;. An arbitrary world can be modified later on by selecting it in the world list and pressing &#8220;Edit World&#8221;, can be removed from the world list by pressig &#8220;Remove world&#8221;, and can get assigned a more meaningful name by selecting it and editing the name in the text field right of the &#8220;Remove world&#8221; button. Alternatively, instead of manually adding and editing worlds, one can also load a whole experiment configuration using &#8220;Load Experiment&#8221;. Accordingly, configured experiments can be stored using &#8220;Store experiment&#8221;.</p>
+<p>Furthermore, one can specify how many independent runs of each world are conducted (the more often the more reliable become the performance estimates) by editing the entry in text field right of &#8220;Runs&#8221; and how many episodes each run should take (text field &#8220;Episodes&#8221;). In addition, one can select whether the independent runs of the world should be conducted sequentially (one after the other) or concurrently (in a separate OS-process each). By editing the text field &#8220;Parallel running processes&#8221;, one can choose how many runs are conducted in parallel (this is fixed to 1 for sequential execution). The maximally allowed number of parallel processes is the number of (virtual) cores in the machine.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A word of warning: the concurrent execution of world processes is still in an experimental state and may behave strangely under certain conditions (for instance it might not shutdown correctly and keep some zombie processes). Furthermore, Windows OSes do not support concurrent execution of worlds.</p>
+</div>
+<p>By pressing &#8220;Start Experiment&#8221;, the experiment is started and a new tab &#8220;Experiment Statistics&#8221; is added in which the progress of the experiment can be monitored in real time:</p>
+<img alt="../_images/experiment_statistics.png" src="../_images/experiment_statistics.png" style="width: 800px;" />
+<p>In the top line, the metric that should be displayed can be selected. The metric &#8220;Episode Return&#8221; is always available; it shows the accumulated reward per Episode. Below this, a table is shown which presents some statistics (min, max, mean, median etc.) of the chosen metric for the different runs of the worlds. The results of the experiment can be analyzed for statistical significance by pressing the &#8220;Statistics&#8221; (see <a class="reference internal" href="../learn_more/evaluating_experiments.html#evaluate-experiments"><em>Evaluating experiments</em></a>). By pressing &#8220;Visualize&#8221;, these results can also be displayed in a graphical manner:</p>
+<img alt="../_images/current_experiment_results.png" src="../_images/current_experiment_results.png" style="width: 800px;" />
+<p>In this visualizations, one can see the development of the selected metric over time for the two agents. One can select whether one wants to see the average over all runs conducted for one agent or each of these runs separately. Furthermore, one can specify the length of the moving window average. The plot is not updated automatically, but only when one presses &#8220;Update&#8221; or when one changes the selections. One can save the generaed plot to a file by pressing &#8220;Save&#8221;.</p>
+<p>The &#8220;Experiment Statistics&#8221; tab can also be restored for an experiment conducted earlier by loading the results of this experiment into the Experimenter. This can be done by pressing &#8220;Load Experiment Results&#8221;. This opens a file selection dialog in which the root directory of the particular experiment in the RW area must be selected.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It may happen that different experiments share the same root directory (namely, when both experiments use the same environment). In this case, the Experimenter cannot distinguish these experiments and interprets them as a single experiment. In order to avoid that, please copy the results of an experiment to a unique directory manually.</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Tutorial <a class="reference internal" href="quick_start.html#quickstart"><em>Quick start (command line interface)</em></a></dt>
+<dd>Learn how to use the MMLF with a non-grapical user interface</dd>
+<dt>Learn more about <a class="reference internal" href="../learn_more/agents_and_environments.html#agent-list"><em>Existing agents</em></a> and <a class="reference internal" href="../learn_more/agents_and_environments.html#environment-list"><em>Existing environments</em></a></dt>
+<dd>Get an overview over the agents and environments that are shipped with the MMLF</dd>
+<dt>Tutorial <a class="reference internal" href="writing_agents.html#writing-agents"><em>Writing an agent</em></a></dt>
+<dd>Learn how to write your own agent</dd>
+<dt>Tutorial <a class="reference internal" href="writing_environments.html#writing-environments"><em>Writing an environment</em></a></dt>
+<dd>Learn how to write your own MMLF environment</dd>
+<dt>Learn more about <a class="reference internal" href="../learn_more/evaluating_experiments.html#running-experiments"><em>Experiments</em></a></dt>
+<dd>Learn how to do a serious benchmarking and statistical comparison of the performance of different agents/environments</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html">Quick start (command line interface)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Quick start (graphical user interface)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#explorer">Explorer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experimenter">Experimenter</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="writing_agents.html">Writing an agent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_environments.html">Writing an environment</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="quick_start.html"
+                        title="previous chapter">Quick start (command line interface)</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="writing_agents.html"
+                        title="next chapter">Writing an agent</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorials/quick_start_gui.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="writing_agents.html" title="Writing an agent"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="quick_start.html" title="Quick start (command line interface)"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

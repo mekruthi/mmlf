@@ -1,0 +1,43 @@
+worldPackage : mountain_car
+environment:
+    moduleName : "mcar_env"
+    configDict: 
+        maxStepsPerEpisode : 500    
+        accelerationFactor : 0.001
+        maxGoalVelocity : 0.07
+        positionNoise : 0.0
+        velocityNoise : 0.0
+agent:
+    moduleName : "mbdps_agent"
+    configDict:
+        gamma : 1.0
+        planning_episodes : 500
+        policy_search : 
+            method: 'fixed_parametrization'
+            policy: 
+                type: 'linear'
+                numOfDuplications: 1
+                bias: True
+            optimizer: 
+                name: 'evolution_strategy'
+                sigma:  1.0
+                populationSize : 5
+                evalsPerIndividual: 1
+                numChildren: 10
+        model : 
+            name : 'RMaxModelWrapper'
+            model : 
+                name: 'KNNModel'
+                k: 100
+                b_Sa: 0.03
+                exampleSetSize: 2500
+            RMax : 0.0
+            minExplorationValue : 1.0
+monitor:
+    policyLogFrequency : 10
+    functionOverStateSpaceLogging:
+        active : True
+        logFrequency : 10
+        stateDims : None
+        rasterPoints : 50
+        

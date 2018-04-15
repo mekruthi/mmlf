@@ -1,0 +1,26 @@
+agent:
+  configDict:
+    RMax: 0.0
+    function_approximator:
+      default: 0.0
+      learning_rate: 1.0
+      name: TabularStorage
+    gamma: 0.98999999999999999
+    max_episode_length: 500
+    min_exploration_value: 1.0
+    model:
+      exampleSetSize: 2500
+      name: TabularModel
+    planner:
+      minSweepDelta: 0.10000000000000001
+      name: PrioritizedSweeping
+      updatesPerStep: 100
+  moduleName: fitted_r_max_agent
+environment:
+  configDict:
+    MAZE: maze_shortcut.cfg
+    episodesUntilDoorChange: 10000
+  moduleName: maze2d_environment
+worldPackage: maze2d
+monitor:
+    policyLogFrequency : 100

@@ -1,0 +1,37 @@
+worldPackage : single_pole_balancing
+environment:
+    moduleName : "single_pole_balancing_environment"
+    configDict:
+        GRAVITY : 9.8    
+        MASSCART : 1.0                      
+        MASSPOLE : 0.1
+        TOTAL_MASS : 1.1 
+        LENGTH : 0.5
+        POLEMASS_LENGTH : 0.05
+        TAU : 0.02  
+        FOURTHIRDS : 1.3333333333333
+        MAXCARTPOSITION : 7.5
+        MAXPOLEANGULARPOSITION : 0.7
+        MAXSTEPS : 100000
+agent:
+    moduleName : "dps_agent"
+    configDict:
+        policy_search : 
+            method: 'fixed_parametrization'
+            policy: 
+                type: 'linear'
+                numOfDuplications: 1
+                bias: False
+            optimizer: 
+                name: 'evolution_strategy'
+                sigma:  1.0
+                populationSize : 5
+                evalsPerIndividual: 1
+                numChildren: 10
+monitor:
+    policyLogFrequency : 10000
+    functionOverStateSpaceLogging:
+        active : True
+        logFrequency : 10000
+        stateDims : ['cartPosition', 'cartVelocity']
+        rasterPoints : 50

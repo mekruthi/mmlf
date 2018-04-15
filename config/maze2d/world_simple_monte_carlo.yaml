@@ -1,0 +1,15 @@
+worldPackage : maze2d
+environment:
+    moduleName : "maze2d_environment"
+    configDict:
+        episodesUntilDoorChange : 10000
+        MAZE : "maze_simple.cfg"
+agent:
+    moduleName : "monte_carlo_agent"
+    configDict:
+        gamma : 1.0
+        epsilon : 0.1
+        defaultQ: 0.0
+        visit : "first"
+monitor:
+    policyLogFrequency : 1000

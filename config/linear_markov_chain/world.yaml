@@ -1,0 +1,22 @@
+worldPackage: linear_markov_chain
+agent:
+  moduleName: td_lambda_agent
+  configDict:
+    epsilon: 0.1
+    epsilonDecay: 1.0
+    function_approximator:
+      default: 0.0
+      learning_rate: 1.0
+      name: TabularStorage
+    gamma: 0.9
+    lambda: 0.9
+    minTraceValue: 0.1
+    replacingTraces: true
+    update_rule: SARSA
+environment:
+  moduleName: linear_markov_chain_environment
+  configDict:
+    length: 21
+monitor:
+  plotObservables: []
+  policyLogFrequency: 10

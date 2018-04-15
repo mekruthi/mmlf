@@ -1,0 +1,392 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Writing an environment &mdash; Maja Machine Learning Framework v1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Maja Machine Learning Framework v1.0 documentation" href="../index.html" />
+    <link rel="up" title="Tutorials" href="tutorials.html" />
+    <link rel="next" title="Learn more about..." href="../learn_more/learn_more.html" />
+    <link rel="prev" title="Writing an agent" href="writing_agents.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../learn_more/learn_more.html" title="Learn more about..."
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="writing_agents.html" title="Writing an agent"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" accesskey="U">Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="writing-an-environment">
+<span id="writing-environments"></span><h1>Writing an environment<a class="headerlink" href="#writing-an-environment" title="Permalink to this headline">¶</a></h1>
+<p>This tuturial will explain how you can implement your own environment for the MMLF.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Implementing a new environment is easier with a local installation of the MMLF (see <a class="reference internal" href="installation.html#installation"><em>Installation Tutorial</em></a>).</p>
+</div>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Get an overview over the existing environments in <a class="reference internal" href="../learn_more/agents_and_environments.html#environment-list"><em>Existing environments</em></a></p>
+</div>
+<div class="section" id="learning-about-the-basic-structure-of-mmlf-environments">
+<h2>Learning about the basic structure of MMLF environments<a class="headerlink" href="#learning-about-the-basic-structure-of-mmlf-environments" title="Permalink to this headline">¶</a></h2>
+<p>To begin, please take a look into the worlds/linear_markov_chain/environments subdirectory of the MMLF and open the linear_markov_chain_environment.py in the python editor of your choice. The <a class="reference internal" href="#linear-markov-chain-environment"><em>Linear Markov Chain</em></a> is a quite simple and straightforward environment which demonstrates well the inner life of an environment.</p>
+<dl class="docutils">
+<dt>What you can learn from the environment is the following:</dt>
+<dd><ul class="first last simple">
+<li>Each environment has to be a subclass of SingleAgentEnvironment</li>
+<li>Each environment class must have a static attribute DEFAULT_CONFIG_DICT, which contains the parameters that are available for customizing the environment and their default values.</li>
+<li>The __init__ method gets passed additional arguments (<tt class="docutils literal"><span class="pre">*args</span></tt>) and keyword arguments (<tt class="docutils literal"><span class="pre">**kwargs</span></tt>). These MUST be passed on to the superclass&#8217; constructor using <tt class="docutils literal"><span class="pre">super(SingleAgentEnvironment,</span> <span class="pre">self).__init__(useGUI,</span> <span class="pre">*args,</span> <span class="pre">**kwargs)</span></tt></li>
+<li>Each environment must have an EnvironmentInfo attribute that specifies which communication protocol the environment supports, which capabilities agents must have that can be used in this environment etc.</li>
+<li>The __init__ method defines  <a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-spaces"><em>state space</em></a> and  <a class="reference internal" href="../learn_more/state_and_action_spaces.html#action-spaces"><em>action space</em></a> of the environment as well as its initial state. In the most simple form, these spaces are defined as dicts that map dimension name onto a pair specifying whether the dimension has discrete or continuous values and which values may occur (so-called &#8216;old-style&#8217; spaces).</li>
+<li>The evaluateAction(self, actionObject) method is called to compute the effect of an action chosen by the agent onto the environment. The state transition is computed, and whether an episode has finished (i.e. whether a terminal state has been reached) is checked. Depending on this, the reward is computed. A dictionary containing the immediate reward, the terminal state (if one is reached; otherwise None), the current state (possibly the initial state of the next episode if the episode has been terminated), and a boolean indicating whether a new episodes starts is returned.</li>
+<li>In each environment module, the module-level attribute EnvironmentClass needs set to the class that inherits from SingleAgentEnvironment. This assignment is located usually at the end of the module: EnvironmentClass = LinearMarkovChainEnvironment</li>
+<li>Furthermore, the module-level attribute EnvironmentName should be set to the name of the environment, e.g. EnvironmentName = &#8220;Linear Markov Chain&#8221;. This name is used for instance in the GUI.</li>
+<li>The environment can send messages to the logger by calling &#8220;self.environmentLog.info(message)&#8221;</li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="writing-a-new-mmlf-environment">
+<h2>Writing a new MMLF environment<a class="headerlink" href="#writing-a-new-mmlf-environment" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>For writing a new MMLF environment, the following steps must be executed:</dt>
+<dd><ol class="first last arabic">
+<li><p class="first">Go into the worlds subdirectory of the MMLF and create a new world directory (e.g. example_world). Make this subdirectory a python package by adding an empty __init__.py file. Create a subdirectory &#8220;environments&#8221; in the world directory. In this &#8220;environments&#8221; subdirectory, create again an empty __init__.py file and a file that contains the actual python environment module (e.g. example_environment.py)</p>
+</li>
+<li><p class="first">Open the example_environment.py file. In this file, you have to implement a subclass of SingleAgentEnvironment. Lets call this subclass ExampleEnvironment.</p>
+</li>
+<li><p class="first">The environment class must have a class-attribute DEFAULT_CONFIG_DICT, which is a dictionary that contains the parameters that are available for customizing the environment and their default values. These parameters can be later on configured, e.g., in the MMLF GUI. Each parameter that can customize the behaviour of your enviromment should be contained in this dictionary. If your environment has no parameters, you can simply set &#8220;DEFAULT_CONFIG_DICT = {}&#8221;</p>
+</li>
+<li><p class="first">In the __init__ method of the class, you have to specify EnvironmentInfo. Adapt this object such that reflects the demands your environment poses onto agents that can be used in it.</p>
+</li>
+<li><p class="first">State- and ActionSpace must be defined. These can be either defined by defining each of their dimensions explicitly (see <a class="reference internal" href="../learn_more/state_and_action_spaces.html#state-and-action-spaces"><em>State and Action Spaces</em></a>) and adding them to the spaces or by defining the spaces directly the &#8220;old-style&#8221; way. Such an old-style definition is a dictionary mapping the dimension names to a shorthand definition of them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">&quot;column&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;discrete&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]),</span>
+<span class="s">&quot;row&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;discrete&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])}</span>
+</pre></div>
+</div>
+<p>This defines a space with two discrete dimensions with the names &#8220;column&#8221; and &#8220;row&#8221;. The &#8220;column&#8221; dimension can take on the values 0,1,2, and 3 and the &#8220;row&#8221; dimension the values 3,4, and 5.</p>
+</li>
+<li><p class="first">The <em>getInitialState</em> method must be implemented: This method is used for sampling a start state at the beginning of each episode. This state is currently NOT an MMLF state object but a dictionary which maps dimension name to dimension value.  This may change in future releases of the MMLF.</p>
+</li>
+<li><p class="first">The <em>evaluateAction</em> method is the place where the actual dynamics of the environment are implemented. It gets as parameter the actionObject chosen by the agent. This actionObject is a dictionary mapping the action space dimensions onto the values chosen by the agent for the respective dimension. Thus, via &#8220;actionObject[&#8216;force&#8217;]&#8221;, one could access the force the agent has chosen (let force be an action space dimension). The implementation of the method depends on your environment; important is that a state transition has to happen and a reward must be computed. The method must thus return a dictionary containing the immediate reward, the terminal state (if one is reached; otherwise None), the current state (possibly the initial state of the next episode if the episode has been terminated), and a boolean indicating whether a new episodes starts is.</p>
+</li>
+<li><p class="first">Create an module attribute EnvironmentClass and assign the environment class to it: &#8220;EnvironmentClass = ExampleEnvironment&#8221;</p>
+</li>
+<li><p class="first">Create an module attribute EnvironmentName and assign the environment&#8217;s name to it: &#8220;EnvironmentName = &#8220;Example&#8221;&#8220;</p>
+</li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="linearmarkovchainenvironment">
+<span id="linear-markov-chain-environment"></span><h2>LinearMarkovChainEnvironment<a class="headerlink" href="#linearmarkovchainenvironment" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Maja Machine Learning Framework</span>
+<span class="c">#</span>
+<span class="c"># This program is free software; you can redistribute it and/or modify</span>
+<span class="c"># it under the terms of the GNU General Public License as published</span>
+<span class="c"># by the Free Software Foundation; either version 3 of the License, or</span>
+<span class="c"># (at your option) any later version.</span>
+
+<span class="c"># This program is distributed in the hope that it will be useful, but</span>
+<span class="c"># WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the</span>
+<span class="c"># GNU General Public License for more details.</span>
+
+<span class="c"># You should have received a copy of the GNU General Public License</span>
+<span class="c"># along with this program; if not, see &lt;http://www.gnu.org/licenses/&gt;.</span>
+
+<span class="c"># Author: Jan Hendrik Metzen  (jhm@informatik.uni-bremen.de)</span>
+<span class="c"># Created: 2011/04/05</span>
+<span class="sd">&quot;&quot;&quot; A linear markov chain environment. &quot;&quot;&quot;</span>
+
+<span class="n">__author__</span> <span class="o">=</span> <span class="s">&quot;Jan Hendrik Metzen&quot;</span>
+<span class="n">__copyright__</span> <span class="o">=</span> <span class="s">&quot;Copyright 2011, University Bremen, AG Robotics&quot;</span>
+<span class="n">__credits__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Mark Edgington&#39;</span><span class="p">]</span>
+<span class="n">__license__</span> <span class="o">=</span> <span class="s">&quot;GPLv3&quot;</span>
+<span class="n">__version__</span> <span class="o">=</span> <span class="s">&quot;1.0&quot;</span>
+<span class="n">__maintainer__</span> <span class="o">=</span> <span class="s">&quot;Jan Hendrik Metzen&quot;</span>
+<span class="n">__email__</span> <span class="o">=</span> <span class="s">&quot;jhm@informatik.uni-bremen.de&quot;</span>
+
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+
+<span class="kn">from</span> <span class="nn">mmlf.framework.spaces</span> <span class="kn">import</span> <span class="n">StateSpace</span><span class="p">,</span> <span class="n">ActionSpace</span>
+<span class="kn">from</span> <span class="nn">mmlf.framework.protocol</span> <span class="kn">import</span> <span class="n">EnvironmentInfo</span>
+<span class="kn">from</span> <span class="nn">mmlf.environments.single_agent_environment</span> <span class="kn">import</span> <span class="n">SingleAgentEnvironment</span>
+
+<span class="c"># Each environment has to inherit directly or indirectly from SingleAgentEnvironment</span>
+<span class="k">class</span> <span class="nc">LinearMarkovChainEnvironment</span><span class="p">(</span><span class="n">SingleAgentEnvironment</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; A linear markov chain.</span>
+<span class="sd">    </span>
+<span class="sd">    The agent starts in the middle of this linear markov chain. He can either</span>
+<span class="sd">    move right or left. The chain is not stochastic, i.e. when the agent </span>
+<span class="sd">    wants to move right, the state is decreased with probability 1 by 1.  </span>
+<span class="sd">    When the agent wants to move left, the state is increased with probability 1</span>
+<span class="sd">    by 1 accordingly.</span>
+<span class="sd">    </span>
+<span class="sd">    .. versionadded:: 0.9.10</span>
+<span class="sd">       Added LinearMarkovChain environment</span>
+<span class="sd">    </span>
+<span class="sd">    **CONFIG DICT**</span>
+<span class="sd">        :length: : The number of states of the linear markov chain</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    
+    <span class="c"># Add default configuration for this environment to this static dict</span>
+    <span class="c"># This specific parameter controls how long the linear markov chain is</span>
+    <span class="c"># (i.e. how many states there are)</span>
+    <span class="n">DEFAULT_CONFIG_DICT</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;length&quot;</span> <span class="p">:</span> <span class="mi">21</span><span class="p">}</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">useGUI</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c"># Create the environment info</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">environmentInfo</span> <span class="o">=</span> \
+            <span class="n">EnvironmentInfo</span><span class="p">(</span><span class="c"># Which communication protocol version can the </span>
+                            <span class="c"># environment handle?</span>
+                            <span class="n">versionNumber</span><span class="o">=</span><span class="s">&quot;0.3&quot;</span><span class="p">,</span>
+                            <span class="c"># Name of the environment (can be chosen arbitrarily) </span>
+                            <span class="n">environmentName</span><span class="o">=</span><span class="s">&quot;LinearMarkovChain&quot;</span><span class="p">,</span>
+                            <span class="c"># Is the action space of this environment discrete?</span>
+                            <span class="n">discreteActionSpace</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="c"># Is the environment episodic?</span>
+                            <span class="n">episodic</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="c"># Is the state space of environment continuous?</span>
+                            <span class="n">continuousStateSpace</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="c"># Is the action space of environment continuous?</span>
+                            <span class="n">continuousActionSpace</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                            <span class="c"># Is the environment stochastic?</span>
+                            <span class="n">stochastic</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="c"># Calls constructor of base class</span>
+        <span class="c"># After this call, the environment has an attribute &quot;self.configDict&quot;,</span>
+        <span class="c"># The values of this dict are evaluated, i.e. instead of &#39;100&#39; (string),</span>
+        <span class="c"># the key &#39;length&#39; will have the same value 100 (int).</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LinearMarkovChainEnvironment</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">useGUI</span><span class="o">=</span><span class="n">useGUI</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+               
+        <span class="c"># The state space of the linear markov chain</span>
+        <span class="n">oldStyleStateSpace</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&quot;field&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;discrete&quot;</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configDict</span><span class="p">[</span><span class="s">&quot;length&quot;</span><span class="p">]))}</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">stateSpace</span> <span class="o">=</span> <span class="n">StateSpace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stateSpace</span><span class="o">.</span><span class="n">addOldStyleSpace</span><span class="p">(</span><span class="n">oldStyleStateSpace</span><span class="p">,</span> <span class="n">limitType</span><span class="o">=</span><span class="s">&quot;soft&quot;</span><span class="p">)</span>
+        
+        <span class="c"># The action space of the linear markov chain</span>
+        <span class="n">oldStyleActionSpace</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&quot;action&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s">&quot;discrete&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;left&quot;</span><span class="p">,</span> <span class="s">&quot;right&quot;</span><span class="p">])}</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span> <span class="o">=</span> <span class="n">ActionSpace</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionSpace</span><span class="o">.</span><span class="n">addOldStyleSpace</span><span class="p">(</span><span class="n">oldStyleActionSpace</span><span class="p">,</span> <span class="n">limitType</span><span class="o">=</span><span class="s">&quot;soft&quot;</span><span class="p">)</span>
+        
+        <span class="c"># The initial state of the environment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">initialState</span> <span class="o">=</span>  <span class="p">{</span><span class="s">&quot;field&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">configDict</span><span class="p">[</span><span class="s">&quot;length&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">}</span>
+        <span class="c"># The current state is initially set to the initial state</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initialState</span><span class="p">)</span>
+
+    <span class="c">########################## Interface Functions #####################################</span>
+    <span class="k">def</span> <span class="nf">getInitialState</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Returns the initial state of the environment &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">environmentLog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Episode starts in state &#39;</span><span class="si">%s</span><span class="s">&#39;.&quot;</span> 
+                                    <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initialState</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">initialState</span>
+    
+    <span class="k">def</span> <span class="nf">evaluateAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">actionObject</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Execute an agent&#39;s action in the environment.</span>
+<span class="sd">        </span>
+<span class="sd">        Take an actionObject containing the action of an agent, and evaluate </span>
+<span class="sd">        this action, calculating the next state, and the reward the agent </span>
+<span class="sd">        should receive for having taken this action.</span>
+<span class="sd">        </span>
+<span class="sd">        Additionally, decide whether the episode should continue,</span>
+<span class="sd">        or end after the reward has been  issued to the agent.</span>
+<span class="sd">        </span>
+<span class="sd">        This method returns a dictionary with the following keys:</span>
+<span class="sd">           :rewardValue: : An integer or float representing the agent&#39;s reward.</span>
+<span class="sd">                           If rewardValue == None, then no reward is given to the agent.</span>
+<span class="sd">           :startNewEpisode: : True if the agent&#39;s action has caused an episode</span>
+<span class="sd">                               to get finished.</span>
+<span class="sd">           :nextState: : A State object which contains the state the environment</span>
+<span class="sd">                         takes on after executing the action. This might be the</span>
+<span class="sd">                         initial state of the next episode if a new episode</span>
+<span class="sd">                         has just started (startNewEpisode == True)</span>
+<span class="sd">           :terminalState: : A State object which contains the terminal state </span>
+<span class="sd">                             of the environment in the last episode if a new </span>
+<span class="sd">                             episode has just started (startNewEpisode == True). </span>
+<span class="sd">                             Otherwise None.        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">action</span> <span class="o">=</span> <span class="n">actionObject</span><span class="p">[</span><span class="s">&#39;action&#39;</span><span class="p">]</span>
+        <span class="n">previousState</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">]</span>
+        
+        <span class="c"># Change state of environment deterministically</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="o">==</span> <span class="s">&#39;left&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">environmentLog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Agent chose action &#39;</span><span class="si">%s</span><span class="s">&#39; which caused a transition from &#39;</span><span class="si">%s</span><span class="s">&#39; to &#39;</span><span class="si">%s</span><span class="s">&#39;.&quot;</span> 
+                                    <span class="o">%</span> <span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">previousState</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">]))</span>
+        
+        <span class="c">#Check if the episode is finished (i.e. the goal is reached)</span>
+        <span class="n">episodeFinished</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_checkEpisodeFinished</span><span class="p">()</span>
+        
+        <span class="n">terminalState</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span> <span class="k">if</span> <span class="n">episodeFinished</span> <span class="k">else</span> <span class="bp">None</span>
+        
+        <span class="k">if</span> <span class="n">episodeFinished</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">episodeLengthObservable</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">episodeCounter</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">stepCounter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">returnObservable</span><span class="o">.</span><span class="n">addValue</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">episodeCounter</span><span class="p">,</span>
+                                           <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">stepCounter</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">environmentLog</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Terminal state &#39;</span><span class="si">%s</span><span class="s">&#39; reached.&quot;</span> 
+                                            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">environmentLog</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Episode </span><span class="si">%s</span><span class="s"> lasted for </span><span class="si">%s</span><span class="s"> steps.&quot;</span> 
+                                     <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">episodeCounter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">stepCounter</span>  <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            
+            <span class="n">reward</span> <span class="o">=</span> <span class="mi">10</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">else</span> <span class="o">-</span><span class="mi">10</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">stepCounter</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">episodeCounter</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+            <span class="c"># Reset the simulation to the initial state (always the same)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">initialState</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">reward</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stepCounter</span> <span class="o">+=</span> <span class="mi">1</span>
+        
+        <span class="n">resultsDict</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;reward&quot;</span> <span class="p">:</span> <span class="n">reward</span><span class="p">,</span> 
+                       <span class="s">&quot;terminalState&quot;</span> <span class="p">:</span> <span class="n">terminalState</span><span class="p">,</span>
+                       <span class="s">&quot;nextState&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span><span class="p">,</span>
+                       <span class="s">&quot;startNewEpisode&quot;</span> <span class="p">:</span> <span class="n">episodeFinished</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">resultsDict</span>
+        
+    <span class="k">def</span> <span class="nf">_checkEpisodeFinished</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Checks whether the episode is finished.</span>
+<span class="sd">        </span>
+<span class="sd">        An episode is finished whenever the leftmost or rightmost state of the</span>
+<span class="sd">        chain is reached.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentState</span><span class="p">[</span><span class="s">&#39;field&#39;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">configDict</span><span class="p">[</span><span class="s">&#39;length&#39;</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+<span class="c"># Each module that implements an environment must have a module-level attribute </span>
+<span class="c"># &quot;EnvironmentClass&quot; that is set to the class that inherits from SingleAgentEnvironment</span>
+<span class="n">EnvironmentClass</span> <span class="o">=</span> <span class="n">LinearMarkovChainEnvironment</span>
+<span class="c"># Furthermore, the name of the environment has to be assigned to &quot;EnvironmentName&quot;.</span>
+<span class="c"># This  name is used in the GUI. </span>
+<span class="n">EnvironmentName</span> <span class="o">=</span> <span class="s">&quot;Linear Markov Chain&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/MMLF_white.png" alt="Logo"/>
+            </a></p>
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html">Quick start (command line interface)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start_gui.html">Quick start (graphical user interface)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="writing_agents.html">Writing an agent</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Writing an environment</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#learning-about-the-basic-structure-of-mmlf-environments">Learning about the basic structure of MMLF environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#writing-a-new-mmlf-environment">Writing a new MMLF environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linearmarkovchainenvironment">LinearMarkovChainEnvironment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../learn_more/learn_more.html">Learn more about...</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_documentation/api_documentation.html">API-documentation</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="writing_agents.html"
+                        title="previous chapter">Writing an agent</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../learn_more/learn_more.html"
+                        title="next chapter">Learn more about...</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/tutorials/writing_environments.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../learn_more/learn_more.html" title="Learn more about..."
+             >next</a> |</li>
+        <li class="right" >
+          <a href="writing_agents.html" title="Writing an agent"
+             >previous</a> |</li>
+        <li><a href="../index.html">Maja Machine Learning Framework v1.0 documentation</a> &raquo;</li>
+          <li><a href="tutorials.html" >Tutorials</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Jan Hendrik Metzen, Mark Edgington.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
